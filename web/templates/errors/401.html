@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>401 - Доступ запрещён</title>
+    <link rel="icon" href="/web/static/img/favicon.ico">
+
+    <script src="/web/static/js/app.js"></script>
+    <script src="/web/static/js/utils.js"></script>
+    <script src="/web/static/notify/simple-notify.min.js"></script>
+
+    <link rel="stylesheet" href="/web/static/css/main.css">
+    <link rel="stylesheet" href="/web/static/css/auth.css">
+    <link rel="stylesheet" href="/web/static/css/elements.css">
+    <link rel="stylesheet" href="/web/static/notify/simple-notify.css"/>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-size: 72px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        a {
+            padding: 10px 20px;
+            background-color: #0055ff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: opacity 0.2s ease-in-out;
+        }
+        a:hover {
+            opacity: .8;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>401</h1>
+    <p>Доступ запрещён. Пожалуйста, войдите в аккаунт, чтобы продолжить.</p>
+    <a onclick="openAuthModal('login') ">Войти</a>
+</div>
+</body>
+</html>
