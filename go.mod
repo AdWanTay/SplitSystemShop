@@ -5,8 +5,10 @@ go 1.23
 require (
 	github.com/gofiber/fiber/v2 v2.52.6
 	github.com/gofiber/template/html/v2 v2.1.3
+	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/joho/godotenv v1.5.1
 	github.com/kelseyhightower/envconfig v1.4.0
+	golang.org/x/crypto v0.17.0
 	gorm.io/driver/postgres v1.5.11
 	gorm.io/driver/sqlite v1.5.7
 	gorm.io/gorm v1.26.0
@@ -32,7 +34,6 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
-	golang.org/x/crypto v0.17.0 // indirect
 	golang.org/x/sync v0.9.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/text v0.20.0 // indirect

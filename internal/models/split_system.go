@@ -7,7 +7,7 @@ type SplitSystem struct {
 	TypeID               uint
 	Type                 Type
 	Price                int // копейки
-	Inverter             bool
+	HasInverter          bool
 	RecommendedArea      float64 // м²
 	CoolingPower         float64 // кВт
 	Modes                []Mode  `gorm:"many2many:split_system_modes"`
@@ -30,4 +30,6 @@ type SplitSystem struct {
 	InternalDepth  int
 
 	Images []SplitSystemImage `gorm:"foreignKey:SplitSystemID"`
+
+	AverageRating float64 `gorm:"-"`
 }

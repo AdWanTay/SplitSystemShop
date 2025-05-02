@@ -2,7 +2,9 @@ package app
 
 import (
 	"SplitSystemShop/internal/config"
+	"SplitSystemShop/internal/context"
 	"SplitSystemShop/internal/database"
+	"SplitSystemShop/internal/routes"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
@@ -10,22 +12,12 @@ import (
 )
 
 func App(cfg *config.Config) error {
-	_, err := database.GetConnection(cfg.Database)
+	db, err := database.GetConnection(cfg.Database)
 	if err != nil {
 		return fmt.Errorf("get database connection: %w", err)
 	}
 
-	//userRepo := repositories.NewUserRepository(db)
-	//userService := services.NewUserService(userRepo)
-	//
-	//testRepo := repositories.NewTestRepository(db)
-	//testService := services.NewTestService(testRepo)
-	//
-	//courseRepo := repositories.NewCourseRepository(db)
-	//courseService := services.NewCourseService(courseRepo, userRepo, testRepo)
-	//
-	//usersCourseRepo := repositories.NewUsersCourseRepository(db)
-	//usersCourseService := services.NewUsersCourseService(usersCourseRepo, testRepo)
+	ctx := context.InitServices(db)
 
 	engine := html.New("./web/templates", ".html")
 	engine.Reload(true)
@@ -59,7 +51,7 @@ func App(cfg *config.Config) error {
 		},
 	})
 
-	//routes.SetupRoutes(app, cfg, userService, courseService, testService, usersCourseService)
+	routes.SetupRoutes(app, cfg, ctx)
 	err = app.Listen(":" + cfg.Port)
 	if err != nil {
 		return fmt.Errorf("app listen: %w", err)

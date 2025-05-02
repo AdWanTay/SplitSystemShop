@@ -37,7 +37,16 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 			return
 		}
 
-		//err = db.AutoMigrate(&models.User{}, &models.Course{}, &models.UsersCourse{}, &models.Test{}, &models.Question{}, &models.Answer{}, &models.TestScore{})
+		err = db.AutoMigrate(
+			&models.User{},
+			&models.Brand{},
+			&models.Type{},
+			&models.Mode{},
+			&models.EnergyClass{},
+			&models.SplitSystem{},
+			&models.SplitSystemImage{},
+			&models.Review{},
+		)
 		err = populateDB(db)
 		if err != nil {
 			_ = fmt.Errorf("populateDB(db)")
@@ -106,7 +115,7 @@ func populateDB(db *gorm.DB) error {
 		BrandID:              brand.ID,
 		TypeID:               t.ID,
 		Price:                29990,
-		Inverter:             true,
+		HasInverter:          true,
 		RecommendedArea:      25.0,
 		CoolingPower:         2.5,
 		EnergyClassCoolingID: coolingClass.ID,
