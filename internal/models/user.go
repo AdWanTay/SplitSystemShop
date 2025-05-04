@@ -9,5 +9,7 @@ type User struct {
 	PhoneNumber string `gorm:"unique"`
 	Password    string `gorm:"not null"`
 	Reviews     []Review
-	Role        string `gorm:"default:'user'"`
+	Role        string        `gorm:"default:'user'"`
+	Cart        []SplitSystem `gorm:"many2many:user_cart"`
+	Favorites   []SplitSystem `gorm:"many2many:user_favorites"`
 }

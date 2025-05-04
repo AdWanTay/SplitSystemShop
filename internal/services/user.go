@@ -112,3 +112,21 @@ func (s *UserService) ChangeCredentials(c context.Context, userID uint, newCrede
 	user.PhoneNumber = newCredentials.NewPhoneNumber
 	return s.repo.Update(c, user)
 }
+
+func (s *UserService) GetCart(c context.Context, userId uint) (*[]models.SplitSystem, error) {
+	cart, err := s.repo.GetCart(c, userId)
+	if err != nil {
+		return nil, err
+	}
+
+	return cart, nil
+}
+
+func (s *UserService) GetFavorites(c context.Context, userId uint) (*[]models.SplitSystem, error) {
+	favorites, err := s.repo.GetFavorites(c, userId)
+	if err != nil {
+		return nil, err
+	}
+
+	return favorites, nil
+}

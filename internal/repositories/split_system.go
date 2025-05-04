@@ -1,21 +1,53 @@
 package repositories
 
 import (
+	"SplitSystemShop/internal/models"
+	"context"
 	"gorm.io/gorm"
 )
 
 type SplitSystemRepository interface {
-	//GetUserByEmail(c context.Context, email string) (*models.User, error)
-	//CreateUser(c context.Context, user *models.User) error
-	//GetUserById(c context.Context, id uint) (*models.User, error)
-	//Update(c context.Context, user *models.User) error
-	//Delete(c context.Context, userId uint) error
+	GetSplitSystem(c context.Context, id uint) (*models.SplitSystem, error)
+	GetAllSplitSystems(ctx context.Context) (*[]models.SplitSystem, error)
 }
 
 type splitSystemRepository struct {
 	db *gorm.DB
 }
 
-func NewSplitSystemRepository(db *gorm.DB) UserRepository {
-	return &userRepository{db: db}
+func (r splitSystemRepository) GetAllSplitSystems(c context.Context) (*[]models.SplitSystem, error) {
+	var splitSystems []models.SplitSystem
+	err := r.db.WithContext(c).
+		Preload("Brand").
+		Preload("Type").
+		Preload("Modes").
+		Preload("EnergyClassCooling").
+		Preload("EnergyClassHeating").Find(&splitSystems).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &splitSystems, nil
+
+}
+
+func NewSplitSystemRepository(db *gorm.DB) SplitSystemRepository {
+	return &splitSystemRepository{db: db}
+}
+
+func (r splitSystemRepository) GetSplitSystem(c context.Context, id uint) (*models.SplitSystem, error) {
+	var splitSystem models.SplitSystem
+
+	err := r.db.WithContext(c).
+		Preload("Brand").
+		Preload("Type").
+		Preload("Modes").
+		Preload("EnergyClassCooling").
+		Preload("EnergyClassHeating").
+		First(&splitSystem, id).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &splitSystem, nil
 }
