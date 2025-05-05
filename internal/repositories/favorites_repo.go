@@ -24,15 +24,15 @@ type favoritesRepository struct {
 func (r favoritesRepository) GetUserFavorites(c context.Context, userID uint) ([]models.SplitSystem, error) {
 	var user models.User
 	if err := r.db.WithContext(c).
-		Preload("Cart.Brand").
-		Preload("Cart.Type").
-		Preload("Cart.Modes").
-		Preload("Cart.EnergyClassCooling").
-		Preload("Cart.EnergyClassHeating").
+		Preload("Favorites.Brand").
+		Preload("Favorites.Type").
+		Preload("Favorites.Modes").
+		Preload("Favorites.EnergyClassCooling").
+		Preload("Favorites.EnergyClassHeating").
 		First(&user, userID).Error; err != nil {
 		return nil, err
 	}
-	return user.Cart, nil
+	return user.Favorites, nil
 
 }
 
