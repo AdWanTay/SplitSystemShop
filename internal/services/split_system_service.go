@@ -15,19 +15,13 @@ func NewSlitSystemService(repo repositories.SplitSystemRepository) *SplitSystemS
 }
 
 func (s *SplitSystemService) GetSplitSystem(c context.Context, id uint) (*models.SplitSystem, error) {
-	item, err := s.repo.GetSplitSystem(c, id)
-	if err != nil {
-		return nil, err
-	}
-
-	return item, nil
+	return s.repo.GetSplitSystem(c, id)
 }
 
 func (s *SplitSystemService) GetAllSplitSystems(c context.Context) (*[]models.SplitSystem, error) {
-	items, err := s.repo.GetAllSplitSystems(c)
-	if err != nil {
-		return nil, err
-	}
+	return s.repo.GetAllSplitSystems(c)
+}
 
-	return items, nil
+func (s *SplitSystemService) DeleteSplitSystem(c context.Context, splitSystemID uint) error {
+	return s.repo.DeleteSplitSystem(c, splitSystemID)
 }

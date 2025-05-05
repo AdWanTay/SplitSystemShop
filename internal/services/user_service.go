@@ -104,3 +104,11 @@ func (s *UserService) ChangeCredentials(c context.Context, userID uint, newCrede
 func (s *UserService) GetFavorites(c context.Context, userID uint) (*[]models.SplitSystem, error) {
 	return s.repo.GetFavorites(c, userID)
 }
+
+func (s *UserService) GetUserRole(c context.Context, userID uint) (string, error) {
+	user, err := s.repo.GetUserById(c, userID)
+	if err != nil {
+		return "", err
+	}
+	return user.Role, nil
+}
