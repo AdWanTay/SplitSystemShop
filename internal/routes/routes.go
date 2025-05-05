@@ -48,5 +48,6 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Get("/contact", handlers.ContactPage(cfg))
 	app.Get("/products", handlers.ProductPage(cfg))
 	app.Get("/profile", handlers.ProfilePage(cfg))
+	app.Get("/blog", handlers.BlogPage(cfg))
 
 }
