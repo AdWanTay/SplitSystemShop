@@ -10,7 +10,7 @@ func DeleteFavoritesItem(s *services.FavoritesService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		splitSystemID, err := strconv.Atoi(c.Params("id"))
 		if err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "Неверный id товара"})
+			return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{"message": "Неверный id товара"})
 		}
 		userID := c.Locals("userId").(uint)
 		if err = s.RemoveFromFavorites(c.Context(), userID, uint(splitSystemID)); err != nil {
@@ -28,7 +28,7 @@ func AddToFavorites(s *services.FavoritesService) fiber.Handler {
 
 		body := &request{}
 		if err := c.BodyParser(&body); err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "Неверный id товара"})
+			return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{"message": "Неверный id товара"})
 		}
 
 		userID := c.Locals("userId").(uint)
@@ -45,7 +45,7 @@ func GetFavorites(service *services.FavoritesService) fiber.Handler {
 		items, err := service.GetFavorites(c.Context(), userID)
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-				"error": "failed to get cart",
+				"message": "Ошибка загрузки товаров",
 			})
 		}
 		return c.JSON(fiber.Map{
