@@ -24,10 +24,13 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Patch("/api/auth/profile", middlewares.RequireAuth(cfg, false), handlers.ChangeCredentials(ctx.UserService))
 	app.Patch("/api/auth/change-password", middlewares.RequireAuth(cfg, false), handlers.ChangePassword(ctx.UserService))
 
-	app.Get("/api/cart", middlewares.RequireAuth(cfg, false), handlers.GetCart(ctx.UserService))
-	app.Get("/api/favorites", middlewares.RequireAuth(cfg, false), handlers.GetFavorites(ctx.UserService))
 	app.Get("/api/split-system/:id", middlewares.RequireAuth(cfg, false), handlers.GetSplitSystem(ctx.SplitSystemService))
-	app.Get("/api/split-system", middlewares.RequireAuth(cfg, false), handlers.GetAllSplitSystem(ctx.SplitSystemService))
+	app.Get("/api/split-system", middlewares.RequireAuth(cfg, false), handlers.GetAllSplitSystems(ctx.SplitSystemService))
+
+	app.Get("/api/favorites", middlewares.RequireAuth(cfg, false), handlers.GetFavorites(ctx.FavoritesService))
+	app.Delete("/api/favorites/:id", middlewares.RequireAuth(cfg, false), handlers.DeleteFavoritesItem(ctx.FavoritesService))
+	app.Post("/api/favorites", middlewares.RequireAuth(cfg, false), handlers.AddToFavorites(ctx.FavoritesService))
+
 	app.Get("/api/cart", middlewares.RequireAuth(cfg, false), handlers.GetCart(ctx.CartService))
 	app.Delete("/api/cart/:id", middlewares.RequireAuth(cfg, false), handlers.DeleteCartItem(ctx.CartService))
 	app.Post("/api/cart", middlewares.RequireAuth(cfg, false), handlers.AddToCart(ctx.CartService))
