@@ -38,18 +38,6 @@ func (s *UserService) RegisterUser(c context.Context, input dto.RegistrationRequ
 		Password:    string(hashedPassword),
 	}
 
-	//validate := validator.New()
-	//err = validate.Struct(newUser)
-	//if err != nil {
-	//	var validationErrors validator.ValidationErrors
-	//	errors.As(err, &validationErrors)
-	//	errorString := "Не удалось согласовать данные пользователя: \n"
-	//	for _, validationError := range validationErrors {
-	//		errorString += validationError.Field() + "\n"
-	//	}
-	//	return nil, fmt.Errorf(errorString)
-	//}
-
 	err = s.repo.CreateUser(c, newUser)
 
 	if err != nil {
@@ -113,20 +101,6 @@ func (s *UserService) ChangeCredentials(c context.Context, userID uint, newCrede
 	return s.repo.Update(c, user)
 }
 
-func (s *UserService) GetCart(c context.Context, userId uint) (*[]models.SplitSystem, error) {
-	cart, err := s.repo.GetCart(c, userId)
-	if err != nil {
-		return nil, err
-	}
-
-	return cart, nil
-}
-
-func (s *UserService) GetFavorites(c context.Context, userId uint) (*[]models.SplitSystem, error) {
-	favorites, err := s.repo.GetFavorites(c, userId)
-	if err != nil {
-		return nil, err
-	}
-
-	return favorites, nil
+func (s *UserService) GetFavorites(c context.Context, userID uint) (*[]models.SplitSystem, error) {
+	return s.repo.GetFavorites(c, userID)
 }

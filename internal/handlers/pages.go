@@ -11,10 +11,10 @@ func Render(c *fiber.Ctx, template string, data fiber.Map, cfg *config.Config) e
 	}
 
 	//tokenString := c.Cookies("token")
-	//userId, err := utils.ParseAndValidateJWT(tokenString, cfg)
+	//userID, err := utils.ParseAndValidateJWT(tokenString, cfg)
 	//
 	//if err == nil {
-	//	data["firstName"], data["lastName"], _ = userService.GetFirstNameAndLastName(c.Context(), userId)
+	//	data["firstName"], data["lastName"], _ = userService.GetFirstNameAndLastName(c.Context(), userID)
 	//}
 	//
 	//data["isAuthenticated"] = err == nil

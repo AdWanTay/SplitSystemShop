@@ -15,12 +15,12 @@ func RequireAuth(cfg *config.Config, onlyUserId bool) fiber.Handler {
 		}
 		tokenString = strings.TrimPrefix(tokenString, "Bearer ")
 
-		userId, err := utils.ParseAndValidateJWT(tokenString, cfg)
+		userID, err := utils.ParseAndValidateJWT(tokenString, cfg)
 		if err != nil && !onlyUserId {
 			return fiber.NewError(fiber.StatusUnauthorized, "Invalid token")
 		}
 		if err == nil {
-			c.Locals("userId", userId)
+			c.Locals("userId", userID)
 		}
 		return c.Next()
 	}

@@ -8,7 +8,7 @@ import (
 
 type SplitSystemRepository interface {
 	GetSplitSystem(c context.Context, id uint) (*models.SplitSystem, error)
-	GetAllSplitSystems(ctx context.Context) (*[]models.SplitSystem, error)
+	GetAllSplitSystems(c context.Context) (*[]models.SplitSystem, error)
 }
 
 type splitSystemRepository struct {
