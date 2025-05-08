@@ -1,0 +1,36 @@
+{{define "header"}}
+<header class="header">
+    <div class="header__top">
+        <button class="header__logo">Логотип</button>
+        <a href="tel:+79008005510" class="header__phone">+7 (900) 800 55-10</a>
+        <div class="search__container">
+            <div class="icon">
+                <svg viewBox="0 0 24 24"><use xlink:href="/web/static/icons/iconpack.svg#icon-search"></use></svg>
+            </div>
+            <input type="text" placeholder="Поиск" class="header__search" />
+        </div>
+        <a href="#" class="header__chat">
+            <div class="icon">
+                <svg viewBox="0 0 24 24"><use xlink:href="/web/static/icons/iconpack.svg#icon-chat"></use></svg>
+            </div>
+            Онлайн-чат
+        </a>
+        <div class="header__icons">
+            <a href="/profile" class="icon">
+                <svg viewBox="0 0 24 24"><use xlink:href="/web/static/icons/iconpack.svg#icon-user"></use></svg>
+            </a>
+            <a href="/cart" class="icon">
+                <svg viewBox="0 0 24 24"><use xlink:href="/web/static/icons/iconpack.svg#icon-cart"></use></svg>
+            </a>
+        </div>
+    </div>
+    <nav class="nav">
+        <a href="/catalog">Каталог продукции</a>
+        <a href="/catalog/#">Кондиционеры</a>
+        <a href="/blog">Блог</a>
+        <a href="/contact">Контакты</a>
+        <a href="/cart">Корзина</a>
+        <a href="/cart#">Избранное</a>
+    </nav>
+</header>
+{{end}}}
