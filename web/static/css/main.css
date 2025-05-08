@@ -379,3 +379,75 @@ body {
         flex: 2 0;
     }
 }
+
+.calc__banner {
+    margin: 2vw 8vw;
+    height: 10vw;
+    overflow: hidden;
+    background: #007aff;
+    border-radius: 1rem;
+}
+
+
+
+
+
+
+
+
+.form-toggle {
+    display: inline-block;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+.form-toggle-item {
+    float: left;
+    display: inline-block;
+}
+.form-toggle-item input[type=radio] {
+    display: none;
+}
+.form-toggle-item label {
+    display: inline-block;
+    margin-right: 15px;
+    line-height: 1.5;
+    /*border: 1px solid #999;*/
+    border-right: none;
+    cursor: pointer;
+    user-select: none;
+}
+
+.form-toggle .item-1 input[type=radio]:checked + label {
+    color: #0055ff;
+    border-bottom: 2px dashed #0055ff;
+}
+.form-toggle .item-2 input[type=radio]:checked + label {
+    color: #0055ff;
+    border-bottom: 2px dashed #0055ff;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #0055ff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-size: 15px;
+}
+
+.submit-btn:hover {
+    background-color: #003fcc;
+}
+
+#registerForm .links {
+    color: #0055ff;
+}
+
+.links:hover {
+    opacity: .8;
+}

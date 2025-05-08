@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<link rel="stylesheet" href="/web/static/css/elements.css">
 
-</body>
-</html>
+<div class="modal">
+    <div class="modal-content main-modal">
+        <span class="modal-close" onclick="this.closest('.modal').remove()">✖</span>
+
+        <h2 class="modal-title">Заголовок окна</h2>
+
+        <div class="modal-body">
+            <!-- Здесь можешь вставлять любые элементы, например форму -->
+            <p>Какой-то контент или форма может быть тут</p>
+        </div>
+
+        <div class="modal-description">
+            Это описание или пояснение к действию. Здесь ты можешь разместить текст, предупреждение и т.п.
+        </div>
+
+        <div class="modal-actions">
+            <button id="mainBtn" class="modal-button primary">Универсальная кнопка</button>
+            <button class="modal-button cancel" onclick="this.closest('.modal').remove()">Отмена</button>
+        </div>
+    </div>
+</div>

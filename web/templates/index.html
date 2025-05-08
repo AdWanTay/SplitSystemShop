@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Сайт сплит-систем</title>
     <link rel="stylesheet" href="/web/static/css/main.css" />
+    <link rel="stylesheet" href="/web/static/css/elements.css" />
 </head>
 <body>
 {{template "header" .}}
@@ -28,6 +29,7 @@
 
 
     {{template "popular-products" .}}
+    {{template "calc-banner" .}}
 
     {{template "contact-form" .}}
 
@@ -35,6 +37,8 @@
 
 {{template "footer" .}}}
 
-<script src="script.js"></script>
+<script src="/web/static/js/app.js"></script>
+<script src="/web/static/js/utils.js"></script>
+
 </body>
 </html>

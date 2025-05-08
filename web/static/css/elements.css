@@ -1,0 +1,411 @@
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.modal-content {
+    position: relative;
+    background-color: #ffffff;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    font-family: Arial, sans-serif;
+}
+
+.modal-close {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    right: -3.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 20px;
+    cursor: pointer;
+    color: #999;
+    border-radius: 15px;
+    border: 1px solid #999999;
+    background: rgba(0, 0, 0, 0.05);
+    transition: .3s ease-in-out;
+}
+.modal-close:hover {
+    color: #bcbcbc;
+}
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="tel"],
+.modal-content input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.checkbox-label input {
+    border: 1px solid #999999;
+    margin: 0 .8rem 0 .5rem;
+    scale: 2;
+}
+
+.main-modal {
+    max-width: 30%;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 1rem;
+}
+
+.modal-body {
+    margin-bottom: 1rem;
+}
+.modal-body > * {
+    color: #000000;
+}
+
+.modal-description {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.modal-button {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease;
+}
+
+.modal-button.primary {
+    background-color: #0055ff;
+    color: white;
+}
+
+.modal-button.primary:hover {
+    opacity: .8;
+}
+
+.modal-button.cancel {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.modal-button.cancel:hover {
+    background-color: #d6d6d6;
+}
+
+
+
+
+/* Новые стили для модального окна курса */
+.course-modal {
+    max-width: 900px !important;
+}
+
+.course-modal-body {
+    display: flex;
+    gap: 20px;
+}
+
+.course-details {
+    flex: 2;
+}
+
+.course-title {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.course-category {
+    display: inline-block;
+    background-color: #f0f0f0;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #555555;
+    margin-bottom: 20px;
+}
+
+.course-description {
+    margin-bottom: 30px;
+}
+
+.course-description h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.course-description p {
+    color: #666;
+    line-height: 1.5;
+}
+
+.modal-actions {
+    justify-content: flex-end;
+    display: flex;
+    gap: 10px;
+}
+
+.accent-link {
+    color: #0055ff;
+}
+
+.btn-close,
+.btn-buy {
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-close {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.btn-buy {
+    background-color: #0055ff;
+    color: white;
+}
+
+.accent-btn {
+    background: #0055ff;
+    color: #fff;
+    border: none;
+    border-radius: .5rem;
+    padding: .5rem;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+.accent-btn:hover {
+    opacity: .8;
+}
+
+.primary-btn {
+    color: #555;
+    border: none;
+    border-radius: .5rem;
+    padding: .5rem;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+.primary-btn:hover {
+    color: #999999;
+}
+
+.outline-btn {
+    color: #555;
+    background: none;
+    border: 1px solid #0055ff;
+    border-radius: .5rem;
+    padding: .5rem;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+.outline-btn:hover {
+    background: #0055ff;
+    color: #fff;
+}
+
+.btn-small {
+    padding: .3rem 1rem;
+}
+
+.btn-standard {
+    padding: .5rem;
+}
+
+.btn-huge {
+    padding: .8rem 2rem;
+    border-radius: 15px;
+    font-size: 1rem;
+}
+
+.switch {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 2rem;
+}
+
+#checkbox-theme {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+#theme-switch {
+    position: absolute;
+    top: 0;
+    left: .5rem;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/*#checkbox-theme:checked + #theme-switch {*/
+/*    background: #2f2f2f;*/
+/*}*/
+
+#theme-switch :active:after {
+    width: 13px;
+}
+
+.purchase-title {
+    margin: 0;
+    color: #333;
+    margin-bottom: .5rem;
+    text-align: center;
+}
+
+.purchase-modal .course-title {
+    text-align: center;
+    font-size: .875rem;
+    margin-bottom: 10px;
+}
+
+.purchase-description {
+    margin-bottom: 20px;
+    margin-top: 2.5rem;
+    color: #666;
+    text-align: center;
+}
+
+.qr-code-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.qr-code {
+    width: 200px;
+    height: 200px;
+    margin-bottom: .5rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.qr-code-container a {
+    font-size: .875rem;
+    color: #999999;
+}
+
+.payment-link-container {
+    text-align: center;
+}
+
+.payment-link {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    padding: 10px 20px;
+    background: #0055ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.payment-link:hover {
+    opacity: .8;
+}
+
+.buy-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+
+
+
+
+.calculator-modal {
+    max-width: 50%;
+}
+
+.cooling-calculator {
+    font-size: 0.95rem;
+    margin: 0 auto;
+}
+
+.calculator-modal .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.calculator-modal .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.calculator-modal .form-group.checkbox label {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.calculator-modal .form-group input,
+.calculator-modal .form-group select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: .5rem;
+    border: 1px solid #dcdcdc;
+}
+
+.calculator-modal .results {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: #1b7900;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

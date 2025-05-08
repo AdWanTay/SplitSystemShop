@@ -112,7 +112,7 @@ function openAboutModal(title, author, fullDescription, id, isAuth) {
 function openAuthModal(type) {
     closeAllModals();
 
-    fetch("/web/templates/modals/auth.html")
+    fetch("/web/templates/components/modals/auth-modal.html")
         .then((res) => res.text())
         .then((html) => {
             const modalContainer = document.createElement("div");
@@ -583,3 +583,23 @@ const modalConfigs = {
         }
     }
 };
+
+
+function openCalculator() {
+    fetch("/web/templates/components/modals/calc-modal.html")
+        .then((res) => res.text())
+        .then((html) => {
+            const modalContainer = document.createElement("div");
+            modalContainer.innerHTML = html;
+            document.body.appendChild(modalContainer);
+
+            // реалиция
+
+            modalContainer.addEventListener("click", (e) => {
+                if (e.target.classList.contains("modal")) {
+                    modalContainer.remove();
+                }
+            });
+            addAuthListener(type, modalContainer)
+        });
+}
