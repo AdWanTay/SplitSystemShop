@@ -12,6 +12,21 @@ a {
     color: currentColor;
 }
 
+input[type="tel"], input[type="text"], input[type="email"],
+textarea {
+    font-size: 1rem !important;
+    padding: .8rem 1rem;
+    border-radius: .5rem;
+    border: 1px solid #dcdcdc;
+}
+
+input[type="tel"]:active, input[type="text"]:active, input[type="email"]:active,
+input[type="tel"]:focus, input[type="text"]:focus, input[type="email"]:focus,
+textarea:focus, textarea:active {
+    border: 1px solid #007aff;
+    outline: none;
+}
+
 body {
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     display: flex;
@@ -149,9 +164,11 @@ body {
 .products {
     padding: 4rem 8vw;
 }
-.products h2 {
+.products h2, .contact__form h2 {
     font-size: 3rem;
     margin-bottom: 1.5rem;
+    white-space: nowrap ;
+    width: 100%;
 }
 .products__grid {
     display: grid;
@@ -167,12 +184,70 @@ body {
 }
 
 
+.contact__form {
+    padding: 4vw 8vw;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.contact__form textarea {
+    width: 100%;
+    resize: none;
+}
+
+.contact__form .contact-col, .contact__process > *  {
+    flex: 1;
+}
+
+.contact__form .contact__banner {
+    height: 20vw;
+}
+
+.contact__form img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin-left: 2rem;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+#contact-phone {
+    position: relative;
+}
+#contact-phone::after {
+    position: absolute;
+    content: "";
+    width: 3rem;
+    height: 3rem;
+    top: 0;
+    left: 0;
+}
+
+.contact__process {
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.contact-btn {
+    border-radius: .5rem;
+    flex: 1;
+}
+
+
+
+
 
 .footer {
     display: flex;
     flex-flow: row wrap;
-    padding: 4rem 8rem;
-    margin-top: 4vw;
+    padding: 4vw 8vw;
+    margin-top: 2vw;
     color: #000000;
     background-color: #f8f8f7;
     border-top: 1px solid #dcdcdc;

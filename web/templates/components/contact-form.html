@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{{define "contact-form"}}
+<section class="contact__form">
+    <h2>Оставить заявку</h2>
+    <div class="contact-col">
+        <textarea name="message" id="contact-text" cols="30" rows="15" placeholder="Ваше сообщение"></textarea>
+        <div class="contact__process">
+            <input id="contact-phone" type="tel" placeholder="Телефон">
+            <button class="contact-btn">Отправить</button>
+        </div>
+    </div>
+    <div class="contact-col">
+        <img class="contact__banner" src="/web/static/img/banner.png" alt="Тут картинка">
+    </div>
+</section>
+{{end}}}
