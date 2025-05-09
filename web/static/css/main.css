@@ -451,3 +451,73 @@ body {
 .links:hover {
     opacity: .8;
 }
+
+
+
+
+/*#5db0ff*/
+
+
+
+
+
+
+
+.swiper-container {
+    width: 100%;
+    /*height: 500px;*/
+    position: relative;
+    overflow: hidden; /* Скрываем всё, что выходит за границы */
+    border-radius: 2rem; /* Закругление углов */
+}
+
+.swiper-wrapper {
+    /* Убираем отступы между слайдами */
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.swiper-slide {
+    opacity: 0 !important; /* Сначала слайд невидим */
+    transform: scale(0.95); /* Слегка уменьшаем неактивные слайды */
+    transition:
+            opacity 600ms ease-in-out,
+            transform 600ms ease-in-out; /* Плавные переходы */
+}
+
+.swiper-slide-active {
+    opacity: 1 !important; /* Активный слайд полностью виден */
+    transform: scale(1); /* Возвращаем нормальный размер */
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2rem; /* Закругление для изображения */
+}
+
+/* Стили для пагинации (точек) */
+.swiper-pagination {
+    position: absolute;
+    bottom: 2rem !important;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    z-index: 10;
+}
+
+.swiper-pagination-bullet {
+    width: 16px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.swiper-pagination-bullet-active {
+    background: #fff !important;
+}
