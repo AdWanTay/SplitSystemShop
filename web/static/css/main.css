@@ -403,12 +403,12 @@ body {
 }
 
 .calc__banner {
-    cursor: pointer;
     height: 36vh;
     margin: 2vw 8vw;
     overflow: hidden;
     background: #007aff;
     border-radius: 1rem;
+    cursor: pointer;
 }
 
 .calc__banner img {
