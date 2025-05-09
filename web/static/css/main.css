@@ -80,6 +80,7 @@ body {
     padding: .5rem 1rem;
     margin-right: 1rem;
     margin-left: auto;
+    cursor: pointer;
     transition: .5s ease;
 }
 
@@ -406,7 +407,7 @@ body {
     height: 36vh;
     margin: 2vw 8vw;
     overflow: hidden;
-    background: #007aff;
+    background: #5db0ff07aff;
     border-radius: 1rem;
     cursor: pointer;
 }
