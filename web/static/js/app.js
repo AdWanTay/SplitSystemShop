@@ -1,5 +1,6 @@
 function closeAllModals() {
     document.querySelectorAll('.modal').forEach(modal => modal.remove());
+    unlockBodyScroll();
 }
 
 function showForm(type) {
@@ -18,6 +19,7 @@ function showForm(type) {
         btnRegister.checked = true;
     }
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
     try {
@@ -89,36 +91,46 @@ function openPurchaseModal(title, id) {
         });
 }
 
-function openAboutModal(title, author, fullDescription, id, isAuth) {
-    closeAllModals();
+function openCartModal() {
+    lockBodyScroll();
 
-    fetch("/web/templates/modals/about-course.html")
+    fetch("/web/templates/components/modals/cart-modal.html")
         .then((res) => res.text())
         .then((html) => {
             const modalContainer = document.createElement("div");
             modalContainer.innerHTML = html;
             document.body.appendChild(modalContainer);
-            document.querySelector(".course-title").innerHTML = title;
-            document.querySelector(".course-description").innerHTML = "<p>" + fullDescription + "</p>"
-            document.querySelector(".course-category").innerHTML = "Автор курса: " + author;
-            const buyBtn = modalContainer.querySelector(".buy-btn");
-            if (isAuth){
-                buyBtn.setAttribute("onclick", `openPurchaseModal("${title}", ${id})`);
-            }else{
-                buyBtn.setAttribute("onclick", `openAuthModal('login')`);
 
-            }
             //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
             modalContainer.addEventListener("click", (e) => {
-                if (e.target.classList.contains("modal")) {
-                    modalContainer.remove();
-                }
+                closeAllModals();
             });
+        });
+}
+
+function openCalculator() {
+    lockBodyScroll();
+
+    fetch("/web/templates/components/modals/calc-modal.html")
+        .then((res) => res.text())
+        .then((html) => {
+            const modalContainer = document.createElement("div");
+            modalContainer.innerHTML = html;
+            document.body.appendChild(modalContainer);
+
+            // реалиция
+
+            modalContainer.addEventListener("click", (e) => {
+                closeAllModals();
+            });
+            addAuthListener(type, modalContainer)
         });
 }
 
 function openAuthModal(type) {
     closeAllModals();
+
+    lockBodyScroll();
 
     fetch("/web/templates/components/modals/auth-modal.html")
         .then((res) => res.text())
@@ -151,9 +163,7 @@ function openAuthModal(type) {
 
             //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
             modalContainer.addEventListener("click", (e) => {
-                if (e.target.classList.contains("modal")) {
-                    modalContainer.remove();
-                }
+                closeAllModals();
             });
             addAuthListener(type, modalContainer)
         });
@@ -170,7 +180,6 @@ function addAuthListener(type, modalContainer) {
         registerForm.addEventListener('submit', registerHandler);
     }
 }
-
 
 function login(modalContainer) {
     return async (event) => {
@@ -253,8 +262,6 @@ async function logout() {
     }
 }
 
-
-// Функция для открытия модального окна с нужным содержимым
 function openModal(config) {
     closeAllModals();
 
@@ -289,7 +296,6 @@ function openModal(config) {
 
 }
 
-// Конфигурации для разных модальных окон
 const modalConfigs = {
     orderKit: {
         title: "Оставить заявку",
@@ -584,23 +590,3 @@ const modalConfigs = {
         }
     }
 };
-
-
-function openCalculator() {
-    fetch("/web/templates/components/modals/calc-modal.html")
-        .then((res) => res.text())
-        .then((html) => {
-            const modalContainer = document.createElement("div");
-            modalContainer.innerHTML = html;
-            document.body.appendChild(modalContainer);
-
-            // реалиция
-
-            modalContainer.addEventListener("click", (e) => {
-                if (e.target.classList.contains("modal")) {
-                    modalContainer.remove();
-                }
-            });
-            addAuthListener(type, modalContainer)
-        });
-}
