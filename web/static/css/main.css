@@ -43,7 +43,7 @@ body {
 .header__top {
     display: flex;
     align-items: center;
-    padding: .8vw 8vw;
+    padding: .5vw 8vw;
     flex-wrap: wrap;
     border-bottom: 1px solid #dcdcdc;
 
@@ -153,7 +153,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 2vw;
-    padding: 0.5rem 0;
+    padding: 0.35rem 0;
 }
 .header .nav a {
     text-decoration: none;
@@ -207,7 +207,7 @@ body {
 
 
 .contact__form {
-    padding: 4vw 8vw;
+    padding: 4vw 8vw 0 8vw;
     width: 100%;
     display: flex;
     align-items: stretch;
@@ -225,7 +225,7 @@ body {
 }
 
 .contact__form .contact__banner {
-    height: 20vw;
+    /*height: 20vw;*/
 }
 
 .contact__form img {
@@ -257,7 +257,6 @@ body {
 }
 
 .contact-btn {
-    border-radius: .5rem;
     flex: 1;
 }
 
@@ -269,8 +268,7 @@ body {
     display: flex;
     flex-flow: row wrap;
     padding: 4vw 8vw;
-    margin-top: 2vw;
-    color: #000000;
+    color: #999999;
     background-color: #f8f8f7;
     border-top: 1px solid #dcdcdc;
 }
@@ -295,6 +293,7 @@ body {
     margin-bottom: .3em;
     font-size: 1rem;
     font-weight: 400;
+    color: #5db0ff;
 }
 
 .nav__title {
@@ -355,7 +354,7 @@ body {
 }
 
 .nav__ul li:hover a {
-    color: #0055ff;
+    color: #5db0ff;
 }
 
 
@@ -407,7 +406,7 @@ body {
     height: 36vh;
     margin: 2vw 8vw;
     overflow: hidden;
-    background: #5db0ff07aff;
+    background: #5db0ff;
     border-radius: 1rem;
     cursor: pointer;
 }

@@ -39,56 +39,7 @@ function showNotify(title, text) {
 };
 
 
-// ################################################################################################################
-// ##                    Themes
-// ################################################################################################################
-
 document.addEventListener("DOMContentLoaded", () => {
-    function detectColorScheme(){
-        var theme="light";    //default to light
-
-        if(localStorage.getItem("theme")){
-            if(localStorage.getItem("theme") == "dark"){
-                var theme = "dark";
-            }
-        } else if(!window.matchMedia) {
-            return false;
-        } else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            var theme = "dark";
-        }
-
-        if (theme=="dark") {
-            document.documentElement.setAttribute("data-theme", "dark");
-            document.querySelector('#theme-switch').innerHTML = "Тема: Темная";
-        }
-    }
-    try {
-        detectColorScheme();
-    } catch {}
-
-    const toggleSwitch = document.querySelector('#checkbox-theme');
-    const toggleSwitchText = document.querySelector('#theme-switch');
-
-    function switchTheme(e) {
-        if (e.target.checked) {
-            localStorage.setItem('theme', 'dark');
-            document.documentElement.setAttribute('data-theme', 'dark');
-            toggleSwitchText.innerHTML  = "Тема: Темная";
-            toggleSwitch.checked = true;
-        } else {
-            localStorage.setItem('theme', 'light');
-            document.documentElement.setAttribute('data-theme', 'light');
-            toggleSwitchText.innerHTML  = "Тема: Светлая";
-            toggleSwitch.checked = false;
-        }
-    }
-    try {
-        toggleSwitch.addEventListener('change', switchTheme, false);
-        if (document.documentElement.getAttribute("data-theme") == "dark"){
-            toggleSwitch.checked = true;
-        }
-    } catch { }
-
 
     // ################################################################################################################
     // ##                    Profile

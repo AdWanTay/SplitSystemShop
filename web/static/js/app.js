@@ -34,6 +34,14 @@ document.addEventListener("DOMContentLoaded", () => {
         logoutBtn.addEventListener("click", () => logout());
     } catch {
     }
+
+    try {
+        var input = document.querySelector("input[type='tel']");
+        input.addEventListener("input", mask, false);
+        input.addEventListener("focus", mask, false);
+        input.addEventListener("blur", mask, false);
+    } catch {
+    }
 });
 
 
@@ -279,13 +287,6 @@ function openModal(config) {
         }
     } catch { }
 
-    try {
-        var input = document.querySelector("input[type='tel']");
-        input.addEventListener("input", mask, false);
-        input.addEventListener("focus", mask, false);
-        input.addEventListener("blur", mask, false);
-    } catch {
-    }
 }
 
 // Конфигурации для разных модальных окон
