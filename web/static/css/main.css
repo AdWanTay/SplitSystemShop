@@ -51,12 +51,15 @@ body {
 
 .header__top .header__logo {
     font-weight: bold;
-    background: #dbeafe;
     border: none;
     border-radius: 1000px;
-    padding: .8rem 1rem;
+    padding: .8rem 0;
     margin-right: 1rem;
 }
+.header__logo img {
+    height: 2rem;
+}
+
 .header__top .header__phone, .header__top .header__chat {
     font-size: 1rem;
     color: #000;
@@ -262,10 +265,11 @@ body {
     margin-bottom: 2em;
 }
 
-.footer__logo {
-    font-family: 'SoyuzGroteskBold';
-    font-size: 2rem;
+.footer__logo img {
+    height: 3rem;
 }
+
+
 
 .footer__addr h2 {
     margin-top: 1.3em;
