@@ -1,10 +1,18 @@
-.blog {
+.blog, .article {
     margin: 2vw 8vw;
 }
 
-.blog h2 {
+.more-articles {
+    margin: 6vw 8vw;
+}
+
+.blog h2, .article h1 {
     font-size: 3rem;
     margin-bottom: 2rem;
+}
+
+.more-articles h2 {
+    margin-bottom: 1rem;
 }
 
 .blog-card-container {
@@ -69,7 +77,7 @@
     border-top: 1px solid #eee;
 }
 
-.blog-card-action button {
+.blog-card-action .more-btn {
     width: 100%;
     padding: 10px;
     background: #5db0ff;
@@ -81,6 +89,29 @@
     transition: background 0.3s ease;
 }
 
-.blog-card-action button:hover {
+.blog-card-action .more-btn:hover {
     background: #5295da;
+}
+
+.article-content {
+    line-height: 180%;
+}
+
+.article-content p {
+    margin-bottom: 1rem;
+}
+
+.article-content img {
+    border-radius: 1rem;
+    max-width: 30vw;
+}
+
+.left-img {
+    float: left;
+    margin: 1rem 1rem 1rem 0;
+}
+
+.right-img {
+    float: right;
+    margin: 1rem 0 1rem 1rem;
 }

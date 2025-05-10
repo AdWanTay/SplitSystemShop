@@ -749,3 +749,87 @@ input[type=checkbox]:checked::after {
 .swiper-pagination-bullet-active {
     background: #fff !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+.about {
+    padding: 0 8vw;
+    margin-top: 6vw;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    font-family: Arial, sans-serif;
+}
+
+.about__container {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.about__content {
+    flex: 3 1 500px;
+}
+
+.about__title {
+    font-size: 3rem;
+    margin-bottom: 1vw;
+}
+
+.about__text {
+    font-size: 16px;
+    line-height: 180%;
+    margin-bottom: 16px;
+}
+
+.about__text a {
+    color: #5295da;
+    text-decoration: none;
+}
+
+.about__text a:hover {
+    text-decoration: underline;
+}
+
+.about__stats {
+    flex: 1 1 300px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+.about__stat span {
+    display: block;
+    font-size: 28px;
+    font-weight: bold;
+    color: #5295da;
+}
+
+.about__stat p {
+    margin-top: 4px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+    .about__container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .about__stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

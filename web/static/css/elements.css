@@ -100,6 +100,7 @@
 .modal-actions {
     display: flex;
     justify-content: flex-end;
+    margin-top: 1vw;
     gap: 1rem;
 }
 
@@ -252,13 +253,14 @@
 }
 
 .btn-standard {
-    padding: .5rem;
+    padding: .5rem 1rem;
 }
 
 .btn-huge {
     padding: .8rem 2rem;
     border-radius: 15px;
     font-size: 1rem;
+    line-height: 150%;
 }
 
 .switch {
@@ -437,6 +439,9 @@ body.modal-open {
 
 
 .calculator-modal .results {
+    display: flex;
+    justify-content: space-between;
+
     margin-top: 1rem;
     font-size: 1.1rem;
     color: #1b7900;
