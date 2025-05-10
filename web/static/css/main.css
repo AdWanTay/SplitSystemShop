@@ -183,6 +183,11 @@ body {
     border-radius: 2rem;
 }
 
+.catalog__container {
+    display: flex;
+    gap: 2vw;
+}
+
 .products, .services {
     padding: 4rem 8vw;
 }

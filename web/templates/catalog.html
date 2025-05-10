@@ -1,19 +1,84 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Каталог сплит-систем | ClimateHome - Продаем и устанавливаем сплит-системы в Уфе</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/web/static/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/web/static/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/web/static/favicon/favicon-16x16.png">
     <link rel="manifest" href="/web/static/favicon/site.webmanifest">
 
-    <link rel="stylesheet" href="/web/static/css/main.css" />
-    <link rel="stylesheet" href="/web/static/css/elements.css" />
+    <link rel="stylesheet" href="/web/static/css/main.css"/>
+    <link rel="stylesheet" href="/web/static/css/elements.css"/>
 
     <script src="https://static.elfsight.com/platform/platform.js" async></script>
     <div class="elfsight-app-e4363121-2d4f-4914-8220-73508a36cd9e" data-elfsight-app-lazy></div>
+
+    <style>
+       aside {
+            max-width: 420px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            height: max-content;
+            overflow-y: auto;
+        }
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        .filter-group label.title {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333333;
+        }
+        .checkbox-button, .radio-button {
+            display: inline-block;
+            background: #f1f1f1;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            padding: 6px 10px;
+            margin: 4px 6px 4px 0;
+            cursor: pointer;
+            font-size: 14px;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+        .checkbox-button input, .radio-button input {
+            display: none;
+        }
+        .checkbox-button.checked, .radio-button.checked {
+            background: #5db0ff;
+            color: white;
+            border-color: #5db0ff;
+        }
+        select, input[type="range"], input[type="number"] {
+            width: 100%;
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid #dcdcdc;
+            font-size: 14px;
+            accent-color: #2989e5;
+        }
+        .filter-actions {
+            margin-top: 24px;
+        }
+        .btn-apply {
+            display: block;
+            width: 100%;
+            padding: 10px;
+        }
+        #area-range-label, #cooling-range-label {
+            font-size: .875rem;
+            padding: .3rem 1rem;
+            border: 1px solid #dcdcdc;
+            border-radius: 1000px;
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
 {{template "header" .}}
@@ -22,145 +87,376 @@
 
     <section class="catalog products">
         <h2>Каталог | Cплит-системы в Уфе</h2>
-        <div class="products__filters">
-            <label class="filter-radio">
-                <input type="radio" name="filter" value="option1" checked>
-                <span class="radio-label">Высокий рейтинг</span>
-            </label>
 
-            <label class="filter-radio">
-                <input type="radio" name="filter" value="option2">
-                <span class="radio-label">По возрастанию цены</span>
-            </label>
-
-            <label class="filter-radio">
-                <input type="radio" name="filter" value="option3">
-                <span class="radio-label">По убыванию цены</span>
-            </label>
-        </div>
-
-        <div class="products__grid">
-            <div class="product-card">
-                <div class="product-thumb">
-                    <button class="add-to-favorites">♡</button>
-                    <span class="product-price">{{"14 999"}} ₽</span>
-                    <img src="/web/static/img/primer.webp" class="product-img">
-                </div>
-                <div class="product-body">
-                    <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                    <div class="product-tags">
-                        <span>Сплит-система</span>
-                        <span>до 20 м²</span>
-                        <span>34 дБ</span>
+        <div class="catalog__container">
+            <aside>
+                 <div class="filter-group">
+                    <label class="title">Бренд</label>
+                    <div id="brand-checkboxes">
+                        <script>
+                            const brands = ["Tosot", "Lessar", "Midea", "Mitsubishi", "Ballu", "Samsung", "LG", "Panasonic", "Daikin", "Hitachi", "Dexp", "Centek", "Electrolux", "Haier", "TCL", "Aceline", "Bosch", "Daichi", "EcoClima", "Loriot", "Marsa", "Pioneer"];
+                            document.write(brands.map(b => `<label class='checkbox-button'><input type='checkbox' value='${b}'/>${b}</label>`).join(""));
+                        </script>
                     </div>
-                    <button class="add-to-cart">В корзину</button>
                 </div>
+
+                <div class="filter-group">
+                    <label class="title">Рекомендуемая площадь (м²)</label>
+                    <input type="range" min="0" max="5" step="1" value="0" id="area-range">
+                    <div style="text-align: center;"><span id="area-range-label"></span></div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="title">Мощность охлаждения (кВт)</label>
+                    <input type="range" min="0" max="4" step="1" value="0" id="power-range">
+                    <div style="text-align: center;"><span id="cooling-range-label"></span></div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="title">Тип сплит-системы</label>
+                    <div>
+                        <label class="checkbox-button"><input type="checkbox" value="Настенные"/>Настенные</label>
+                        <label class="checkbox-button"><input type="checkbox" value="Кассетные"/>Кассетные</label>
+                        <label class="checkbox-button"><input type="checkbox" value="Канальные"/>Канальные</label>
+                        <label class="checkbox-button"><input type="checkbox" value="Напольно-потолочные"/>Напольно-потолочные</label>
+                        <label class="checkbox-button"><input type="checkbox" value="Мультисплит-системы"/>Мультисплит-системы</label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="title">Цена (₽)</label>
+                    <div style="display: flex; gap: 1rem; margin-bottom: .5rem">
+                        <input type="number" placeholder="Цена от" id="price-from"/>
+                        <input type="number" placeholder="Цена до" id="price-to"/>
+                    </div>
+                    <div>
+                        <label class="radio-button"><input type="radio" name="cost" value="менее 15000"/>менее
+                            15000</label>
+                        <label class="radio-button"><input type="radio" name="cost"
+                                                           value="15001-20000"/>15001-20000</label>
+                        <label class="radio-button"><input type="radio" name="cost"
+                                                           value="20001-25000"/>20001-25000</label>
+                        <label class="radio-button"><input type="radio" name="cost"
+                                                           value="25001-35000"/>25001-35000</label>
+                        <label class="radio-button"><input type="radio" name="cost"
+                                                           value="35001-45000"/>35001-45000</label>
+                        <label class="radio-button"><input type="radio" name="cost" value="более 45001"/>более
+                            45001</label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="title">Инвертор</label>
+                    <div>
+                        <label class="radio-button"><input type="radio" name="inverter" value="Есть"/>Есть</label>
+                        <label class="radio-button"><input type="radio" name="inverter" value="Нет"/>Нет</label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="title">Мин. уровень шума (дБ)</label>
+                    <select>
+                        <option>менее 20</option>
+                        <option>20-24,9</option>
+                        <option>25-29,9</option>
+                        <option>30-39,9</option>
+                        <option>40 и более</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="title">Макс. уровень шума (дБ)</label>
+                    <select>
+                        <option>менее 29,9</option>
+                        <option>30-34,9</option>
+                        <option>35-39,9</option>
+                        <option>40-44,9</option>
+                        <option>45-49,9</option>
+                        <option>50 и более</option>
+                    </select>
+                </div>
+
+                <div id="extra-filters">
+                    <div class="filter-group">
+                        <label class="title">Основные режимы</label>
+                        <div>
+                            <label class="checkbox-button"><input type="checkbox" value="Охлаждение"/>Охлаждение</label>
+                            <label class="checkbox-button"><input type="checkbox" value="Обогрев"/>Обогрев</label>
+                            <label class="checkbox-button"><input type="checkbox" value="Осушение"/>Осушение</label>
+                            <label class="checkbox-button"><input type="checkbox" value="Вентиляция"/>Вентиляция</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="title">Класс энергопотребления (Охлаждение)</label>
+                        <select>
+                            <option>A+++</option>
+                            <option>A++</option>
+                            <option>A+</option>
+                            <option>A</option>
+                            <option>B</option>
+                            <option>C</option>
+                            <option>D</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="title">Класс энергопотребления (Обогрев)</label>
+                        <select>
+                            <option>A+++</option>
+                            <option>A++</option>
+                            <option>A+</option>
+                            <option>A</option>
+                            <option>B</option>
+                            <option>C</option>
+                            <option>D</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="title">Вес внешнего блока (кг)</label>
+                        <select>
+                            <option>Менее 24.99</option>
+                            <option>25 - 29.99</option>
+                            <option>30 - 39.99</option>
+                            <option>40 - 49.99</option>
+                            <option>50 - 59.99</option>
+                            <option>60 и более</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="title">Ширина внешнего блока (мм)</label>
+                        <select>
+                            <option>Менее 699</option>
+                            <option>700 - 799</option>
+                            <option>800 - 899</option>
+                            <option>900 - 999</option>
+                            <option>1 000 и более</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="title">Высота внешнего блока (мм)</label>
+                        <select>
+                            <option>Менее 449</option>
+                            <option>450 - 499</option>
+                            <option>500 - 549</option>
+                            <option>550 - 599</option>
+                            <option>600 - 649</option>
+                            <option>650 и более</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="title">Глубина внешнего блока (мм)</label>
+                        <select>
+                            <option>Менее 249</option>
+                            <option>250 - 299</option>
+                            <option>300 - 349</option>
+                            <option>350 - 449</option>
+                            <option>450 - 499</option>
+                            <option>500 и более</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="title">Глубина внутреннего блока (мм)</label>
+                        <select>
+                            <option>Менее 199</option>
+                            <option>199.1 - 249</option>
+                            <option>249.1 - 299</option>
+                            <option>299.1 - 499</option>
+                            <option>499.1 и более</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="title">Ширина внутреннего блока (мм)</label>
+                        <select>
+                            <option>Менее 499</option>
+                            <option>500 - 699</option>
+                            <option>700 - 799</option>
+                            <option>800 - 899</option>
+                            <option>900 - 1 199</option>
+                            <option>1 200 и более</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="title">Вес внутреннего блока (кг)</label>
+                        <select>
+                            <option>Менее 7.99</option>
+                            <option>8 - 9.99</option>
+                            <option>10 - 11.99</option>
+                            <option>12 - 14.99</option>
+                            <option>15 - 19.99</option>
+                            <option>20 и более</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="title">Высота внутреннего блока (мм)</label>
+                        <select>
+                            <option>Менее 199</option>
+                            <option>200 - 299</option>
+                            <option>300 - 399</option>
+                            <option>400 - 699</option>
+                            <option>700 и более</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="toggle-filters" class="btn-apply primary-btn" style="margin-top: 12px;">Все фильтры</button>
+
+                <div class="filter-actions">
+                    <button class="btn-apply accent-btn">Применить фильтры</button>
+                </div>
+            </aside>
+
+            <div class="products__container">
+                <div class="products__filters">
+                    <label class="filter-radio">
+                        <input type="radio" name="filter" value="option1" checked>
+                        <span class="radio-label">Высокий рейтинг</span>
+                    </label>
+
+                    <label class="filter-radio">
+                        <input type="radio" name="filter" value="option2">
+                        <span class="radio-label">По возрастанию цены</span>
+                    </label>
+
+                    <label class="filter-radio">
+                        <input type="radio" name="filter" value="option3">
+                        <span class="radio-label">По убыванию цены</span>
+                    </label>
+                </div>
+                <div class="products__grid">
+                    <div class="product-card">
+                        <div class="product-thumb">
+                            <button class="add-to-favorites">♡</button>
+                            <span class="product-price">{{"14 999"}} ₽</span>
+                            <img src="/web/static/img/primer.webp" class="product-img">
+                        </div>
+                        <div class="product-body">
+                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
+                            <div class="product-tags">
+                                <span>Сплит-система</span>
+                                <span>до 20 м²</span>
+                                <span>34 дБ</span>
+                            </div>
+                            <button class="add-to-cart">В корзину</button>
+                        </div>
+                    </div>
+
+
+                    <div class="product-card">
+                        <div class="product-thumb">
+                            <button class="add-to-favorites">♡</button>
+                            <span class="product-price">{{"14 999"}} ₽</span>
+                            <img src="/web/static/img/primer.webp" class="product-img">
+                        </div>
+                        <div class="product-body">
+                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
+                            <div class="product-tags">
+                                <span>Сплит-система</span>
+                                <span>до 20 м²</span>
+                                <span>34 дБ</span>
+                            </div>
+                            <button class="add-to-cart">В корзину</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-thumb">
+                            <button class="add-to-favorites">♡</button>
+                            <span class="product-price">{{"14 999"}} ₽</span>
+                            <img src="/web/static/img/primer.webp" class="product-img">
+                        </div>
+                        <div class="product-body">
+                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
+                            <div class="product-tags">
+                                <span>Сплит-система</span>
+                                <span>до 20 м²</span>
+                                <span>34 дБ</span>
+                            </div>
+                            <button class="add-to-cart">В корзину</button>
+                        </div>
+                    </div>
+
+
+                    <div class="product-card">
+                        <div class="product-thumb">
+                            <button class="add-to-favorites">♡</button>
+                            <span class="product-price">{{"14 999"}} ₽</span>
+                            <img src="/web/static/img/primer.webp" class="product-img">
+                        </div>
+                        <div class="product-body">
+                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
+                            <div class="product-tags">
+                                <span>Сплит-система</span>
+                                <span>до 20 м²</span>
+                                <span>34 дБ</span>
+                            </div>
+                            <button class="add-to-cart">В корзину</button>
+                        </div>
+                    </div>
+
+
+                    <div class="product-card">
+                        <div class="product-thumb">
+                            <button class="add-to-favorites">♡</button>
+                            <span class="product-price">{{"14 999"}} ₽</span>
+                            <img src="/web/static/img/primer.webp" class="product-img">
+                        </div>
+                        <div class="product-body">
+                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
+                            <div class="product-tags">
+                                <span>Сплит-система</span>
+                                <span>до 20 м²</span>
+                                <span>34 дБ</span>
+                            </div>
+                            <button class="add-to-cart">В корзину</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-thumb">
+                            <button class="add-to-favorites">♡</button>
+                            <span class="product-price">{{"14 999"}} ₽</span>
+                            <img src="/web/static/img/primer.webp" class="product-img">
+                        </div>
+                        <div class="product-body">
+                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
+                            <div class="product-tags">
+                                <span>Сплит-система</span>
+                                <span>до 20 м²</span>
+                                <span>34 дБ</span>
+                            </div>
+                            <button class="add-to-cart">В корзину</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-thumb">
+                            <button class="add-to-favorites">♡</button>
+                            <span class="product-price">{{"14 999"}} ₽</span>
+                            <img src="/web/static/img/primer.webp" class="product-img">
+                        </div>
+                        <div class="product-body">
+                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
+                            <div class="product-tags">
+                                <span>Сплит-система</span>
+                                <span>до 20 м²</span>
+                                <span>34 дБ</span>
+                            </div>
+                            <button class="add-to-cart">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-
-            <div class="product-card">
-                <div class="product-thumb">
-                    <button class="add-to-favorites">♡</button>
-                    <span class="product-price">{{"14 999"}} ₽</span>
-                    <img src="/web/static/img/primer.webp" class="product-img">
-                </div>
-                <div class="product-body">
-                    <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                    <div class="product-tags">
-                        <span>Сплит-система</span>
-                        <span>до 20 м²</span>
-                        <span>34 дБ</span>
-                    </div>
-                    <button class="add-to-cart">В корзину</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-thumb">
-                    <button class="add-to-favorites">♡</button>
-                    <span class="product-price">{{"14 999"}} ₽</span>
-                    <img src="/web/static/img/primer.webp" class="product-img">
-                </div>
-                <div class="product-body">
-                    <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                    <div class="product-tags">
-                        <span>Сплит-система</span>
-                        <span>до 20 м²</span>
-                        <span>34 дБ</span>
-                    </div>
-                    <button class="add-to-cart">В корзину</button>
-                </div>
-            </div>
-
-
-            <div class="product-card">
-                <div class="product-thumb">
-                    <button class="add-to-favorites">♡</button>
-                    <span class="product-price">{{"14 999"}} ₽</span>
-                    <img src="/web/static/img/primer.webp" class="product-img">
-                </div>
-                <div class="product-body">
-                    <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                    <div class="product-tags">
-                        <span>Сплит-система</span>
-                        <span>до 20 м²</span>
-                        <span>34 дБ</span>
-                    </div>
-                    <button class="add-to-cart">В корзину</button>
-                </div>
-            </div>
-
-
-            <div class="product-card">
-                <div class="product-thumb">
-                    <button class="add-to-favorites">♡</button>
-                    <span class="product-price">{{"14 999"}} ₽</span>
-                    <img src="/web/static/img/primer.webp" class="product-img">
-                </div>
-                <div class="product-body">
-                    <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                    <div class="product-tags">
-                        <span>Сплит-система</span>
-                        <span>до 20 м²</span>
-                        <span>34 дБ</span>
-                    </div>
-                    <button class="add-to-cart">В корзину</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-thumb">
-                    <button class="add-to-favorites">♡</button>
-                    <span class="product-price">{{"14 999"}} ₽</span>
-                    <img src="/web/static/img/primer.webp" class="product-img">
-                </div>
-                <div class="product-body">
-                    <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                    <div class="product-tags">
-                        <span>Сплит-система</span>
-                        <span>до 20 м²</span>
-                        <span>34 дБ</span>
-                    </div>
-                    <button class="add-to-cart">В корзину</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-thumb">
-                    <button class="add-to-favorites">♡</button>
-                    <span class="product-price">{{"14 999"}} ₽</span>
-                    <img src="/web/static/img/primer.webp" class="product-img">
-                </div>
-                <div class="product-body">
-                    <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                    <div class="product-tags">
-                        <span>Сплит-система</span>
-                        <span>до 20 м²</span>
-                        <span>34 дБ</span>
-                    </div>
-                    <button class="add-to-cart">В корзину</button>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -173,6 +469,92 @@
 </main>
 
 {{template "footer" .}}}
+
+<script>
+    const toggleBtn = document.getElementById('toggle-filters');
+    const extraFilters = document.getElementById('extra-filters');
+    let isVisible = false;
+
+    extraFilters.style.display = 'none';
+
+    toggleBtn.addEventListener('click', () => {
+        isVisible = !isVisible;
+        extraFilters.style.display = isVisible ? 'block' : 'none';
+        toggleBtn.textContent = isVisible ? 'Скрыть фильтры' : 'Все фильтры';
+    });
+</script>
+
+
+<script>
+    const areaLabels = [
+        "менее 24",
+        "24,1–29",
+        "29,1–34",
+        "34,1–49",
+        "49,1–69",
+        "69,1 и более"
+    ];
+    const powerLabels = [
+        "2,0–2,2 кВт",
+        "2,5–2,7 кВт",
+        "3,5 кВт",
+        "5–5,2 кВт",
+        "7 кВт"
+    ];
+
+    const areaRange = document.getElementById("area-range");
+    const areaLabel = document.getElementById("area-range-label");
+    const powerRange = document.getElementById("power-range");
+    const powerLabel = document.getElementById("cooling-range-label");
+
+    areaLabel.textContent = areaLabels[areaRange.value];
+    powerLabel.textContent = powerLabels[powerRange.value];
+
+    areaRange.addEventListener("input", () => {
+        areaLabel.textContent = areaLabels[areaRange.value];
+    });
+
+    powerRange.addEventListener("input", () => {
+        powerLabel.textContent = powerLabels[powerRange.value];
+    });
+
+    // Радиокнопки: визуальное выделение при выборе
+    document.querySelectorAll(".radio-button input").forEach(input => {
+        input.addEventListener("change", () => {
+            const name = input.name;
+            document.querySelectorAll(`.radio-button input[name="${name}"]`).forEach(el => {
+                el.parentElement.classList.remove("checked");
+            });
+            input.parentElement.classList.add("checked");
+        });
+    });
+
+    // Чекбоксы: визуальное выделение при выборе
+    document.querySelectorAll(".checkbox-button input").forEach(input => {
+        input.addEventListener("change", () => {
+            input.parentElement.classList.toggle("checked", input.checked);
+        });
+    });
+</script>
+
+
+<script>
+    document.querySelectorAll('.checkbox-button').forEach(label => {
+        const input = label.querySelector('input');
+        label.addEventListener('click', () => {
+            input.checked = !input.checked;
+            label.classList.toggle('checked', input.checked);
+        });
+    });
+
+    // Cooling Capacity Range
+    const coolingRange = document.getElementById('cooling-capacity-range');
+    const coolingLabel = document.getElementById('cooling-capacity-label');
+    coolingRange.addEventListener('input', () => {
+        const values = ['2,0–2,2 кВт', '2,5-2,7 квт', '3,5 квт', '5-5,2 квт', '7 квт'];
+        coolingLabel.textContent = values[coolingRange.value - 1];
+    });
+</script>
 
 </body>
 </html>
