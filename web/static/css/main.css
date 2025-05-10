@@ -320,6 +320,11 @@ body {
     background: #5295da;
 }
 
+.add-to-cart.active:hover {
+    background: #5db0ff;
+    color: white;
+}
+
 .add-to-favorites {
     position: absolute;
     top: 0.5rem;
