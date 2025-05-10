@@ -309,6 +309,12 @@ body {
     transition: 0.3s;
 }
 
+.add-to-cart.active {
+    background: none;
+    border: 1px solid #5db0ff;
+    color: #5db0ff;
+}
+
 .add-to-cart:hover {
     background: #5295da;
 }
