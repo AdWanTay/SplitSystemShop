@@ -1,0 +1,86 @@
+.blog {
+    margin: 2vw 8vw;
+}
+
+.blog h2 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.blog-card-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.blog-card {
+    width: 100%;
+    max-width: 300px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.blog-card-image {
+    background-color: #eeeeee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    overflow: hidden;
+}
+
+.blog-card-image:hover img {
+    scale: 1.05;
+}
+
+.blog-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .6s ease;
+}
+
+.blog-card-content {
+    padding: 16px;
+    text-align: left;
+}
+
+.blog-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.blog-card-description {
+    font-size: 0.95rem;
+    color: #666;
+    margin-top: 8px;
+}
+
+.blog-card-action {
+    margin: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.blog-card-action button {
+    width: 100%;
+    padding: 10px;
+    background: #5db0ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.blog-card-action button:hover {
+    background: #5295da;
+}

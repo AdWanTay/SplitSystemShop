@@ -23,6 +23,8 @@
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.15);
     margin: auto; /* Центрирование по вертикали */
+    transform: translateY(2vw);
+    z-index: 1003;
 }
 
 .modal-close {
@@ -393,19 +395,23 @@ body.modal-open {
 }
 
 .cooling-calculator {
-    font-size: 0.95rem;
+    font-size: 0.875rem;
     margin: 0 auto;
 }
 
 .calculator-modal .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
 }
 
 .calculator-modal .form-group {
     display: flex;
     flex-direction: column;
+}
+
+.calculator-modal .form-group.checkbox {
+    justify-content: center;
 }
 
 .calculator-modal .form-group.checkbox label {
@@ -421,6 +427,14 @@ body.modal-open {
     border-radius: .5rem;
     border: 1px solid #dcdcdc;
 }
+
+.calculator-modal .form-group input:focus,
+.calculator-modal .form-group input:active,
+.calculator-modal .form-group select:focus,
+.calculator-modal .form-group select:active {
+    outline: 2px solid #5db0ff;
+}
+
 
 .calculator-modal .results {
     margin-top: 1rem;

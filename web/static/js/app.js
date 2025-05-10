@@ -103,7 +103,9 @@ function openCartModal() {
 
             //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
             modalContainer.addEventListener("click", (e) => {
-                closeAllModals();
+                if (e.target.classList.contains("modal")) {
+                    closeAllModals();
+                }
             });
         });
 }
@@ -121,7 +123,9 @@ function openCalculator() {
             // реалиция
 
             modalContainer.addEventListener("click", (e) => {
-                closeAllModals();
+                if (e.target.classList.contains("modal")) {
+                    closeAllModals();
+                }
             });
             addAuthListener(type, modalContainer)
         });
@@ -163,7 +167,9 @@ function openAuthModal(type) {
 
             //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
             modalContainer.addEventListener("click", (e) => {
-                closeAllModals();
+                if (e.target.classList.contains("modal")) {
+                    closeAllModals();
+                }
             });
             addAuthListener(type, modalContainer)
         });
