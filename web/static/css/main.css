@@ -194,32 +194,33 @@ body {
 }
 .products__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20vw, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(18vw, 1fr));
+    gap: 2vw;
 }
 
 .products__grid.cart {
     position: relative;
     grid-template-columns: repeat(3, minmax(10vw, 1fr));
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .product-card {
     display: flex;
     position: relative;
     flex-direction: column;
-    border: 2px solid transparent;
+    border: 1px solid #dcdcdc;
+    outline: 2px solid transparent;
     overflow: hidden;
     border-radius: 1rem;
     background: #f8f8f7;
     transition: 0.3s;
     cursor: pointer;
-    outline: none;
 }
 
 .product-card:focus,
 .product-card:hover {
-    border-color: #2196f3;
+    outline-color: #2196f3;
+    border: 1px solid transparent;
     color: #000;
 }
 
@@ -753,6 +754,85 @@ input[type=checkbox]:checked::after {
 
 
 
+
+
+
+#services {
+    padding: 0 8vw;
+    margin-top: 4vw;
+    margin-bottom: 2vw;
+}
+
+#services h2 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.services-card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.services-card {
+    position: relative;
+    width: 100%;
+    background-color: #5db0ff;
+    color: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #dcdcdc;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.services-card-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+    overflow: hidden;
+}
+
+.services-card-image:hover img {
+    scale: 1.05;
+}
+
+.services-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .6s ease;
+}
+
+.services-card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    text-align: left;
+}
+
+.services-card-title {
+    font-size: 1rem;
+    font-weight: normal;
+    margin: 0;
+}
+
+.arrow-right {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+    width: 1.5rem;
+    transition: .3s ease;
+}
+
+.services-card:hover .arrow-right {
+    visibility: visible;
+    transform: translateX(0px);;
+    opacity: 1;
+}
 
 
 
