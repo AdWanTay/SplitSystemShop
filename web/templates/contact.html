@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="/web/static/css/main.css" />
     <link rel="stylesheet" href="/web/static/css/elements.css" />
+    <link rel="stylesheet" href="/web/static/css/contact.css" />
 
     <script src="https://static.elfsight.com/platform/platform.js" async></script>
     <div class="elfsight-app-e4363121-2d4f-4914-8220-73508a36cd9e" data-elfsight-app-lazy></div>
@@ -19,6 +20,66 @@
 {{template "header" .}}
 
 <main class="main">
+
+    <section class="contact-info">
+        <h2>Контактная информация</h2>
+        <div class="contact__container">
+            <div class="contact__content">
+                <div class="contact-card">
+                    <h3 class="contact-card-title">Компания</h3>
+                    <img style="width: 80%; object-fit: cover" src="/web/static/img/logo.png" alt="">
+                    <a href="https://climatehome.online/" style="font-size: 0.875rem">www.climatehome.online</a>
+                </div>
+                <div class="contact-card">
+                    <h3 class="contact-card-title">Услуги</h3>
+                    <p><svg viewBox="0 0 32 32"><use xlink:href="/web/static/icons/iconpack.svg#icon-delivery"></use></svg> Доставка</p>
+                    <p><svg viewBox="0 0 420 420"><use xlink:href="/web/static/icons/iconpack.svg#icon-spanner"></use></svg> Монтаж</p>
+                    <p><svg viewBox="0 0 24 24"><use xlink:href="/web/static/icons/iconpack.svg#icon-pen"></use></svg> Проектирование</p>
+                    <p><svg viewBox="0 0 24 24"><use xlink:href="/web/static/icons/iconpack.svg#icon-settings"></use></svg> Обслуживание</p>
+                </div>
+                <div class="contact-card">
+                    <h3 class="contact-card-title">Контакты</h3>
+                    <a href="tel:89998002001">+7 (999) 800-20-01</a>
+                    <a href="mailto:info@climatehome.online">info@climatehome.online</a>
+                    <a href="mailto:admin@climatehome.online">admin@climatehome.online</a>
+                </div>
+                <div class="contact-card">
+                    <h3 class="contact-card-title">Адрес</h3>
+                    <p>Респ. Башкортостан, г. Уфа</p>
+                </div>
+            </div>
+
+            <div style="position:relative;overflow:hidden; height: 55vh; border-radius: 1rem; flex: 1; border: 1px solid #dcdcdc;">
+                <iframe style="height: 100%; width: 100%" src="https://yandex.ru/map-widget/v1/?ll=56.037968%2C54.731079&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgg1MzEwNTMwORJD0KDQvtGB0YHQuNGPLCDQoNC10YHQv9GD0LHQu9C40LrQsCDQkdCw0YjQutC-0YDRgtC-0YHRgtCw0L0sINCj0YTQsCIKDb7VX0IVy_BaQg%2C%2C&source=serp_navig&z=10" frameborder="0" allowfullscreen="true" style="position:relative;">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about__container">
+            <div class="about__content">
+                <h2 class="about__title">О компании ClimateHome</h2>
+                <p class="about__text">
+                    С 2022 года ClimateHome занимается продажей, установкой и обслуживанием сплит-систем по всему региону.
+                    Среди наших клиентов – частные домовладельцы, отели, офисы и строительные организации. Мы успешно реализовали
+                    более 100 проектов различной сложности и масштаба.
+                </p>
+                <p class="about__text">
+                    Наша цель — обеспечить комфортный микроклимат в каждом доме. Мы работаем только с сертифицированной техникой,
+                    используем проверенные материалы и гарантируем надёжность систем на долгие годы. Наша команда – это опытные
+                    специалисты, готовые к любым задачам.
+                    <a href="/contact">Подробнее</a>
+                </p>
+            </div>
+            <div class="about__stats">
+                <div class="about__stat"><span>&gt;100</span><p>Установленных систем</p></div>
+                <div class="about__stat"><span>&gt;5</span><p>Профессиональных монтажников</p></div>
+                <div class="about__stat"><span>&gt;2 года</span><p>Опыт работы в сфере климата</p></div>
+                <div class="about__stat"><span>&gt;100</span><p>Долгосрочных клиентов</p></div>
+            </div>
+        </div>
+    </section>
 
     {{template "contact-form" .}}
 
