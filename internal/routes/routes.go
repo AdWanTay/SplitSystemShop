@@ -45,7 +45,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Get("/admin", handlers.AdminPage(cfg))
 	app.Get("/article", handlers.ArticlePage(cfg))
 	app.Get("/cart", handlers.CartPage(cfg))
-	app.Get("/catalog", handlers.CatalogPage(cfg))
+	app.Get("/catalog", handlers.CatalogPage(cfg, ctx))
 	app.Get("/contact", handlers.ContactPage(cfg))
 	app.Get("/products", handlers.ProductPage(cfg))
 	app.Get("/profile", handlers.ProfilePage(cfg))

@@ -16,7 +16,7 @@
     <div class="elfsight-app-e4363121-2d4f-4914-8220-73508a36cd9e" data-elfsight-app-lazy></div>
 
     <style>
-       aside {
+        aside {
             max-width: 420px;
             background: #ffffff;
             border-radius: 16px;
@@ -25,9 +25,11 @@
             height: max-content;
             overflow-y: auto;
         }
+
         .filter-group {
             margin-bottom: 20px;
         }
+
         .filter-group label.title {
             display: block;
             margin-bottom: 8px;
@@ -35,6 +37,7 @@
             font-weight: bold;
             color: #333333;
         }
+
         .checkbox-button, .radio-button {
             display: inline-block;
             background: #f1f1f1;
@@ -47,14 +50,17 @@
             user-select: none;
             transition: all 0.2s ease;
         }
+
         .checkbox-button input, .radio-button input {
             display: none;
         }
+
         .checkbox-button.checked, .radio-button.checked {
             background: #5db0ff;
             color: white;
             border-color: #5db0ff;
         }
+
         select, input[type="range"], input[type="number"] {
             width: 100%;
             padding: 6px;
@@ -63,14 +69,17 @@
             font-size: 14px;
             accent-color: #2989e5;
         }
+
         .filter-actions {
             margin-top: 24px;
         }
+
         .btn-apply {
             display: block;
             width: 100%;
             padding: 10px;
         }
+
         #area-range-label, #cooling-range-label {
             font-size: .875rem;
             padding: .3rem 1rem;
@@ -90,13 +99,12 @@
 
         <div class="catalog__container">
             <aside>
-                 <div class="filter-group">
+                <div class="filter-group">
                     <label class="title">Бренд</label>
                     <div id="brand-checkboxes">
-                        <script>
-                            const brands = ["Tosot", "Lessar", "Midea", "Mitsubishi", "Ballu", "Samsung", "LG", "Panasonic", "Daikin", "Hitachi", "Dexp", "Centek", "Electrolux", "Haier", "TCL", "Aceline", "Bosch", "Daichi", "EcoClima", "Loriot", "Marsa", "Pioneer"];
-                            document.write(brands.map(b => `<label class='checkbox-button'><input type='checkbox' value='${b}'/>${b}</label>`).join(""));
-                        </script>
+                        {{ range .brands }}
+                        <label class='checkbox-button'><input type='checkbox' value='{{.ID}}'/>{{.Name}}</label>
+                        {{ end }}
                     </div>
                 </div>
 
@@ -115,11 +123,9 @@
                 <div class="filter-group">
                     <label class="title">Тип сплит-системы</label>
                     <div>
-                        <label class="checkbox-button"><input type="checkbox" value="Настенные"/>Настенные</label>
-                        <label class="checkbox-button"><input type="checkbox" value="Кассетные"/>Кассетные</label>
-                        <label class="checkbox-button"><input type="checkbox" value="Канальные"/>Канальные</label>
-                        <label class="checkbox-button"><input type="checkbox" value="Напольно-потолочные"/>Напольно-потолочные</label>
-                        <label class="checkbox-button"><input type="checkbox" value="Мультисплит-системы"/>Мультисплит-системы</label>
+                        {{ range .types }}
+                        <label class="checkbox-button"><input type="checkbox" value="{{.ID}}"/>{{.Name}}</label>
+                        {{end}}
                     </div>
                 </div>
 
@@ -148,8 +154,8 @@
                 <div class="filter-group">
                     <label class="title">Инвертор</label>
                     <div>
-                        <label class="radio-button"><input type="radio" name="inverter" value="Есть"/>Есть</label>
-                        <label class="radio-button"><input type="radio" name="inverter" value="Нет"/>Нет</label>
+                        <label class="radio-button"><input type="radio" name="inverter" value="1"/>Есть</label>
+                        <label class="radio-button"><input type="radio" name="inverter" value="0"/>Нет</label>
                     </div>
                 </div>
 
@@ -180,10 +186,9 @@
                     <div class="filter-group">
                         <label class="title">Основные режимы</label>
                         <div>
-                            <label class="checkbox-button"><input type="checkbox" value="Охлаждение"/>Охлаждение</label>
-                            <label class="checkbox-button"><input type="checkbox" value="Обогрев"/>Обогрев</label>
-                            <label class="checkbox-button"><input type="checkbox" value="Осушение"/>Осушение</label>
-                            <label class="checkbox-button"><input type="checkbox" value="Вентиляция"/>Вентиляция</label>
+                            {{ range .modes }}
+                            <label class="checkbox-button"><input type="checkbox" value="{{.ID}}"/>{{.Name}}</label>
+                            {{end}}
                         </div>
                     </div>
 

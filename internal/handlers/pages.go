@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"SplitSystemShop/internal/config"
+	"SplitSystemShop/internal/context"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -51,9 +52,19 @@ func CartPage(cfg *config.Config) fiber.Handler {
 	}
 }
 
-func CatalogPage(cfg *config.Config) fiber.Handler {
+func CatalogPage(cfg *config.Config, ctx *context.AppContext) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "catalog", fiber.Map{}, cfg)
+		brands, err := ctx.BrandService.GetAll(c.Context())
+		types, err := ctx.TypeService.GetAll(c.Context())
+		modes, err := ctx.ModeService.GetAll(c.Context())
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
+		}
+
+		return Render(c, "catalog", fiber.Map{"brands": brands,
+			"types": types,
+			"modes": modes,
+		}, cfg)
 	}
 }
 
