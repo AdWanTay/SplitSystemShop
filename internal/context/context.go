@@ -14,6 +14,7 @@ type AppContext struct {
 	BrandService       *services.BrandService
 	TypeService        *services.TypeService
 	ModeService        *services.ModeService
+	EnergyClassService *services.EnergyClassService
 }
 
 func InitServices(db *gorm.DB) *AppContext {
@@ -24,6 +25,7 @@ func InitServices(db *gorm.DB) *AppContext {
 	brandRepo := repositories.NewBrandRepository(db)
 	typeRepo := repositories.NewTypeRepository(db)
 	modeRepo := repositories.NewModeRepository(db)
+	energyClassRepo := repositories.NewEnergyClassRepository(db)
 
 	return &AppContext{
 		UserService:        services.NewUserService(userRepo),
@@ -33,5 +35,6 @@ func InitServices(db *gorm.DB) *AppContext {
 		BrandService:       services.NewBrandService(brandRepo),
 		TypeService:        services.NewTypeService(typeRepo),
 		ModeService:        services.NewModeService(modeRepo),
+		EnergyClassService: services.NewEnergyClassService(energyClassRepo),
 	}
 }

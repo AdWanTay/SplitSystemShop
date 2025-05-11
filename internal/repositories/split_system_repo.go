@@ -8,7 +8,7 @@ import (
 
 type SplitSystemRepository interface {
 	GetSplitSystem(c context.Context, systemID uint) (*models.SplitSystem, error)
-	GetAllSplitSystems(c context.Context) (*[]models.SplitSystem, error)
+	GetAllSplitSystems(c context.Context) ([]models.SplitSystem, error)
 	DeleteSplitSystem(c context.Context, systemID uint) error
 }
 
@@ -20,7 +20,7 @@ func NewSplitSystemRepository(db *gorm.DB) SplitSystemRepository {
 	return &splitSystemRepository{db: db}
 }
 
-func (r splitSystemRepository) GetAllSplitSystems(c context.Context) (*[]models.SplitSystem, error) {
+func (r splitSystemRepository) GetAllSplitSystems(c context.Context) ([]models.SplitSystem, error) {
 	var splitSystems []models.SplitSystem
 	err := r.db.WithContext(c).
 		Preload("Brand").
@@ -32,7 +32,7 @@ func (r splitSystemRepository) GetAllSplitSystems(c context.Context) (*[]models.
 		return nil, err
 	}
 
-	return &splitSystems, nil
+	return splitSystems, nil
 
 }
 

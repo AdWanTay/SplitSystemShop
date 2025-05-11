@@ -18,7 +18,7 @@ func (s *SplitSystemService) GetSplitSystem(c context.Context, id uint) (*models
 	return s.repo.GetSplitSystem(c, id)
 }
 
-func (s *SplitSystemService) GetAllSplitSystems(c context.Context) (*[]models.SplitSystem, error) {
+func (s *SplitSystemService) GetAllSplitSystems(c context.Context) ([]models.SplitSystem, error) {
 	return s.repo.GetAllSplitSystems(c)
 }
 

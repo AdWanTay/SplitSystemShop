@@ -57,13 +57,15 @@ func CatalogPage(cfg *config.Config, ctx *context.AppContext) fiber.Handler {
 		brands, err := ctx.BrandService.GetAll(c.Context())
 		types, err := ctx.TypeService.GetAll(c.Context())
 		modes, err := ctx.ModeService.GetAll(c.Context())
+		energyClasses, err := ctx.EnergyClassService.GetAll(c.Context())
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
 
 		return Render(c, "catalog", fiber.Map{"brands": brands,
-			"types": types,
-			"modes": modes,
+			"types":          types,
+			"modes":          modes,
+			"energy_classes": energyClasses,
 		}, cfg)
 	}
 }

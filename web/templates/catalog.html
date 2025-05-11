@@ -195,26 +195,18 @@
                     <div class="filter-group">
                         <label class="title">Класс энергопотребления (Охлаждение)</label>
                         <select>
-                            <option>A+++</option>
-                            <option>A++</option>
-                            <option>A+</option>
-                            <option>A</option>
-                            <option>B</option>
-                            <option>C</option>
-                            <option>D</option>
+                            {{ range .energy_classes }}
+                            <option value="{{.ID}}">{{.Name}}</option>
+                            {{ end }}
                         </select>
                     </div>
 
                     <div class="filter-group">
                         <label class="title">Класс энергопотребления (Обогрев)</label>
                         <select>
-                            <option>A+++</option>
-                            <option>A++</option>
-                            <option>A+</option>
-                            <option>A</option>
-                            <option>B</option>
-                            <option>C</option>
-                            <option>D</option>
+                            {{ range .energy_classes }}
+                            <option value="{{.ID}}">{{.Name}}</option>
+                            {{ end }}
                         </select>
                     </div>
 

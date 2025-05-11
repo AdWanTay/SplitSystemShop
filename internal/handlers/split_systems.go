@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"SplitSystemShop/internal/dto"
+	"SplitSystemShop/internal/models"
 	"SplitSystemShop/internal/services"
 	"github.com/gofiber/fiber/v2"
 	"strconv"
@@ -25,15 +27,22 @@ func GetSplitSystem(service *services.SplitSystemService) fiber.Handler {
 	}
 }
 
-func GetAllSplitSystems(service *services.SplitSystemService) fiber.Handler {
+func GetAllSplitSystems(splitSystemService *services.SplitSystemService, userService *services.UserService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		splitSystems, err := service.GetAllSplitSystems(c.Context())
+		splitSystems, err := splitSystemService.GetAllSplitSystems(c.Context())
+		userID := c.Locals("userId")
+		var cart []models.SplitSystem
+		if userID != nil {
+			cart, err = userService.GetCart(c.Context(), userID.(uint))
+		}
+
+		response := dto.CatalogResponse{}
+		response.New(cart, splitSystems)
+
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "Ошибка получения товаров"})
 		}
-		return c.Status(fiber.StatusOK).JSON(fiber.Map{
-			"items": splitSystems,
-		})
+		return c.Status(fiber.StatusOK).JSON(response)
 	}
 }
 

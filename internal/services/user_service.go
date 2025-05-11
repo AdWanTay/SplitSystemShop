@@ -101,7 +101,11 @@ func (s *UserService) ChangeCredentials(c context.Context, userID uint, newCrede
 	return s.repo.Update(c, user)
 }
 
-func (s *UserService) GetFavorites(c context.Context, userID uint) (*[]models.SplitSystem, error) {
+func (s *UserService) GetFavorites(c context.Context, userID uint) ([]models.SplitSystem, error) {
+	return s.repo.GetFavorites(c, userID)
+}
+
+func (s *UserService) GetCart(c context.Context, userID uint) ([]models.SplitSystem, error) {
 	return s.repo.GetFavorites(c, userID)
 }
 
