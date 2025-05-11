@@ -1,6 +1,6 @@
 package models
 
 type EnergyClass struct {
-	ID   uint   `gorm:"primaryKey"`
-	Name string `gorm:"unique"`
+	ID   uint   `gorm:"primaryKey" json:"id"`
+	Name string `gorm:"unique" json:"name"`
 }
