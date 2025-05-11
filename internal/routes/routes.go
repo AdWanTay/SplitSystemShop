@@ -24,9 +24,9 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Patch("/api/auth/profile", middlewares.RequireAuth(cfg, false), handlers.ChangeCredentials(ctx.UserService))
 	app.Patch("/api/auth/change-password", middlewares.RequireAuth(cfg, false), handlers.ChangePassword(ctx.UserService))
 
-	app.Get("/api/split-system/:id", middlewares.RequireAuth(cfg, false), handlers.GetSplitSystem(ctx.SplitSystemService))
-	app.Get("/api/split-system", middlewares.RequireAuth(cfg, false), handlers.GetAllSplitSystems(ctx.SplitSystemService))
-	app.Delete("/api/split-system/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.DeleteSplitSystem(ctx.SplitSystemService))
+	app.Get("/api/split-systems/:id", middlewares.RequireAuth(cfg, false), handlers.GetSplitSystem(ctx.SplitSystemService))
+	app.Get("/api/split-systems", middlewares.RequireAuth(cfg, true), handlers.GetAllSplitSystems(ctx.SplitSystemService, ctx.UserService))
+	app.Delete("/api/split-systems/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.DeleteSplitSystem(ctx.SplitSystemService))
 
 	app.Get("/api/favorites", middlewares.RequireAuth(cfg, false), handlers.GetFavorites(ctx.FavoritesService))
 	app.Delete("/api/favorites/:id", middlewares.RequireAuth(cfg, false), handlers.DeleteFavoritesItem(ctx.FavoritesService))
