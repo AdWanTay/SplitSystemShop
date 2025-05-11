@@ -122,7 +122,7 @@
 
                 <div class="filter-group">
                     <label class="title">Тип сплит-системы</label>
-                    <div>
+                    <div id="type-checkboxes">
                         {{ range .types }}
                         <label class="checkbox-button"><input type="checkbox" value="{{.ID}}"/>{{.Name}}</label>
                         {{end}}
@@ -162,23 +162,25 @@
                 <div class="filter-group">
                     <label class="title">Мин. уровень шума (дБ)</label>
                     <select>
-                        <option>менее 20</option>
-                        <option>20-24,9</option>
-                        <option>25-29,9</option>
-                        <option>30-39,9</option>
-                        <option>40 и более</option>
+                        <option value="">-- выберите значение --</option>
+                        <option value="0-20">менее 20</option>
+                        <option value="20-24,9">20-24,9</option>
+                        <option value="25-29,9">25-29,9</option>
+                        <option value="30-39,9">30-39,9</option>
+                        <option value="40-10000">40 и более</option>
                     </select>
                 </div>
 
                 <div class="filter-group">
                     <label class="title">Макс. уровень шума (дБ)</label>
                     <select>
-                        <option>менее 29,9</option>
-                        <option>30-34,9</option>
-                        <option>35-39,9</option>
-                        <option>40-44,9</option>
-                        <option>45-49,9</option>
-                        <option>50 и более</option>
+                        <option value="">-- выберите значение --</option>
+                        <option value="0-29,9">менее 29,9</option>
+                        <option value="30-34,9">30-34,9</option>
+                        <option value="35-39,9">35-39,9</option>
+                        <option value="40-44,9">40-44,9</option>
+                        <option value="45-49,9">45-49,9</option>
+                        <option value="50-10000">50 и более</option>
                     </select>
                 </div>
 
@@ -195,6 +197,7 @@
                     <div class="filter-group">
                         <label class="title">Класс энергопотребления (Охлаждение)</label>
                         <select>
+                            <option value="">-- выберите значение --</option>
                             {{ range .energy_classes }}
                             <option value="{{.ID}}">{{.Name}}</option>
                             {{ end }}
@@ -204,6 +207,7 @@
                     <div class="filter-group">
                         <label class="title">Класс энергопотребления (Обогрев)</label>
                         <select>
+                            <option value="">-- выберите значение --</option>
                             {{ range .energy_classes }}
                             <option value="{{.ID}}">{{.Name}}</option>
                             {{ end }}
@@ -213,100 +217,108 @@
                     <div class="filter-group">
                         <label class="title">Вес внешнего блока (кг)</label>
                         <select>
-                            <option>Менее 24.99</option>
-                            <option>25 - 29.99</option>
-                            <option>30 - 39.99</option>
-                            <option>40 - 49.99</option>
-                            <option>50 - 59.99</option>
-                            <option>60 и более</option>
+                            <option value="">-- выберите значение --</option>
+                            <option value="0-24,99">Менее 24,99</option>
+                            <option value="25-29,99">25 - 29,99</option>
+                            <option value="30-39,99">30 - 39,99</option>
+                            <option value="40-49,99">40 - 49,99</option>
+                            <option value="50-59,99">50 - 59,99</option>
+                            <option value="60-10000">60 и более</option>
                         </select>
                     </div>
 
                     <div class="filter-group">
                         <label class="title">Ширина внешнего блока (мм)</label>
                         <select>
-                            <option>Менее 699</option>
-                            <option>700 - 799</option>
-                            <option>800 - 899</option>
-                            <option>900 - 999</option>
-                            <option>1 000 и более</option>
+                            <option value="">-- выберите значение --</option>
+                            <option value="0-699">Менее 699</option>
+                            <option value="700-799">700 - 799</option>
+                            <option value="800-899">800 - 899</option>
+                            <option value="900-999">900 - 999</option>
+                            <option value="1000-10000">1 000 и более</option>
                         </select>
                     </div>
 
                     <div class="filter-group">
                         <label class="title">Высота внешнего блока (мм)</label>
                         <select>
-                            <option>Менее 449</option>
-                            <option>450 - 499</option>
-                            <option>500 - 549</option>
-                            <option>550 - 599</option>
-                            <option>600 - 649</option>
-                            <option>650 и более</option>
+                            <option value="">-- выберите значение --</option>
+                            <option value="0-499">Менее 449</option>
+                            <option value="450-499">450 - 499</option>
+                            <option value="500-549">500 - 549</option>
+                            <option value="550-599">550 - 599</option>
+                            <option value="600-649">600 - 649</option>
+                            <option value="650-10000">650 и более</option>
                         </select>
                     </div>
 
                     <div class="filter-group">
                         <label class="title">Глубина внешнего блока (мм)</label>
                         <select>
-                            <option>Менее 249</option>
-                            <option>250 - 299</option>
-                            <option>300 - 349</option>
-                            <option>350 - 449</option>
-                            <option>450 - 499</option>
-                            <option>500 и более</option>
+                            <option value="">-- выберите значение --</option>
+                            <option value="0-249">Менее 249</option>
+                            <option value="250-299">250 - 299</option>
+                            <option value="300-349">300 - 349</option>
+                            <option value="350-449">350 - 449</option>
+                            <option value="450-499">450 - 499</option>
+                            <option value="500-10000">500 и более</option>
                         </select>
                     </div>
 
                     <div class="filter-group">
                         <label class="title">Глубина внутреннего блока (мм)</label>
                         <select>
-                            <option>Менее 199</option>
-                            <option>199.1 - 249</option>
-                            <option>249.1 - 299</option>
-                            <option>299.1 - 499</option>
-                            <option>499.1 и более</option>
+                            <option value="">-- выберите значение --</option>
+                            <option value="0-199">Менее 199</option>
+                            <option value="199,1 - 249">199.1 - 249</option>
+                            <option value="249,1 - 299">249.1 - 299</option>
+                            <option value="299,1 - 499">299.1 - 499</option>
+                            <option value="499,1-10000">499.1 и более</option>
                         </select>
                     </div>
 
                     <div class="filter-group">
                         <label class="title">Ширина внутреннего блока (мм)</label>
                         <select>
-                            <option>Менее 499</option>
-                            <option>500 - 699</option>
-                            <option>700 - 799</option>
-                            <option>800 - 899</option>
-                            <option>900 - 1 199</option>
-                            <option>1 200 и более</option>
+                            <option value="">-- выберите значение --</option>
+                            <option value="0-499">Менее 499</option>
+                            <option value="500-699">500 - 699</option>
+                            <option value="700-799">700 - 799</option>
+                            <option value="800-899">800 - 899</option>
+                            <option value="900-1199">900 - 1 199</option>
+                            <option value="1200-10000">1 200 и более</option>
                         </select>
                     </div>
 
                     <div class="filter-group">
                         <label class="title">Вес внутреннего блока (кг)</label>
                         <select>
-                            <option>Менее 7.99</option>
-                            <option>8 - 9.99</option>
-                            <option>10 - 11.99</option>
-                            <option>12 - 14.99</option>
-                            <option>15 - 19.99</option>
-                            <option>20 и более</option>
+                            <option value="">-- выберите значение --</option>
+                            <option value="">Менее 7.99</option>
+                            <option value="8-9,99">8 - 9.99</option>
+                            <option value="10-11,99">10 - 11.99</option>
+                            <option value="12-14,99">12 - 14.99</option>
+                            <option value="15-19,99">15 - 19.99</option>
+                            <option value="20-10000">20 и более</option>
                         </select>
                     </div>
 
                     <div class="filter-group">
                         <label class="title">Высота внутреннего блока (мм)</label>
                         <select>
-                            <option>Менее 199</option>
-                            <option>200 - 299</option>
-                            <option>300 - 399</option>
-                            <option>400 - 699</option>
-                            <option>700 и более</option>
+                            <option value="">-- выберите значение --</option>
+                            <option value="0-199">Менее 199</option>
+                            <option value="200-299">200 - 299</option>
+                            <option value="300-399">300 - 399</option>
+                            <option value="400-699">400 - 699</option>
+                            <option value="700-10000">700 и более</option>
                         </select>
                     </div>
                 </div>
 
                 <button id="toggle-filters" class="btn-apply primary-btn" style="margin-top: 12px;">Все фильтры</button>
 
-                <div class="filter-actions">
+                <div class="filter-actions" onclick="load()">
                     <button class="btn-apply accent-btn">Применить фильтры</button>
                 </div>
             </aside>
@@ -328,7 +340,7 @@
                         <span class="radio-label">По убыванию цены</span>
                     </label>
                 </div>
-                <div class="products__grid">
+                <div class="products__grid" id="products__grid">
                     <div class="product-card">
                         <div class="product-thumb">
                             <button class="add-to-favorites">♡</button>
@@ -468,6 +480,8 @@
 {{template "footer" .}}}
 
 <script>
+
+
     const toggleBtn = document.getElementById('toggle-filters');
     const extraFilters = document.getElementById('extra-filters');
     let isVisible = false;
@@ -483,6 +497,159 @@
 
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const fullUrl = "/api/split-systems";
+        fetch(fullUrl)
+            .then(response => {
+                if (!response.ok) throw new Error('Ошибка загрузки');
+                return response.json();
+            })
+            .then(data => {
+                console.log("Ответ с сервера:", data);
+                renderProducts(data.items)
+            })
+            .catch(err => {
+                console.error("Ошибка:", err);
+            });
+    })
+
+    //TODO: сброс фильтров
+
+    function load() {
+        //TODO: только тыкнутые пользователем фильтры применялись
+        //TODO: корзина и любимые (после регистрации)
+        const params = new URLSearchParams();
+
+        // Бренды
+        document.querySelectorAll('#brand-checkboxes input[type="checkbox"]:checked')
+            .forEach(cb => params.append('brand', cb.value));
+
+        // Типы
+        document.querySelectorAll('#type-checkboxes input[type="checkbox"]:checked')
+            .forEach(cb => params.append('type', cb.value));
+
+        // Инвертор
+        const inverter = document.querySelector('input[name="inverter"]:checked')?.value;
+        if (inverter !== undefined) {
+            params.append('has_inverter', inverter);
+        }
+
+        // Цена
+        const minPrice = document.getElementById('price-from')?.value;
+        const maxPrice = document.getElementById('price-to')?.value;
+        if (minPrice) params.append('min_price', minPrice);
+        if (maxPrice) params.append('max_price', maxPrice);
+
+        // Шаблон функции для всех select с диапазонами
+        function appendRangeFromSelect(selectEl, paramPrefix) {
+            const value = selectEl?.value;
+            if (value && value !== "") {
+                const [min, max] = value.replace(',', '.').split('-');
+                if (min !== undefined && max !== undefined) {
+                    params.append(`${paramPrefix}_min`, parseFloat(min));
+                    params.append(`${paramPrefix}_max`, parseFloat(max));
+                }
+            }
+        }
+
+        function appendRangeFromRange(value, paramPrefix) {
+            if (value && value !== "") {
+                const [min, max] = value.replace(',', '.').split('–');
+                if (min !== undefined && max !== undefined) {
+                    params.append(`${paramPrefix}_min`, parseFloat(min));
+                    params.append(`${paramPrefix}_max`, parseFloat(max));
+                }
+            }
+        }
+
+        // Пример: Уровень шума
+        appendRangeFromSelect(document.querySelectorAll('select')[0], 'min_noise_level');
+        appendRangeFromSelect(document.querySelectorAll('select')[1], 'max_noise_level');
+
+        const classCooling = document.querySelectorAll('select')[2]?.value;
+        if (classCooling) params.append('energy_class_cooling', classCooling);
+
+        const classHeating = document.querySelectorAll('select')[3]?.value;
+        if (classHeating) params.append('energy_class_heating', classHeating);
+
+        appendRangeFromSelect(document.querySelectorAll('select')[4], 'external_weight');
+        appendRangeFromSelect(document.querySelectorAll('select')[5], 'external_width');
+        appendRangeFromSelect(document.querySelectorAll('select')[6], 'external_height');
+        appendRangeFromSelect(document.querySelectorAll('select')[7], 'external_depth');
+        appendRangeFromSelect(document.querySelectorAll('select')[8], 'internal_depth');
+        appendRangeFromSelect(document.querySelectorAll('select')[9], 'internal_width');
+        appendRangeFromSelect(document.querySelectorAll('select')[10], 'internal_weight');
+        appendRangeFromSelect(document.querySelectorAll('select')[11], 'internal_height');
+
+        // Площадь и мощность (range-слайдеры)
+        const areaValue = document.getElementById('area-range')?.value;
+        if (areaValue && areaValue > 0) {
+            appendRangeFromRange(areaValues[areaValue], 'recommended_area');
+        }
+        const powerValue = document.getElementById('power-range')?.value;
+        if (powerValue && powerValue > 0) {
+            appendRangeFromRange(powerValues[powerValue], 'cooling_power');
+        }
+
+        // Отправка запроса
+        const fullUrl = "/api/split-systems?" + params.toString();
+        console.log("Загрузка с фильтрами:", fullUrl);
+
+        fetch(fullUrl)
+            .then(response => {
+                if (!response.ok) throw new Error('Ошибка загрузки');
+                return response.json();
+            })
+            .then(data => {
+                console.log("Ответ с сервера:", data);
+                renderProducts(data.items)
+            })
+            .catch(err => {
+                console.error("Ошибка:", err);
+            });
+    }
+
+    function renderProducts(products) {
+        const container = document.getElementById('products__grid');
+        container.innerHTML = '';
+
+        if (!products.length) {
+            container.innerHTML = '<p>Ничего не найдено по выбранным фильтрам.</p>';
+            return;
+        }
+
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+
+            const img = product.images?.[0]?.image_url || '/web/static/img/primer.webp';
+
+            card.innerHTML = `
+            <div class="product-thumb">
+                <button class="add-to-favorites">♡</button>
+                <span class="product-price">${formatPrice(product.price)} ₽</span>
+                <img src="${img}" class="product-img" alt="${product.brand?.name || ''}">
+            </div>
+            <div class="product-body">
+                <p class="product-title">${product.title}</p>
+                <div class="product-tags">
+                    <span>${product.type?.name || ''}</span>
+                    <span>до ${product.recommended_area} м²</span>
+                    <span>${product.min_noise_level} дБ</span>
+                </div>
+                <button class="add-to-cart">В корзину</button>
+            </div>
+        `;
+
+            container.appendChild(card);
+        });
+    }
+
+    function formatPrice(price) {
+        return (price / 100).toLocaleString('ru-RU'); // если цена в копейках
+    }
+
+
     const areaLabels = [
         "менее 24",
         "24,1–29",
@@ -491,14 +658,29 @@
         "49,1–69",
         "69,1 и более"
     ];
+    const areaValues = [
+        "0-24",
+        "24,1–29",
+        "29,1–34",
+        "34,1–49",
+        "49,1–69",
+        "69,1-10000"
+    ];
     const powerLabels = [
         "2,0–2,2 кВт",
         "2,5–2,7 кВт",
-        "3,5 кВт",
+        "3-3,5 кВт",
         "5–5,2 кВт",
         "7 кВт"
     ];
 
+    const powerValues = [
+        "2,0–2,2",
+        "2,5–2,7",
+        "3-3,5",
+        "5–5,2",
+        "7"
+    ];
     const areaRange = document.getElementById("area-range");
     const areaLabel = document.getElementById("area-range-label");
     const powerRange = document.getElementById("power-range");
@@ -548,7 +730,7 @@
     const coolingRange = document.getElementById('cooling-capacity-range');
     const coolingLabel = document.getElementById('cooling-capacity-label');
     coolingRange.addEventListener('input', () => {
-        const values = ['2,0–2,2 кВт', '2,5-2,7 квт', '3,5 квт', '5-5,2 квт', '7 квт'];
+        const values = ['2,0–2,2 кВт', '2,5-2,7 квт', '3-3,5 квт', '5-5,2 квт', '7 квт'];
         coolingLabel.textContent = values[coolingRange.value - 1];
     });
 </script>

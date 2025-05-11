@@ -112,6 +112,7 @@ func populateDB(db *gorm.DB) error {
 	db.Where("name IN ?", []string{"охлаждение", "обогрев"}).Find(&modesList)
 
 	system := models.SplitSystem{
+		Title:                "Кондиционер настенный сплит-система DEXP AC-CD7ONF",
 		BrandID:              brand.ID,
 		TypeID:               t.ID,
 		Price:                29990,

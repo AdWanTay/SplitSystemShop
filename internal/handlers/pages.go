@@ -3,6 +3,7 @@ package handlers
 import (
 	"SplitSystemShop/internal/config"
 	"SplitSystemShop/internal/context"
+	"SplitSystemShop/internal/utils"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -11,14 +12,10 @@ func Render(c *fiber.Ctx, template string, data fiber.Map, cfg *config.Config) e
 		data = fiber.Map{}
 	}
 
-	//tokenString := c.Cookies("token")
-	//userID, err := utils.ParseAndValidateJWT(tokenString, cfg)
-	//
-	//if err == nil {
-	//	data["firstName"], data["lastName"], _ = userService.GetFirstNameAndLastName(c.Context(), userID)
-	//}
-	//
-	//data["isAuthenticated"] = err == nil
+	tokenString := c.Cookies("token")
+	_, err := utils.ParseAndValidateJWT(tokenString, cfg)
+
+	data["isAuthenticated"] = err == nil
 
 	return c.Render(template, data)
 }

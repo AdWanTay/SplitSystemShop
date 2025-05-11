@@ -18,8 +18,8 @@ func (s *SplitSystemService) GetSplitSystem(c context.Context, id uint) (*models
 	return s.repo.GetSplitSystem(c, id)
 }
 
-func (s *SplitSystemService) GetAllSplitSystems(c context.Context) ([]models.SplitSystem, error) {
-	return s.repo.GetAllSplitSystems(c)
+func (s *SplitSystemService) GetAllSplitSystems(c context.Context, filters map[string]interface{}) ([]models.SplitSystem, error) {
+	return s.repo.GetAllSplitSystems(c, filters)
 }
 
 func (s *SplitSystemService) DeleteSplitSystem(c context.Context, splitSystemID uint) error {
