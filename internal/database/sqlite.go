@@ -51,6 +51,7 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 			&models.Review{},
 		)
 		err = populateDB(db)
+		addTriggers(db)
 		if err = populateDB(db); err != nil {
 			log.Printf("failed to populate DB: %v", err)
 			return
@@ -62,6 +63,50 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 	}
 
 	return db, nil
+}
+
+func addTriggers(db *gorm.DB) {
+	db.Exec(`
+		CREATE TRIGGER IF NOT EXISTS update_average_rating_after_insert
+		AFTER INSERT ON reviews
+		BEGIN
+		  UPDATE split_systems
+		  SET average_rating = (
+			SELECT AVG(rating)
+			FROM reviews
+			WHERE split_system_id = NEW.split_system_id
+		  )
+		  WHERE id = NEW.split_system_id;
+		END;
+	`)
+	db.Exec(`
+		CREATE TRIGGER IF NOT EXISTS update_average_rating_after_update
+		AFTER UPDATE ON reviews
+		BEGIN
+		  UPDATE split_systems
+		  SET average_rating = (
+			SELECT AVG(rating)
+			FROM reviews
+			WHERE split_system_id = NEW.split_system_id
+		  )
+		  WHERE id = NEW.split_system_id;
+		END;
+	`)
+
+	db.Exec(`
+		CREATE TRIGGER IF NOT EXISTS update_average_rating_after_delete
+		AFTER DELETE ON reviews
+		BEGIN
+		  UPDATE split_systems
+		  SET average_rating = (
+			SELECT AVG(rating)
+			FROM reviews
+			WHERE split_system_id = OLD.split_system_id
+		  )
+		  WHERE id = OLD.split_system_id;
+		END;
+	`)
+
 }
 
 func populateDB(db *gorm.DB) error {

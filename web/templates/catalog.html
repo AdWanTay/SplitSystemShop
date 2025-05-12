@@ -318,7 +318,7 @@
 
                 <button id="toggle-filters" class="btn-apply primary-btn" style="margin-top: 12px;">Все фильтры</button>
 
-                <div class="filter-actions" onclick="load()">
+                <div class="filter-actions" onclick="applyButtonPress()">
                     <button class="btn-apply accent-btn">Применить фильтры</button>
                 </div>
             </aside>
@@ -326,146 +326,37 @@
             <div class="products__container">
                 <div class="products__filters">
                     <label class="filter-radio">
-                        <input type="radio" name="filter" value="option1" checked>
+                        <input type="radio" name="sort_filter" value="rating_desc" checked>
                         <span class="radio-label">Высокий рейтинг</span>
                     </label>
-
                     <label class="filter-radio">
-                        <input type="radio" name="filter" value="option2">
+                        <input type="radio" name="sort_filter" value="price_asc">
                         <span class="radio-label">По возрастанию цены</span>
                     </label>
-
                     <label class="filter-radio">
-                        <input type="radio" name="filter" value="option3">
+                        <input type="radio" name="sort_filter" value="price_desc">
                         <span class="radio-label">По убыванию цены</span>
                     </label>
                 </div>
                 <div class="products__grid" id="products__grid">
-                    <div class="product-card">
-                        <div class="product-thumb">
-                            <button class="add-to-favorites">♡</button>
-                            <span class="product-price">{{"14 999"}} ₽</span>
-                            <img src="/web/static/img/primer.webp" class="product-img">
-                        </div>
-                        <div class="product-body">
-                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                            <div class="product-tags">
-                                <span>Сплит-система</span>
-                                <span>до 20 м²</span>
-                                <span>34 дБ</span>
-                            </div>
-                            <button class="add-to-cart active">В корзину</button>
-                        </div>
-                    </div>
-
-
-                    <div class="product-card">
-                        <div class="product-thumb">
-                            <button class="add-to-favorites">♡</button>
-                            <span class="product-price">{{"14 999"}} ₽</span>
-                            <img src="/web/static/img/primer.webp" class="product-img">
-                        </div>
-                        <div class="product-body">
-                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                            <div class="product-tags">
-                                <span>Сплит-система</span>
-                                <span>до 20 м²</span>
-                                <span>34 дБ</span>
-                            </div>
-                            <button class="add-to-cart">В корзину</button>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-thumb">
-                            <button class="add-to-favorites">♡</button>
-                            <span class="product-price">{{"14 999"}} ₽</span>
-                            <img src="/web/static/img/primer.webp" class="product-img">
-                        </div>
-                        <div class="product-body">
-                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                            <div class="product-tags">
-                                <span>Сплит-система</span>
-                                <span>до 20 м²</span>
-                                <span>34 дБ</span>
-                            </div>
-                            <button class="add-to-cart">В корзину</button>
-                        </div>
-                    </div>
-
-
-                    <div class="product-card">
-                        <div class="product-thumb">
-                            <button class="add-to-favorites">♡</button>
-                            <span class="product-price">{{"14 999"}} ₽</span>
-                            <img src="/web/static/img/primer.webp" class="product-img">
-                        </div>
-                        <div class="product-body">
-                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                            <div class="product-tags">
-                                <span>Сплит-система</span>
-                                <span>до 20 м²</span>
-                                <span>34 дБ</span>
-                            </div>
-                            <button class="add-to-cart">В корзину</button>
-                        </div>
-                    </div>
-
-
-                    <div class="product-card">
-                        <div class="product-thumb">
-                            <button class="add-to-favorites">♡</button>
-                            <span class="product-price">{{"14 999"}} ₽</span>
-                            <img src="/web/static/img/primer.webp" class="product-img">
-                        </div>
-                        <div class="product-body">
-                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                            <div class="product-tags">
-                                <span>Сплит-система</span>
-                                <span>до 20 м²</span>
-                                <span>34 дБ</span>
-                            </div>
-                            <button class="add-to-cart">В корзину</button>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-thumb">
-                            <button class="add-to-favorites">♡</button>
-                            <span class="product-price">{{"14 999"}} ₽</span>
-                            <img src="/web/static/img/primer.webp" class="product-img">
-                        </div>
-                        <div class="product-body">
-                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                            <div class="product-tags">
-                                <span>Сплит-система</span>
-                                <span>до 20 м²</span>
-                                <span>34 дБ</span>
-                            </div>
-                            <button class="add-to-cart">В корзину</button>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-thumb">
-                            <button class="add-to-favorites">♡</button>
-                            <span class="product-price">{{"14 999"}} ₽</span>
-                            <img src="/web/static/img/primer.webp" class="product-img">
-                        </div>
-                        <div class="product-body">
-                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                            <div class="product-tags">
-                                <span>Сплит-система</span>
-                                <span>до 20 м²</span>
-                                <span>34 дБ</span>
-                            </div>
-                            <button class="add-to-cart">В корзину</button>
-                        </div>
-                    </div>
+<!--                    <div class="product-card">-->
+<!--                        <div class="product-thumb">-->
+<!--                            <button class="add-to-favorites">♡</button>-->
+<!--                            <span class="product-price">{{"14 999"}} ₽</span>-->
+<!--                            <img src="/web/static/img/primer.webp" class="product-img">-->
+<!--                        </div>-->
+<!--                        <div class="product-body">-->
+<!--                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>-->
+<!--                            <div class="product-tags">-->
+<!--                                <span>Сплит-система</span>-->
+<!--                                <span>до 20 м²</span>-->
+<!--                                <span>34 дБ</span>-->
+<!--                            </div>-->
+<!--                            <button class="add-to-cart active">В корзину</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
-
             </div>
-
         </div>
     </section>
 
@@ -480,8 +371,6 @@
 {{template "footer" .}}}
 
 <script>
-
-
     const toggleBtn = document.getElementById('toggle-filters');
     const extraFilters = document.getElementById('extra-filters');
     let isVisible = false;
@@ -494,28 +383,38 @@
         toggleBtn.textContent = isVisible ? 'Скрыть фильтры' : 'Все фильтры';
     });
 </script>
-
+<script>
+    document.querySelectorAll('input[name="sort_filter"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            // const selectedValue = e.target.value;
+            load();
+        });
+    });
+</script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const fullUrl = "/api/split-systems";
-        fetch(fullUrl)
-            .then(response => {
-                if (!response.ok) throw new Error('Ошибка загрузки');
-                return response.json();
-            })
-            .then(data => {
-                console.log("Ответ с сервера:", data);
-                renderProducts(data.items)
-            })
-            .catch(err => {
-                console.error("Ошибка:", err);
-            });
-    })
 
+    let applyPressed = false
+    // document.addEventListener("DOMContentLoaded", () => {
+    //     const fullUrl = "/api/split-systems";
+    //     fetch(fullUrl)
+    //         .then(response => {
+    //             if (!response.ok) throw new Error('Ошибка загрузки');
+    //             return response.json();
+    //         })
+    //         .then(data => {
+    //             console.log("Ответ с сервера:", data);
+    //             renderProducts(data.items)
+    //         })
+    //         .catch(err => {
+    //             console.error("Ошибка:", err);
+    //         });
+    // })
+
+    load()
     //TODO: сброс фильтров
 
-    function getParams(){
+    function getParams() {
         const params = new URLSearchParams();
 
         // Бренды
@@ -591,12 +490,26 @@
         return params
     }
 
+    function applyButtonPress() {
+        load()
+        applyPressed = true
+    }
+
     function load() {
         //TODO: только тыкнутые пользователем фильтры применялись
         //TODO: корзина и любимые (после регистрации)
 
         // Отправка запроса
-        const fullUrl = "/api/split-systems?" + getParams().toString();
+        const params = getParams();
+
+        let fullUrl = applyPressed ? "/api/split-systems?" + params.toString() : "/api/split-systems?";
+
+        document.querySelectorAll('input[name="sort_filter"]').forEach(radio => {
+            if (radio.checked) {
+                params.append('sort', radio.value); // например: sort=price_desc
+                fullUrl += params.toString()
+            }
+        });
         console.log("Загрузка с фильтрами:", fullUrl);
 
         fetch(fullUrl)
@@ -621,16 +534,15 @@
             container.innerHTML = '<p>Ничего не найдено по выбранным фильтрам.</p>';
             return;
         }
-        const isAuthenticated = {{ .isAuthenticated }}
-            products.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
+        const isAuthenticated = "{{ .isAuthenticated }}" === true
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
 
-                const img = product.images?.[0]?.image_url || '/web/static/img/primer.webp';
-                const inCartClass = product.in_cart ? 'add-to-cart active' : 'add-to-cart';
-                const inFavoritesClass = product.in_favorites ? 'add-to-favorites active' : 'add-to-favorites';
-                console.log(inFavoritesClass)
-                card.innerHTML = `
+            const img = product.images?.[0]?.image_url || '/web/static/img/primer.webp';
+            const inCartClass = product.in_cart ? 'add-to-cart active' : 'add-to-cart';
+            const inFavoritesClass = product.in_favorites ? 'add-to-favorites active' : 'add-to-favorites';
+            card.innerHTML = `
             <div class="product-thumb">
                 ${isAuthenticated ? `<button class="${inFavoritesClass}" onclick="addToFavorites(${product.id})">♡</button>` : ''}
                 <span class="product-price">${formatPrice(product.price)} ₽</span>
@@ -646,8 +558,8 @@
                 ${isAuthenticated ? `<button class="${inCartClass}" onclick="addToCart(${product.id})">В корзину</button>` : ''}
             </div>
         `;
-                container.appendChild(card);
-            });
+            container.appendChild(card);
+        });
     }
 
     function formatPrice(price) {
@@ -730,13 +642,14 @@
             body: JSON.stringify({split_system_id: id})
         })
             .then(data => {
-                alert("Ответ с сервера: "+ data);
+                alert("Ответ с сервера: " + data);
                 renderProducts(data.items)
             })
             .catch(err => {
-                alert("Ошибка: "+ err);
+                alert("Ошибка: " + err);
             });
     }
+
     function addToFavorites(id) {
         fetch("/api/favorites", {
             method: "POST",
@@ -746,11 +659,11 @@
             body: JSON.stringify({split_system_id: id})
         })
             .then(data => {
-                alert("Ответ с сервера: "+ data);
+                alert("Ответ с сервера: " + data);
                 renderProducts(data.items)
             })
             .catch(err => {
-                alert("Ошибка: "+ err);
+                alert("Ошибка: " + err);
             });
     }
 </script>

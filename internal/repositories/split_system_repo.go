@@ -52,7 +52,6 @@ func (r splitSystemRepository) GetAllSplitSystems(c context.Context, filters map
 		query = query.Where("energy_class_heating_id = ?", energyHeating)
 	}
 
-	// ====== Диапазоны
 	rangeFields := []string{
 		"recommended_area",
 		"cooling_power",
@@ -71,8 +70,17 @@ func (r splitSystemRepository) GetAllSplitSystems(c context.Context, filters map
 			query = query.Where(field+" <= ?", max_)
 		}
 	}
+	if sortValue, ok := filters["sort"]; ok {
+		switch sortValue {
+		case "price_asc":
+			query = query.Order("price ASC")
+		case "price_desc":
+			query = query.Order("price DESC")
+		case "rating_desc":
+			query = query.Order("average_rating DESC")
+		}
+	}
 
-	// Выполнение запроса
 	err := query.Distinct().Find(&splitSystems).Error
 	if err != nil {
 		return nil, err

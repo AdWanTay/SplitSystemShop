@@ -64,6 +64,7 @@ func GetAllSplitSystems(splitSystemService *services.SplitSystemService, userSer
 			"internal_width_min", "internal_width_max",
 			"internal_weight_min", "internal_weight_max",
 			"internal_height_min", "internal_height_max",
+			"sort",
 		}
 		filter := map[string]interface{}{}
 		for _, name := range filtersList {

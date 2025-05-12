@@ -31,5 +31,5 @@ type SplitSystem struct {
 	InternalDepth  int     `json:"internal_depth"`
 	ImageURL       string  `gorm:"foreignKey:SplitSystemID" json:"image_url"`
 
-	AverageRating float64 `gorm:"-" json:"average_rating"`
+	AverageRating float64 `gorm:"average_rating; default:0" json:"average_rating"`
 }
