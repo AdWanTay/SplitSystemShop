@@ -3,10 +3,13 @@ package database
 import (
 	"SplitSystemShop/internal/config"
 	"SplitSystemShop/internal/models"
+	"encoding/json"
 	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"log"
+	"os"
 	"sync"
 )
 
@@ -48,8 +51,8 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 			&models.Review{},
 		)
 		err = populateDB(db)
-		if err != nil {
-			_ = fmt.Errorf("populateDB(db)")
+		if err = populateDB(db); err != nil {
+			log.Printf("failed to populate DB: %v", err)
 			return
 		}
 	})
@@ -62,7 +65,6 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 }
 
 func populateDB(db *gorm.DB) error {
-
 	var brands = []models.Brand{
 		{Name: "Tosot"}, {Name: "Lessar"}, {Name: "Midea"}, {Name: "Mitsubishi"},
 		{Name: "Ballu"}, {Name: "Samsung"}, {Name: "LG"}, {Name: "Panasonic"},
@@ -97,7 +99,6 @@ func populateDB(db *gorm.DB) error {
 		db.FirstOrCreate(&e, models.EnergyClass{Name: e.Name})
 	}
 
-	// Добавим одну тестовую сплит-систему с привязкой к справочным данным
 	var brand models.Brand
 	db.First(&brand, "name = ?", "LG")
 
@@ -111,34 +112,90 @@ func populateDB(db *gorm.DB) error {
 	var modesList []models.Mode
 	db.Where("name IN ?", []string{"охлаждение", "обогрев"}).Find(&modesList)
 
-	system := models.SplitSystem{
-		Title:                "Кондиционер настенный сплит-система DEXP AC-CD7ONF",
-		BrandID:              brand.ID,
-		TypeID:               t.ID,
-		Price:                29990,
-		HasInverter:          true,
-		RecommendedArea:      25.0,
-		CoolingPower:         2.5,
-		EnergyClassCoolingID: coolingClass.ID,
-		EnergyClassHeatingID: heatingClass.ID,
-		MinNoiseLevel:        21.0,
-		MaxNoiseLevel:        36.0,
-		ExternalWeight:       28.5,
-		ExternalWidth:        800,
-		ExternalHeight:       545,
-		ExternalDepth:        290,
-		InternalWeight:       9.0,
-		InternalWidth:        790,
-		InternalHeight:       275,
-		InternalDepth:        200,
-	}
-
-	db.FirstOrCreate(&system, models.SplitSystem{BrandID: system.BrandID, TypeID: system.TypeID, Price: system.Price})
-
-	if len(modesList) > 0 {
-		db.Model(&system).Association("Modes").Replace(&modesList)
+	if err := SeedSplitSystemsFromJSON(db, "internal/database/data/systems_seed.json"); err != nil {
+		log.Fatal(err)
 	}
 
 	fmt.Println("Database seeded successfully")
+	return nil
+}
+
+type SplitSystemSeed struct {
+	Title           string   `json:"title,omitempty"`
+	Brand           string   `json:"brand,omitempty"`
+	Type            string   `json:"type,omitempty"`
+	Price           int      `json:"price,omitempty"`
+	HasInverter     bool     `json:"has_inverter,omitempty"`
+	RecommendedArea float64  `json:"recommended_area,omitempty"`
+	CoolingPower    float64  `json:"cooling_power,omitempty"`
+	CoolingClass    string   `json:"cooling_class,omitempty"`
+	HeatingClass    string   `json:"heating_class,omitempty"`
+	MinNoise        float64  `json:"min_noise,omitempty"`
+	MaxNoise        float64  `json:"max_noise,omitempty"`
+	ExternalWidth   int      `json:"external_width,omitempty"`
+	ExternalHeight  int      `json:"external_height,omitempty"`
+	ExternalDepth   int      `json:"external_depth,omitempty"`
+	ExternalWeight  float64  `json:"external_weight,omitempty"`
+	InternalWidth   int      `json:"internal_width,omitempty"`
+	InternalHeight  int      `json:"internal_height,omitempty"`
+	InternalDepth   int      `json:"internal_depth,omitempty"`
+	InternalWeight  float64  `json:"internal_weight,omitempty"`
+	Modes           []string `json:"modes,omitempty"`
+	ImageURL        string   `json:"image_url,omitempty"`
+}
+
+func SeedSplitSystemsFromJSON(db *gorm.DB, filePath string) error {
+	data, err := os.ReadFile(filePath)
+	if err != nil {
+		return fmt.Errorf("read json: %w", err)
+	}
+
+	var systems []SplitSystemSeed
+	if err = json.Unmarshal(data, &systems); err != nil {
+		return fmt.Errorf("unmarshal json: %w", err)
+	}
+
+	for _, s := range systems {
+		var brand models.Brand
+		var t models.Type
+		var coolClass, heatClass models.EnergyClass
+		var modes []models.Mode
+
+		db.First(&brand, "name = ?", s.Brand)
+		db.First(&t, "name = ?", s.Type)
+		db.First(&coolClass, "name = ?", s.CoolingClass)
+		db.First(&heatClass, "name = ?", s.HeatingClass)
+		db.Where("name IN ?", s.Modes).Find(&modes)
+
+		system := models.SplitSystem{
+			Title:                s.Title,
+			BrandID:              brand.ID,
+			TypeID:               t.ID,
+			Price:                s.Price,
+			HasInverter:          s.HasInverter,
+			RecommendedArea:      s.RecommendedArea,
+			CoolingPower:         s.CoolingPower,
+			EnergyClassCoolingID: coolClass.ID,
+			EnergyClassHeatingID: heatClass.ID,
+			MinNoiseLevel:        s.MinNoise,
+			MaxNoiseLevel:        s.MaxNoise,
+			ExternalWidth:        s.ExternalWidth,
+			ExternalHeight:       s.ExternalHeight,
+			ExternalDepth:        s.ExternalDepth,
+			ExternalWeight:       s.ExternalWeight,
+			InternalWidth:        s.InternalWidth,
+			InternalHeight:       s.InternalHeight,
+			InternalDepth:        s.InternalDepth,
+			InternalWeight:       s.InternalWeight,
+			ImageURL:             s.ImageURL,
+		}
+
+		db.FirstOrCreate(&system, models.SplitSystem{Title: s.Title})
+		if len(modes) > 0 {
+			db.Model(&system).Association("Modes").Replace(&modes)
+		}
+	}
+
+	fmt.Println("Split systems loaded from JSON.")
 	return nil
 }

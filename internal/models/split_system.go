@@ -29,8 +29,7 @@ type SplitSystem struct {
 	InternalWidth  int     `json:"internal_width"`
 	InternalHeight int     `json:"internal_height"`
 	InternalDepth  int     `json:"internal_depth"`
-
-	Images []SplitSystemImage `gorm:"foreignKey:SplitSystemID" json:"images"`
+	ImageURL       string  `gorm:"foreignKey:SplitSystemID" json:"image_url"`
 
 	AverageRating float64 `gorm:"-" json:"average_rating"`
 }
