@@ -136,8 +136,8 @@
                         <input type="number" placeholder="Цена до" id="price-to"/>
                     </div>
                     <div>
-                        <label class="radio-button"><input type="radio" name="cost" value="менее 15000"/>менее
-                            15000</label>
+                        <label class="radio-button"><input type="radio" name="cost"
+                                                           value="0-15000"/>менее 15000</label>
                         <label class="radio-button"><input type="radio" name="cost"
                                                            value="15001-20000"/>15001-20000</label>
                         <label class="radio-button"><input type="radio" name="cost"
@@ -146,7 +146,7 @@
                                                            value="25001-35000"/>25001-35000</label>
                         <label class="radio-button"><input type="radio" name="cost"
                                                            value="35001-45000"/>35001-45000</label>
-                        <label class="radio-button"><input type="radio" name="cost" value="более 45001"/>более
+                        <label class="radio-button"><input type="radio" name="cost" value="45001-100000"/>более
                             45001</label>
                     </div>
                 </div>
@@ -338,24 +338,7 @@
                         <span class="radio-label">По убыванию цены</span>
                     </label>
                 </div>
-                <div class="products__grid" id="products__grid">
-<!--                    <div class="product-card">-->
-<!--                        <div class="product-thumb">-->
-<!--                            <button class="add-to-favorites">♡</button>-->
-<!--                            <span class="product-price">{{"14 999"}} ₽</span>-->
-<!--                            <img src="/web/static/img/primer.webp" class="product-img">-->
-<!--                        </div>-->
-<!--                        <div class="product-body">-->
-<!--                            <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>-->
-<!--                            <div class="product-tags">-->
-<!--                                <span>Сплит-система</span>-->
-<!--                                <span>до 20 м²</span>-->
-<!--                                <span>34 дБ</span>-->
-<!--                            </div>-->
-<!--                            <button class="add-to-cart active">В корзину</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-                </div>
+                <div class="products__grid" id="products__grid"></div>
             </div>
         </div>
     </section>
@@ -370,6 +353,44 @@
 
 {{template "footer" .}}}
 
+
+<script>
+    document.querySelectorAll('input[name="cost"]').forEach(radio => {
+        radio.addEventListener('click', () => {
+            const priceFrom = document.getElementById('price-from');
+            const priceTo = document.getElementById('price-to');
+            const parent = radio.parentElement;
+            console.log(parent.classList)
+
+            if (parent.classList.contains('checked')) {
+                priceFrom.value = '';
+                priceTo.value = '';
+                parent.classList.remove('checked');
+                radio.checked = false;
+            } else {
+                document.querySelectorAll('label.radio-button.checked').forEach(label => {
+                    label.classList.remove('checked');
+                });
+
+                const [min, max] = radio.value.split('-');
+                priceFrom.value = min || '';
+                priceTo.value = max || '';
+                parent.classList.add('checked');
+            }
+        });
+    });
+
+    ['price-from', 'price-to'].forEach(id => {
+        const input = document.getElementById(id);
+        input.addEventListener('input', () => {
+            document.querySelectorAll('input[name="cost"]').forEach(radio => {
+                const parent = radio.parentElement;
+                parent.classList.remove('checked');
+            });
+        })
+    });
+
+</script>
 <script>
     const toggleBtn = document.getElementById('toggle-filters');
     const extraFilters = document.getElementById('extra-filters');
@@ -393,26 +414,29 @@
 </script>
 
 <script>
-
     let applyPressed = false
-    // document.addEventListener("DOMContentLoaded", () => {
-    //     const fullUrl = "/api/split-systems";
-    //     fetch(fullUrl)
-    //         .then(response => {
-    //             if (!response.ok) throw new Error('Ошибка загрузки');
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             console.log("Ответ с сервера:", data);
-    //             renderProducts(data.items)
-    //         })
-    //         .catch(err => {
-    //             console.error("Ошибка:", err);
-    //         });
-    // })
-
     load()
     //TODO: сброс фильтров
+    function appendRangeFromSelect(selectEl, paramPrefix) {
+        const value = selectEl?.value;
+        if (value && value !== "") {
+            const [min, max] = value.replace(',', '.').split('-');
+            if (min !== undefined && max !== undefined) {
+                params.append(`${paramPrefix}_min`, parseFloat(min));
+                params.append(`${paramPrefix}_max`, parseFloat(max));
+            }
+        }
+    }
+
+    function appendRangeFromRange(value, paramPrefix) {
+        if (value && value !== "") {
+            const [min, max] = value.replace(',', '.').split('–');
+            if (min !== undefined && max !== undefined) {
+                params.append(`${paramPrefix}_min`, parseFloat(min));
+                params.append(`${paramPrefix}_max`, parseFloat(max));
+            }
+        }
+    }
 
     function getParams() {
         const params = new URLSearchParams();
@@ -434,32 +458,9 @@
         // Цена
         const minPrice = document.getElementById('price-from')?.value;
         const maxPrice = document.getElementById('price-to')?.value;
-        if (minPrice) params.append('min_price', minPrice);
-        if (maxPrice) params.append('max_price', maxPrice);
+        if (minPrice) params.append('price_min', Number(minPrice) * 100);
+        if (maxPrice) params.append('price_max', Number(maxPrice) * 100);
 
-        // Шаблон функции для всех select с диапазонами
-        function appendRangeFromSelect(selectEl, paramPrefix) {
-            const value = selectEl?.value;
-            if (value && value !== "") {
-                const [min, max] = value.replace(',', '.').split('-');
-                if (min !== undefined && max !== undefined) {
-                    params.append(`${paramPrefix}_min`, parseFloat(min));
-                    params.append(`${paramPrefix}_max`, parseFloat(max));
-                }
-            }
-        }
-
-        function appendRangeFromRange(value, paramPrefix) {
-            if (value && value !== "") {
-                const [min, max] = value.replace(',', '.').split('–');
-                if (min !== undefined && max !== undefined) {
-                    params.append(`${paramPrefix}_min`, parseFloat(min));
-                    params.append(`${paramPrefix}_max`, parseFloat(max));
-                }
-            }
-        }
-
-        // Пример: Уровень шума
         appendRangeFromSelect(document.querySelectorAll('select')[0], 'min_noise_level');
         appendRangeFromSelect(document.querySelectorAll('select')[1], 'max_noise_level');
 
@@ -499,19 +500,16 @@
         //TODO: только тыкнутые пользователем фильтры применялись
         //TODO: корзина и любимые (после регистрации)
 
-        // Отправка запроса
         const params = getParams();
 
-        let fullUrl = applyPressed ? "/api/split-systems?" + params.toString() : "/api/split-systems?";
+        const selectedSort = document.querySelector('input[name="sort_filter"]:checked');
+        if (selectedSort) {
+            params.append('sort', selectedSort.value);
+        }
 
-        document.querySelectorAll('input[name="sort_filter"]').forEach(radio => {
-            if (radio.checked) {
-                params.append('sort', radio.value); // например: sort=price_desc
-                fullUrl += params.toString()
-            }
-        });
+        const fullUrl = "/api/split-systems?" + (applyPressed ? params.toString() : '');
+
         console.log("Загрузка с фильтрами:", fullUrl);
-
         fetch(fullUrl)
             .then(response => {
                 if (!response.ok) throw new Error('Ошибка загрузки');
@@ -616,6 +614,9 @@
 
     // Радиокнопки: визуальное выделение при выборе
     document.querySelectorAll(".radio-button input").forEach(input => {
+        if (input.name === "cost"){
+            return
+        }
         input.addEventListener("change", () => {
             const name = input.name;
             document.querySelectorAll(`.radio-button input[name="${name}"]`).forEach(el => {
