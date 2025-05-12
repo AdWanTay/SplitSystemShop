@@ -51,7 +51,7 @@ func GetAllSplitSystems(splitSystemService *services.SplitSystemService, userSer
 		filtersList := []string{
 			"recommended_area_min", "recommended_area_max",
 			"cooling_power_min", "cooling_power_max",
-			"min_price", "max_price",
+			"price_min", "price_max",
 			"has_inverter",
 			"min_noise_level_min", "min_noise_level_max",
 			"max_noise_level_min", "max_noise_level_max",
