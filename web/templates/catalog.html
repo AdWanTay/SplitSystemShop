@@ -515,9 +515,7 @@
 
     //TODO: сброс фильтров
 
-    function load() {
-        //TODO: только тыкнутые пользователем фильтры применялись
-        //TODO: корзина и любимые (после регистрации)
+    function getParams(){
         const params = new URLSearchParams();
 
         // Бренды
@@ -590,9 +588,15 @@
         if (powerValue && powerValue > 0) {
             appendRangeFromRange(powerValues[powerValue], 'cooling_power');
         }
+        return params
+    }
+
+    function load() {
+        //TODO: только тыкнутые пользователем фильтры применялись
+        //TODO: корзина и любимые (после регистрации)
 
         // Отправка запроса
-        const fullUrl = "/api/split-systems?" + params.toString();
+        const fullUrl = "/api/split-systems?" + getParams().toString();
         console.log("Загрузка с фильтрами:", fullUrl);
 
         fetch(fullUrl)
@@ -617,16 +621,18 @@
             container.innerHTML = '<p>Ничего не найдено по выбранным фильтрам.</p>';
             return;
         }
+        const isAuthenticated = {{ .isAuthenticated }}
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
 
-        products.forEach(product => {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-
-            const img = product.images?.[0]?.image_url || '/web/static/img/primer.webp';
-
-            card.innerHTML = `
+                const img = product.images?.[0]?.image_url || '/web/static/img/primer.webp';
+                const inCartClass = product.in_cart ? 'add-to-cart active' : 'add-to-cart';
+                const inFavoritesClass = product.in_favorites ? 'add-to-favorites active' : 'add-to-favorites';
+                console.log(inFavoritesClass)
+                card.innerHTML = `
             <div class="product-thumb">
-                <button class="add-to-favorites">♡</button>
+                ${isAuthenticated ? `<button class="${inFavoritesClass}" onclick="addToFavorites(${product.id})">♡</button>` : ''}
                 <span class="product-price">${formatPrice(product.price)} ₽</span>
                 <img src="${img}" class="product-img" alt="${product.brand?.name || ''}">
             </div>
@@ -637,12 +643,11 @@
                     <span>до ${product.recommended_area} м²</span>
                     <span>${product.min_noise_level} дБ</span>
                 </div>
-                <button class="add-to-cart">В корзину</button>
+                ${isAuthenticated ? `<button class="${inCartClass}" onclick="addToCart(${product.id})">В корзину</button>` : ''}
             </div>
         `;
-
-            container.appendChild(card);
-        });
+                container.appendChild(card);
+            });
     }
 
     function formatPrice(price) {
@@ -714,6 +719,40 @@
             input.parentElement.classList.toggle("checked", input.checked);
         });
     });
+
+
+    function addToCart(id) {
+        fetch("/api/cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({split_system_id: id})
+        })
+            .then(data => {
+                alert("Ответ с сервера: "+ data);
+                renderProducts(data.items)
+            })
+            .catch(err => {
+                alert("Ошибка: "+ err);
+            });
+    }
+    function addToFavorites(id) {
+        fetch("/api/favorites", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({split_system_id: id})
+        })
+            .then(data => {
+                alert("Ответ с сервера: "+ data);
+                renderProducts(data.items)
+            })
+            .catch(err => {
+                alert("Ошибка: "+ err);
+            });
+    }
 </script>
 
 
