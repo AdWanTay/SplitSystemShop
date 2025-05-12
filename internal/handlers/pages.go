@@ -59,7 +59,8 @@ func CatalogPage(cfg *config.Config, ctx *context.AppContext) fiber.Handler {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
 
-		return Render(c, "catalog", fiber.Map{"brands": brands,
+		return Render(c, "catalog", fiber.Map{
+			"brands":         brands,
 			"types":          types,
 			"modes":          modes,
 			"energy_classes": energyClasses,

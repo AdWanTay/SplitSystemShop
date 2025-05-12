@@ -36,7 +36,6 @@ func AddToCart(s *services.CartService) fiber.Handler {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "Ошибка добавления товара"})
 		}
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "товар успешно добавлен"})
-
 	}
 }
 
