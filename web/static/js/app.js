@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-        var input = document.querySelector("input[type='tel']");
+        const input = document.querySelector("input[type='tel']");
         input.addEventListener("input", mask, false);
         input.addEventListener("focus", mask, false);
         input.addEventListener("blur", mask, false);
@@ -143,7 +143,7 @@ function openAuthModal(type) {
             modalContainer.innerHTML = html;
             document.body.appendChild(modalContainer);
 
-            var input = document.querySelector("input[type='tel']");
+            const input = document.querySelector("input[type='tel']");
             input.addEventListener("input", mask, false);
             input.addEventListener("focus", mask, false);
             input.addEventListener("blur", mask, false);

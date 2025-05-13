@@ -26,7 +26,7 @@ func (s *UserService) RegisterUser(c context.Context, input dto.RegistrationRequ
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
 	if err != nil {
-		return nil, fmt.Errorf("Внутренняя ошибка сервера: %w", err)
+		return nil, fmt.Errorf("внутренняя ошибка сервера: %w", err)
 	}
 
 	newUser := &models.User{
@@ -41,7 +41,7 @@ func (s *UserService) RegisterUser(c context.Context, input dto.RegistrationRequ
 	err = s.repo.CreateUser(c, newUser)
 
 	if err != nil {
-		return nil, fmt.Errorf("Не удалось создать новый аккаунт: %w", err)
+		return nil, fmt.Errorf("не удалось создать новый аккаунт: %w", err)
 	}
 
 	return newUser, nil
@@ -50,12 +50,12 @@ func (s *UserService) RegisterUser(c context.Context, input dto.RegistrationRequ
 func (s *UserService) LoginUser(c context.Context, input dto.LoginRequest) (*models.User, error) {
 	user, err := s.repo.GetUserByEmail(c, input.Email)
 	if err != nil {
-		return nil, fmt.Errorf("Неверная почта или пароль")
+		return nil, fmt.Errorf("неверная почта или пароль")
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(input.Password))
 	if err != nil {
-		return nil, fmt.Errorf("Неверная почта или пароль")
+		return nil, fmt.Errorf("неверная почта или пароль")
 	}
 
 	return user, nil
@@ -70,7 +70,7 @@ func (s *UserService) ChangePassword(c context.Context, userID uint, newPassword
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
 	user.Password = string(hashedPassword)
 	if err != nil {
-		return fmt.Errorf("Внутренняя ошибка сервера: %w", err)
+		return fmt.Errorf("внутренняя ошибка сервера: %w", err)
 	}
 	return s.repo.Update(c, user)
 }

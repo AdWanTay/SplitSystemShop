@@ -230,7 +230,7 @@
     cursor: pointer;
     transition: .3s ease-in-out;
 }
-.primary-btn:hover {
+.       primary-btn:hover {
     color: #999999;
 }
 
