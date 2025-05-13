@@ -540,7 +540,7 @@
             container.innerHTML = '<p>Ничего не найдено по выбранным фильтрам.</p>';
             return;
         }
-        const isAuthenticated = "{{ .isAuthenticated }}" === true
+        const isAuthenticated = "{{ .isAuthenticated }}" === "true"
         products.forEach(product => {
             const card = document.createElement('div');
             card.className = 'product-card';

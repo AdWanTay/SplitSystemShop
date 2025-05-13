@@ -1,0 +1,79 @@
+{{define "cart-module"}}
+
+<section id="cart" class="cart-section opened">
+    <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
+        <h2>Корзина ({{ .cart.total}})</h2>
+        <button style="transform: translateY(.3rem)" class="accent-btn btn-standard">Перейти к оформлению</button>
+    </div>
+
+    <div class="cart__container">
+        <div class="products__grid cart">
+
+            {{if eq .cart.total 0}}
+            <div class="products-empty">
+                <h4>В корзине пока пусто</h4>
+                <p>Загляните в каталог — собрали там сплит-системы, которые могут вам подойти</p>
+            </div>
+
+            {{else}}
+            {{ range .cart.items }}
+            <div class="product-card">
+                <div class="product-thumb">
+                    <span class="product-price">{{.Price}} ₽</span>
+                    <img src="/web/static/img/primer.webp" class="product-img" alt="">
+                </div>
+                <div class="product-body">
+                    <p class="product-title">{{.Title}}</p>
+                    <div class="product-tags">
+                        <span>{{.Type.Name}}</span>
+                        <span>до {{.RecommendedArea}} м²</span>
+                        <span>{{.MinNoiseLevel}} дБ</span>
+                    </div>
+                </div>
+            </div>
+            {{end}}
+            {{end}}
+
+        </div>
+    </div>
+</section>
+
+<hr style="margin: 0 8vw">
+
+<section id="favorites" class="favorites-section opened">
+    <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
+        <h2>Избранное ({{.favorites.total}})</h2>
+        <button style="transform: translateY(.3rem)" class="accent-btn btn-standard">Добавить в корзину</button>
+    </div>
+
+    <div class="cart__container">
+        <div class="products__grid cart">
+            {{if eq .favorites.total 0}}
+            <div class="products-empty">
+                <h4>В корзине пока пусто</h4>
+                <p>Загляните в каталог — собрали там сплит-системы, которые могут вам подойти</p>
+            </div>
+
+            {{else}}
+            {{ range .favorites.items }}
+            <div class="product-card">
+                <div class="product-thumb">
+                    <span class="product-price">{{.Price}} ₽</span>
+                    <img src="/web/static/img/primer.webp" class="product-img" alt="">
+                </div>
+                <div class="product-body">
+                    <p class="product-title">{{.Title}}</p>
+                    <div class="product-tags">
+                        <span>{{.Type.Name}}</span>
+                        <span>до {{.RecommendedArea}} м²</span>
+                        <span>{{.MinNoiseLevel}} дБ</span>
+                    </div>
+                    <button class="add-to-cart">В корзину</button>
+                </div>
+            </div>
+            {{end}}
+            {{end}}
+        </div>
+    </div>
+</section>
+{{end}}
