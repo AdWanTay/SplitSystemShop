@@ -249,7 +249,7 @@
 }
 
 .btn-small {
-    padding: .3rem 1rem;
+    padding: .5rem 1rem;
 }
 
 .btn-standard {
@@ -379,9 +379,20 @@ body.modal-open {
     height: 100%;
 }
 
-.cart-modal .modal-title {
+.modal-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.cart-modal .modal-header {
     margin-bottom: 2rem;
 }
+
+.delete-all-btn {
+    transform: translateY(-.3rem);
+}
+
 
 .cart-modal .cart__container {
     padding-right: 2vw !important;
