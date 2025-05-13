@@ -188,8 +188,8 @@ body {
     gap: 2vw;
 }
 
-.products, .services {
-    padding: 4rem 8vw;
+.products, .services, .cart-section, .favorites-section {
+    margin: 4rem 8vw;
 }
 .products h2, .services h2, .contact__form h2 {
     font-size: 3rem;
@@ -207,6 +207,19 @@ body {
     position: relative;
     grid-template-columns: repeat(3, minmax(10vw, 1fr));
     gap: 1rem;
+}
+
+.products-empty {
+    width: 100%;
+    border-radius: 1rem;
+    border: 2px dashed #dcdcdc;
+    padding: 1rem;
+    max-height: 50vh;
+    color: #555555;
+}
+
+.products-empty h4 {
+    margin-bottom: 1rem;
 }
 
 .product-card {
@@ -360,10 +373,15 @@ body {
 
 .cart__container {
     flex-grow: 1;
+    padding: 2px;
     overflow-y: auto;
     height: 100%;
 }
 
+.cart-section h2, .favorites-section h2 {
+    font-size: 3rem;
+    /*margin-bottom: 2rem;*/
+}
 
 
 
