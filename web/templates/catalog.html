@@ -416,6 +416,7 @@
 <script>
     let applyPressed = false
     load()
+
     //TODO: сброс фильтров
     function appendRangeFromSelect(selectEl, paramPrefix) {
         const value = selectEl?.value;
@@ -503,11 +504,12 @@
         const params = getParams();
 
         const selectedSort = document.querySelector('input[name="sort_filter"]:checked');
+        const sortParams = new URLSearchParams()
         if (selectedSort) {
-            params.append('sort', selectedSort.value);
+            sortParams.append('sort', selectedSort.value);
         }
 
-        const fullUrl = "/api/split-systems?" + (applyPressed ? params.toString() : '');
+        const fullUrl = "/api/split-systems" + (applyPressed ? "?" + params.toString() : '') + "?" + sortParams.toString();
 
         console.log("Загрузка с фильтрами:", fullUrl);
         fetch(fullUrl)
@@ -614,7 +616,7 @@
 
     // Радиокнопки: визуальное выделение при выборе
     document.querySelectorAll(".radio-button input").forEach(input => {
-        if (input.name === "cost"){
+        if (input.name === "cost") {
             return
         }
         input.addEventListener("change", () => {

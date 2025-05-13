@@ -113,10 +113,11 @@ func populateDB(db *gorm.DB) error {
 	var brands = []models.Brand{
 		{Name: "Tosot"}, {Name: "Lessar"}, {Name: "Midea"}, {Name: "Mitsubishi"},
 		{Name: "Ballu"}, {Name: "Samsung"}, {Name: "LG"}, {Name: "Panasonic"},
-		{Name: "Daikin"}, {Name: "Hitachi"}, {Name: "Dexp"}, {Name: "Centek"},
+		{Name: "Daikin"}, {Name: "Hitachi"}, {Name: "DEXP"}, {Name: "Centek"},
 		{Name: "Electrolux"}, {Name: "Haier"}, {Name: "TCL"}, {Name: "Aceline"},
 		{Name: "Bosch"}, {Name: "Daichi"}, {Name: "EcoClima"}, {Name: "Loriot"},
-		{Name: "Marsa"}, {Name: "Pioneer"},
+		{Name: "Marsa"}, {Name: "Pioneer"}, {Name: "Thermex"}, {Name: "iFFALCON"},
+		{Name: "GoldStar"}, {Name: "Jax"}, {Name: "Candy"},
 	}
 	for _, b := range brands {
 		db.FirstOrCreate(&b, models.Brand{Name: b.Name})
