@@ -187,7 +187,7 @@
                 <div id="extra-filters">
                     <div class="filter-group">
                         <label class="title">Основные режимы</label>
-                        <div>
+                        <div id="modes-checkboxes">
                             {{ range .modes }}
                             <label class="checkbox-button"><input type="checkbox" value="{{.ID}}"/>{{.Name}}</label>
                             {{end}}
@@ -450,6 +450,11 @@
         // Типы
         document.querySelectorAll('#type-checkboxes input[type="checkbox"]:checked')
             .forEach(cb => params.append('type', cb.value));
+
+        // Режимы
+        document.querySelectorAll('#modes-checkboxes input[type="checkbox"]:checked')
+            .forEach(cb => params.append('mode', cb.value));
+
 
         // Инвертор
         const inverter = document.querySelector('input[name="inverter"]:checked')?.value;
