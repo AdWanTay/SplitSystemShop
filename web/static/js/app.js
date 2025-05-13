@@ -130,25 +130,6 @@ function openPurchaseModal(title, id) {
         });
 }
 
-function openCartModal() {
-    lockBodyScroll();
-
-    fetch("/web/templates/components/modals/cart-modal.html")
-        .then((res) => res.text())
-        .then((html) => {
-            const modalContainer = document.createElement("div");
-            modalContainer.innerHTML = html;
-            document.body.appendChild(modalContainer);
-
-            //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
-            modalContainer.addEventListener("click", (e) => {
-                if (e.target.classList.contains("modal")) {
-                    closeAllModals();
-                }
-            });
-        });
-}
-
 function openCalculator() {
     lockBodyScroll();
 
