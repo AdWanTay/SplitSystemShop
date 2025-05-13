@@ -21,10 +21,28 @@
 
 <main class="main">
     <section class="blog__editor">
-
+        <h1>Редактирование статей</h1>
+        <div class="hint-block">
+            <div class="hint-icon">ⓘ</div>
+            <div class="hint-text">
+                <strong>Редактирование статей доступно в разделе блога.</strong> Чтобы изменить текст, заголовок, изображения или другие элементы публикации, перейдите в соответствующий раздел: Откройте «Блог» → Нажмите «Редактировать» рядом с выбранной статьей, или добавьте новую статью.
+            </div>
+            <div class="hint-close" onclick="this.parentElement.style.display='none'">×</div>
+        </div>
+        <button class="primary-btn btn-standard">Перейти в блог</button>
     </section>
 
+    <div class="divider" style="margin: 0 8vw"></div>
+
+
     <section class="products__editor">
+        <div class="hint-block">
+            <div class="hint-icon">ⓘ</div>
+            <div class="hint-text">
+                <strong>Подсказка:</strong> Кликните на строку с нужным товаром и ниже отобразиться карточка товара с возможностью последующего редактирования.
+            </div>
+            <div class="hint-close" onclick="this.parentElement.style.display='none'">×</div>
+        </div>
         <h1>Таблица всех товаров (<span id="total-count">0</span>)</h1>
 
         <div class="search-container">
@@ -60,6 +78,127 @@
             <button class="add-btn" id="add-btn">Добавить новый товар</button>
             <button class="delete-btn" id="delete-btn">Удалить выбранные</button>
         </div>
+
+        <div class="divider"></div>
+
+        <div class="hint-block">
+            <div class="hint-icon">ⓘ</div>
+            <div class="hint-text">
+                <strong>Подсказка:</strong> Заполните все поля и загрузите изображение товара для лучшего отображения в каталоге. Характеристики помогут покупателям быстрее найти ваш товар. <strong>Не забудьте сохранить!</strong>
+            </div>
+            <div class="hint-close" onclick="this.parentElement.style.display='none'">×</div>
+        </div>
+
+        <h1>Редактирование карточки товара</h1>
+
+        <div class="edit-container">
+            <div class="left-column">
+                <div class="image-upload no-image">
+                    <div>Нет изображения</div>
+                </div>
+                <button id="upload-btn" class="btn-small accent-btn">Загрузить фотографию</button>
+
+            </div>
+
+            <div class="right-column">
+                <div class="form-group">
+                    <label for="product-name">Название товара</label>
+                    <input type="text" id="product-name" placeholder="Введите название товара">
+                </div>
+
+                <div class="form-group">
+                    <label for="short-description">Краткое описание</label>
+                    <textarea id="short-description" placeholder="Введите краткое описание"></textarea>
+                </div>
+
+                <div class="form-group col">
+                    <select>
+                        <option value="">Выберите тип</option>
+                        <option value="type1">Тип 1</option>
+                        <option value="type2">Тип 2</option>
+                        <option value="type3">Тип 3</option>
+                    </select>
+
+                    <select>
+                        <option value="">Выберите мощность</option>
+                        <option value="power1">Мощность 1</option>
+                        <option value="power2">Мощность 2</option>
+                        <option value="power3">Мощность 3</option>
+                    </select>
+
+                    <select>
+                        <option value="">Выберите категорию</option>
+                        <option value="category1">Категория 1</option>
+                        <option value="category2">Категория 2</option>
+                        <option value="category3">Категория 3</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="price" class="price-input" placeholder="Введите цену" value="22 900"> <span style="font-size: 2rem;">₽</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="form-group">
+            <h2>Описание</h2>
+            <textarea id="full-description" placeholder="Введите полное описание товара"></textarea>
+        </div>
+
+        <div class="divider"></div>
+
+        <div>
+            <h2>Характеристики</h2>
+            <div class="characteristics">
+                <div class="form-group characteristic">
+                    <label>Характеристика 1</label>
+                    <select>
+                        <option value="">Выберите значение</option>
+                        <option value="char1-1">Значение 1</option>
+                        <option value="char1-2">Значение 2</option>
+                        <option value="char1-3">Значение 3</option>
+                    </select>
+                </div>
+
+                <div class="form-group characteristic">
+                    <label>Характеристика 2</label>
+                    <select>
+                        <option value="">Выберите значение</option>
+                        <option value="char2-1">Значение 1</option>
+                        <option value="char2-2">Значение 2</option>
+                        <option value="char2-3">Значение 3</option>
+                    </select>
+                </div>
+
+                <div class="form-group characteristic">
+                    <label>Характеристика 3</label>
+                    <select>
+                        <option value="">Выберите значение</option>
+                        <option value="char3-1">Значение 1</option>
+                        <option value="char3-2">Значение 2</option>
+                        <option value="char3-3">Значение 3</option>
+                    </select>
+                </div>
+
+                <div class="form-group characteristic">
+                    <label>Характеристика 4</label>
+                    <select>
+                        <option value="">Выберите значение</option>
+                        <option value="char4-1">Значение 1</option>
+                        <option value="char4-2">Значение 2</option>
+                        <option value="char4-3">Значение 3</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 100%; display: flex;">
+            <button id="saveProductPtn" class="btn-huge accent-btn">Сохранить</button>
+
+        </div>
+
     </section>
 </main>
 

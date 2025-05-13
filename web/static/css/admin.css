@@ -111,3 +111,154 @@ tbody tr:hover {
 .select-all-checkbox {
     margin: 0;
 }
+
+
+
+
+
+h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.edit-container {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.left-column {
+    flex: 1;
+}
+
+.right-column {
+    flex: 2;
+}
+
+.image-upload {
+    border: 2px dashed #dcdcdc;
+    border-radius: 1rem;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    min-height: 300px;
+    max-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #f9f9f9;
+}
+
+.image-upload.no-image {
+    background-color: #f5f5f5;
+    color: #555555;
+}
+
+.image-upload img {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group.col {
+    display: flex;
+    gap: .5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+}
+
+.form-group select,
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: .5rem;
+    font-size: 16px;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.price-input {
+    width: 10vw !important;
+    font-size: 18px;
+    font-weight: bold;
+    background: #d5eaff;
+    outline: 2px solid #5db0ff;
+
+}
+
+.divider {
+    border-top: 1px solid #eee;
+    margin: 2vw 0;
+}
+
+.characteristics {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.characteristic > * {
+    align-self: center;
+}
+
+.characteristic select {
+    flex: 0 1 25%;
+}
+
+#saveProductPtn {
+    margin: 0 auto;
+}
+
+.hint-block {
+    width: 100%;
+    background-color: #f8f9fa;
+    border-left: 4px solid #3498db;
+    border-radius: .5rem;
+    padding: 15px 20px;
+    margin: 20px 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.hint-icon {
+    font-size: 24px;
+    color: #3498db;
+    margin-right: 15px;
+}
+
+.hint-text {
+    flex: 1;
+    color: #495057;
+}
+
+.hint-close {
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 15px;
+}
