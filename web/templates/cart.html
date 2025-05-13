@@ -1,94 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Корзина | ClimateHome - Продаем и устанавливаем сплит-системы в Уфе</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/web/static/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/web/static/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/web/static/favicon/favicon-16x16.png">
     <link rel="manifest" href="/web/static/favicon/site.webmanifest">
 
-    <link rel="stylesheet" href="/web/static/notify/simple-notify.css" />
+    <link rel="stylesheet" href="/web/static/notify/simple-notify.css"/>
 
 
-    <link rel="stylesheet" href="/web/static/css/elements.css" />
-    <link rel="stylesheet" href="/web/static/css/main.css" />
+    <link rel="stylesheet" href="/web/static/css/elements.css"/>
+    <link rel="stylesheet" href="/web/static/css/main.css"/>
 </head>
 <body>
 {{template "header" .}}
 
 <main class="main">
-    <section id="cart" class="cart-section opened">
-        <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
-            <h2>Корзина ({{"Кол-во"}})</h2>
-            <button style="transform: translateY(.3rem)" class="accent-btn btn-standard">Перейти к оформлению</button>
-        </div>
-
-        <div class="cart__container">
-            <div class="products__grid cart">
-                <div class="products-empty">
-                    <h4>В корзине пока пусто</h4>
-                    <p>Загляните в каталог — собрали там сплит-системы, которые могут вам подойти</p>
-
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <hr style="margin: 0 8vw">
-
-    <section id="favorites" class="favorites-section opened">
-        <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
-            <h2>Избранное ({{"Кол-во"}})</h2>
-            <button style="transform: translateY(.3rem)" class="accent-btn btn-standard">Добавить в корзину</button>
-        </div>
-
-        <div class="cart__container">
-            <div class="products__grid cart">
-{{/*                <div class="products-empty">*/}}
-{{/*                    <h4>В избранном пока пусто</h4>*/}}
-{{/*                    <p>Загляните в каталог — собрали там сплит-системы, которые могут вам подойти</p>*/}}
-
-{{/*                </div>*/}}
-
-                <div class="product-card">
-                    <div class="product-thumb">
-                        <button class="add-to-favorites active">♡</button>
-                        <span class="product-price">{{"14 999"}} ₽</span>
-                        <img src="/web/static/img/primer.webp" class="product-img" alt="">
-                    </div>
-                    <div class="product-body">
-                        <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                        <div class="product-tags">
-                            <span>Сплит-система</span>
-                            <span>до 20 м²</span>
-                            <span>34 дБ</span>
-                        </div>
-                        <button class="add-to-cart">В корзину</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-thumb">
-                        <button class="add-to-favorites active">♡</button>
-                        <span class="product-price">{{"14 999"}} ₽</span>
-                        <img src="/web/static/img/primer.webp" class="product-img" alt="">
-                    </div>
-                    <div class="product-body">
-                        <p class="product-title">Кондиционер настенный сплит-система DEXP AC-CD7ONF белый</p>
-                        <div class="product-tags">
-                            <span>Сплит-система</span>
-                            <span>до 20 м²</span>
-                            <span>34 дБ</span>
-                        </div>
-                        <button class="add-to-cart">В корзину</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    {{template "cart-module" .}}
 
     <hr style="margin: 0 8vw">
 

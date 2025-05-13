@@ -55,7 +55,7 @@ func (r userRepository) Delete(c context.Context, userID uint) error {
 
 func (r userRepository) GetFavorites(c context.Context, userID uint) ([]models.SplitSystem, error) {
 	var user models.User
-	err := r.db.WithContext(c).Preload("Favorites").First(&user, userID).Error
+	err := r.db.WithContext(c).Preload("Favorites").Preload("Favorites.Type").First(&user, userID).Error
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (r userRepository) GetFavorites(c context.Context, userID uint) ([]models.S
 
 func (r userRepository) GetCart(c context.Context, userID uint) ([]models.SplitSystem, error) {
 	var user models.User
-	err := r.db.WithContext(c).Preload("Cart").First(&user, userID).Error
+	err := r.db.WithContext(c).Preload("Cart").Preload("Cart.Type").First(&user, userID).Error
 	if err != nil {
 		return nil, err
 	}

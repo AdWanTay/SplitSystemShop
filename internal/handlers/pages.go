@@ -3,6 +3,7 @@ package handlers
 import (
 	"SplitSystemShop/internal/config"
 	"SplitSystemShop/internal/context"
+	"SplitSystemShop/internal/services"
 	"SplitSystemShop/internal/utils"
 	"github.com/gofiber/fiber/v2"
 )
@@ -43,9 +44,31 @@ func BlogPage(cfg *config.Config) fiber.Handler {
 	}
 }
 
-func CartPage(cfg *config.Config) fiber.Handler {
+func CartPage(cfg *config.Config, userService *services.UserService) fiber.Handler {
+
 	return func(c *fiber.Ctx) error {
-		return Render(c, "cart", fiber.Map{}, cfg)
+		userID := c.Locals("userId").(uint)
+
+		cart, err := userService.GetCart(c.Context(), userID)
+		if err != nil {
+			return err
+		}
+
+		favorites, err := userService.GetFavorites(c.Context(), userID)
+		if err != nil {
+			return err
+		}
+
+		return Render(c, "cart", fiber.Map{
+			"cart": fiber.Map{
+				"total": len(cart),
+				"items": cart,
+			},
+			"favorites": fiber.Map{
+				"total": len(favorites),
+				"items": favorites,
+			},
+		}, cfg)
 	}
 }
 
@@ -74,9 +97,30 @@ func ContactPage(cfg *config.Config) fiber.Handler {
 	}
 }
 
-func ProfilePage(cfg *config.Config) fiber.Handler {
+func ProfilePage(cfg *config.Config, userService *services.UserService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "profile", fiber.Map{}, cfg)
+		userID := c.Locals("userId").(uint)
+
+		cart, err := userService.GetCart(c.Context(), userID)
+		if err != nil {
+			return err
+		}
+
+		favorites, err := userService.GetFavorites(c.Context(), userID)
+		if err != nil {
+			return err
+		}
+
+		return Render(c, "profile", fiber.Map{
+			"cart": fiber.Map{
+				"total": len(cart),
+				"items": cart,
+			},
+			"favorites": fiber.Map{
+				"total": len(favorites),
+				"items": favorites,
+			},
+		}, cfg)
 	}
 }
 

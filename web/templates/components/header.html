@@ -5,22 +5,39 @@
         <a href="tel:+79008005510" class="header__phone">+7 (900) 800 55-10</a>
         <div class="search__container">
             <div class="icon">
-                <svg viewBox="0 0 24 24"><use xlink:href="/web/static/icons/iconpack.svg#icon-search"></use></svg>
+                <svg viewBox="0 0 24 24">
+                    <use xlink:href="/web/static/icons/iconpack.svg#icon-search"></use>
+                </svg>
             </div>
-            <input type="search" placeholder="Поиск" class="header__search" />
+            <input type="search" placeholder="Поиск" class="header__search"/>
         </div>
         <a id="openChatBtn" class="header__chat">
             <div class="icon">
-                <svg viewBox="0 0 24 24"><use xlink:href="/web/static/icons/iconpack.svg#icon-chat"></use></svg>
+                <svg viewBox="0 0 24 24">
+                    <use xlink:href="/web/static/icons/iconpack.svg#icon-chat"></use>
+                </svg>
             </div>
             Онлайн-чат
         </a>
         <div class="header__icons">
-            <a class="icon" onclick="openAuthModal('login')">
-                <svg viewBox="0 0 24 24"><use xlink:href="/web/static/icons/iconpack.svg#icon-user"></use></svg>
+
+            {{ if .isAuthenticated }}
+            <a class="icon" href="/profile">
+                <svg viewBox="0 0 24 24">
+                    <use xlink:href="/web/static/icons/iconpack.svg#icon-user"></use>
+                </svg>
             </a>
-            <a class="icon" onclick="openCartModal()" >
-                <svg viewBox="0 0 24 24"><use xlink:href="/web/static/icons/iconpack.svg#icon-cart"></use></svg>
+            {{else}}
+            <a class="icon" onclick="openAuthModal()">
+                <svg viewBox="0 0 24 24">
+                    <use xlink:href="/web/static/icons/iconpack.svg#icon-user"></use>
+                </svg>
+            </a>
+            {{end}}
+            <a class="icon" onclick="openCartModal()">
+                <svg viewBox="0 0 24 24">
+                    <use xlink:href="/web/static/icons/iconpack.svg#icon-cart"></use>
+                </svg>
             </a>
         </div>
     </div>

@@ -44,11 +44,11 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Get("/", handlers.IndexPage(cfg))
 	app.Get("/admin", handlers.AdminPage(cfg))
 	app.Get("/article", handlers.ArticlePage(cfg))
-	app.Get("/cart", handlers.CartPage(cfg))
+	app.Get("/cart", middlewares.RequireAuth(cfg, false), handlers.CartPage(cfg, ctx.UserService))
 	app.Get("/catalog", handlers.CatalogPage(cfg, ctx))
 	app.Get("/contact", handlers.ContactPage(cfg))
 	app.Get("/products", handlers.ProductPage(cfg))
-	app.Get("/profile", handlers.ProfilePage(cfg))
+	app.Get("/profile", middlewares.RequireAuth(cfg, false), handlers.ProfilePage(cfg, ctx.UserService))
 	app.Get("/blog", handlers.BlogPage(cfg))
 
 }
