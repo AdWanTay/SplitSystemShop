@@ -3,7 +3,11 @@
 <section id="cart" class="cart-section opened">
     <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
         <h2>Корзина ({{ .cart.total}})</h2>
-        <button style="transform: translateY(.3rem)" class="accent-btn btn-standard">Перейти к оформлению</button>
+        {{if eq .favorites.total 0}}
+            <button onclick="location.href='/catalog'" style="transform: translateY(.3rem)" class="accent-btn btn-standard">Перейти в каталог</button>
+        {{else}}
+            <button style="transform: translateY(.3rem)" class="accent-btn btn-standard">Перейти к оформлению</button>
+        {{end}}
     </div>
 
     <div class="cart__container">
@@ -41,15 +45,17 @@
 <section id="favorites" class="favorites-section opened">
     <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
         <h2>Избранное ({{.favorites.total}})</h2>
-        <button style="transform: translateY(.3rem)" class="accent-btn btn-standard">Добавить в корзину</button>
+        {{if not (eq .favorites.total 0)}}
+            <button onclick="location.href='/catalog'" style="transform: translateY(.3rem)" class="accent-btn btn-standard">Перейти в каталог</button>
+        {{end}}
     </div>
 
     <div class="cart__container">
         <div class="products__grid cart">
             {{if eq .favorites.total 0}}
             <div class="products-empty">
-                <h4>В корзине пока пусто</h4>
-                <p>Загляните в каталог — собрали там сплит-системы, которые могут вам подойти</p>
+                <h4>В избранном пока пусто</h4>
+                <p>Добавляйте товары в избранное, чтобы не потерять их</p>
             </div>
 
             {{else}}

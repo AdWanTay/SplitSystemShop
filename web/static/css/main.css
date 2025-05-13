@@ -177,15 +177,6 @@ body {
     padding: 0 8vw;
     margin-top: 2vw;
 }
-.slider__container {
-    height: 25vw;
-    max-height: 400px;
-    background-color: #e5e7eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 2rem;
-}
 
 .catalog__container {
     display: flex;
@@ -331,7 +322,6 @@ body {
     background: none;
     border: 1px solid #5db0ff;
     color: #5db0ff;
-
 }
 
 .add-to-cart:hover {
