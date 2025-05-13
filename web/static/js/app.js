@@ -279,132 +279,39 @@ function openModal(config) {
                 <div class="modal-body">${config.body}</div>
                 <div class="modal-description">${config.description}</div>
                 <div class="modal-actions">
-                    <button id="mainBtn" class="modal-button primary">${config.mainBtnText}</button>
-                    <button class="modal-button cancel" onclick="this.closest('.modal').remove()">Отмена</button>
+                    <button id="mainBtn" class="accent-btn btn-standard">${config.mainBtnText}</button>
+                    <button class="primary-btn btn-standard" onclick="this.closest('.modal').remove()">Отмена</button>
                 </div>
             </div>
         </div>
     `;
 
-    // Вставляем модальное окно в body
     document.body.insertAdjacentHTML('beforeend', modalHtml);
-
-    // Назначаем обработчик для основной кнопки
     document.getElementById('mainBtn').addEventListener('click', config.mainBtnAction);
-
-    try {
-        if (config == modalConfigs.orderKit) {
-            document.getElementById('fio').value = document.getElementById('full_name').value
-            document.getElementById('email1').value = document.getElementById('email_address').value
-            document.getElementById('tel1').value = document.getElementById('phone_number').value
-        }
-    } catch { }
-
 }
 
 const modalConfigs = {
-    orderKit: {
-        title: "Оставить заявку",
+    contactUs: {
+        title: "Свяжитесь с нами, или оставьте заявку",
         body: `
-            <form id="submitForm" autocomplete="off">
-                <input id="fio" type="text" id="name" autocomplete="off" placeholder="ФИО" value="" required>
-                <input id="email1" type="email" id="newEmail" autocomplete="off" placeholder="Почта" required>
-                <input id="tel1" type="tel" id="email" autocomplete="off" placeholder="Телефон" required>
-            </form>
+            <div class="contact__content">
+                <div class="contact-card">
+                    <h3 class="contact-card-title">Контакты</h3>
+                    <a href="tel:89998002001">+7 (999) 800-20-01</a>
+                    <a href="mailto:info@climatehome.online">info@climatehome.online</a>
+                    <a href="mailto:admin@climatehome.online">admin@climatehome.online</a>
+                </div>
+                <div class="contact-card">
+                    <h3 class="contact-card-title">Адрес</h3>
+                    <p>Респ. Башкортостан, г. Уфа</p>
+                </div>
+            </div>
         `,
-        description: "ⓘ Необходимо ввести свои данные без ошибок",
-        mainBtnText: "Готово",
+        description: "ⓘ Рабочие дни: Пн-Пт с 10:00 до 19:00, Сб-Вс Выходной",
+        mainBtnText: "Оставить заявку",
         mainBtnAction: async function () {
-            const email = document.getElementById('email1').value;
-            const fullName = document.getElementById('fio').value;
-            const phoneNumber = document.getElementById('tel1').value;
-
-            if (!email || !fullName || !phoneNumber) {
-                showErr("Все поля должны быть заполнены");
-                return;
-            }
-
-            if (!validateEmail(email)) {
-                showErr("Введен некорректный адрес электронной почты");
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/starter-kit/request', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        full_name: fullName,
-                        phone_number: phoneNumber
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.message || "Не удалось");
-                }
-
-                showNotify("Успех", "Страница будет перезагружена");
-                this.closest('.modal').remove();
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3100);
-            } catch (error) {
-                showErr(error.message);
-            }
-        }
-    },
-    emailEdit: {
-        title: "Изменение почты",
-        body: `
-            <form id="emailForm" autocomplete="off">
-                <input type="email" id="newEmail" autocomplete="off" placeholder="Новая почта" required>
-            </form>
-        `,
-        description: "ⓘ Необходимо ввести новый адрес без ошибок",
-        mainBtnText: "Сохранить",
-        mainBtnAction: async function () {
-            const newEmail = document.getElementById('newEmail').value;
-
-            if (!newEmail) {
-                showErr("Все поля должны быть заполнены");
-                return;
-            }
-
-            if (!validateEmail(newEmail)) {
-                showErr("Введен некорректный адрес электронной почты");
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/auth/change-email', {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    },
-                    body: JSON.stringify({
-                        new_email: newEmail
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.message || "Не удалось изменить email");
-                }
-
-                showNotify("Успех", "Email успешно изменён. Страница будет перезагружена");
-                this.closest('.modal').remove();
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3100);
-            } catch (error) {
-                showErr(error.message);
-            }
+            this.closest('.modal').remove();
+            location.href='/#contact-us';
         }
     },
     passwordEdit: {
@@ -454,99 +361,6 @@ const modalConfigs = {
                 }
                 showNotify("Успех", "Пароль успешно изменён");
                 this.closest('.modal').remove();
-            } catch (error) {
-                showErr(error.message);
-            }
-        }
-    },
-    nameEdit: {
-        title: "Изменение ФИО",
-        body: `
-            <form id="nameForm">
-                <input type="text" id="newLastName" autocomplete="off" placeholder="Фамилия" required>
-                <input type="text" id="newFirstName" autocomplete="off" placeholder="Имя" required>
-                <input type="text" id="newPatronymic" autocomplete="off" placeholder="Отчество (необязательно)">
-            </form>
-        `,
-        description: "ⓘ Укажите ваши реальные фамилию, имя и отчество",
-        mainBtnText: "Сохранить",
-        mainBtnAction: async function () {
-            const lastName = document.getElementById('newLastName').value;
-            const firstName = document.getElementById('newFirstName').value;
-            const patronymic = document.getElementById('newPatronymic').value;
-
-            if (!lastName || !firstName) {
-                showErr("Фамилия и имя обязательны для заполнения");
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/auth/change-name', {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    },
-                    body: JSON.stringify({
-                        new_last_name: lastName,
-                        new_first_name: firstName,
-                        new_patronymic: patronymic
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.message || "Не удалось изменить ФИО");
-                }
-
-                showNotify("Успех", "Персональные данные успешно изменены. Страница будет перезагружена");
-                this.closest('.modal').remove();
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3100);
-            } catch (error) {
-                showErr(error.message);
-            }
-        }
-    },
-    phoneEdit: {
-        title: "Изменение номера телефона",
-        body: `
-            <form id="phoneForm" autocomplete="off">
-                <input type="tel" id="newPhoneNumber" autocomplete="off" placeholder="Новый номер телефона" required>
-            </form>
-        `,
-        description: "ⓘ Необходимо ввести корректный номер телефона",
-        mainBtnText: "Сохранить",
-        mainBtnAction: async function () {
-            const newPhoneNumber = document.getElementById('newPhoneNumber').value;
-
-            if (!newPhoneNumber) {
-                showErr("Все поля должны быть заполнены");
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/auth/change-phone', {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    },
-                    body: JSON.stringify({
-                        new_phone_number: newPhoneNumber
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.message || "Не удалось изменить номер телефона");
-                }
-                showNotify("Успех", "Номер телефона успешно изменён. Страница будет перезагружена");
-                this.closest('.modal').remove();
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3100);
             } catch (error) {
                 showErr(error.message);
             }

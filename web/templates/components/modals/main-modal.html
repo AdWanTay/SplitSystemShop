@@ -4,20 +4,17 @@
     <div class="modal-content main-modal">
         <span class="modal-close" onclick="closeAllModals()">✖</span>
 
-        <h2 class="modal-title">Заголовок окна</h2>
+        <h2 class="modal-title">Заголовок</h2>
 
         <div class="modal-body">
-            <!-- Здесь можешь вставлять любые элементы, например форму -->
-            <p>Какой-то контент или форма может быть тут</p>
         </div>
 
         <div class="modal-description">
-            Это описание или пояснение к действию. Здесь ты можешь разместить текст, предупреждение и т.п.
         </div>
 
         <div class="modal-actions">
-            <button id="mainBtn" class="modal-button primary">Универсальная кнопка</button>
-            <button class="modal-button cancel" onclick="this.closest('.modal').remove()">Отмена</button>
+            <button id="mainBtn" class="accent-btn btn-standard">Универсальная кнопка</button>
+            <button class="primary-btn btn-standard" onclick="this.closest('.modal').remove()">Отмена</button>
         </div>
     </div>
 </div>
