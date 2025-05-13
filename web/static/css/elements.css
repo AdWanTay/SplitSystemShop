@@ -253,7 +253,8 @@
 }
 
 .btn-standard {
-    padding: .5rem 1rem;
+    font-size: 1rem;
+    padding: .8rem 2rem;
 }
 
 .btn-huge {

@@ -13,7 +13,7 @@ a {
 }
 
 input[type="tel"], input[type="text"], input[type="email"],
-textarea {
+input[type="password"], textarea {
     font-size: 1rem !important;
     padding: .8rem 1rem;
     border-radius: .5rem;
@@ -188,8 +188,9 @@ body {
     gap: 2vw;
 }
 
-.products, .services, .cart-section, .favorites-section {
-    margin: 4rem 8vw;
+.products, .services, .cart-section, .favorites-section,
+.profile-section {
+    padding: 4rem 8vw;
 }
 .products h2, .services h2, .contact__form h2 {
     font-size: 3rem;
@@ -662,6 +663,34 @@ body {
 .form-toggle-item input[type=radio] {
     display: none;
 }
+
+.form-section {
+    margin-bottom: 40px;
+}
+
+.form-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.form-section h2 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #dcdcdc;
+    margin: 40px 0 30px;
+}
+
+.form-section input {
+    min-width: 15vw;
+
+}
+
 
 input[type=checkbox] {
     accent-color: #007cff;
