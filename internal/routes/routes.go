@@ -20,7 +20,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	//Роуты для апи
 	app.Post("/api/auth/login", handlers.Login(ctx.UserService, cfg))
 	app.Post("/api/auth/register", handlers.Registration(ctx.UserService, cfg))
-	app.Get("/api/auth/logout", handlers.Logout())
+	app.Get("/api/auth/logout", middlewares.RequireAuth(cfg, false), handlers.Logout())
 	app.Patch("/api/auth/profile", middlewares.RequireAuth(cfg, false), handlers.ChangeCredentials(ctx.UserService))
 	app.Patch("/api/auth/change-password", middlewares.RequireAuth(cfg, false), handlers.ChangePassword(ctx.UserService))
 

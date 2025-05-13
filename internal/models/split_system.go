@@ -1,8 +1,11 @@
 package models
 
 type SplitSystem struct {
-	ID                   uint        `gorm:"primaryKey" json:"id"`
-	Title                string      `json:"title"`
+	ID               uint   `gorm:"primaryKey" json:"id"`
+	Title            string `json:"title"`
+	ShortDescription string `json:"short_description"`
+	LongDescription  string `json:"long_description"`
+
 	BrandID              uint        `json:"brand_id"`
 	Brand                Brand       `json:"brand"`
 	TypeID               uint        `json:"type_id"`

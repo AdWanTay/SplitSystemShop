@@ -547,11 +547,9 @@
             card.className = 'product-card';
 
             const img = product.images?.[0]?.image_url || '/web/static/img/primer.webp';
-            const inCartClass = product.in_cart ? 'add-to-cart active' : 'add-to-cart';
-            const inFavoritesClass = product.in_favorites ? 'add-to-favorites active' : 'add-to-favorites';
             card.innerHTML = `
             <div class="product-thumb">
-                ${isAuthenticated ? `<button class="${inFavoritesClass}" onclick="addToFavorites(${product.id})">♡</button>` : ''}
+                ${isAuthenticated ? `<button class="${product.in_favorites ? 'add-to-favorites active' : 'add-to-favorites'}" onclick="${product.in_favorites ? `removeFromFavorites(this, ${product.id})` : `addToFavorites(this, ${product.id})`} ">♡</button>` : ''}
                 <span class="product-price">${formatPrice(product.price)} ₽</span>
                 <img src="${img}" class="product-img" alt="${product.brand?.name || ''}">
             </div>
@@ -562,15 +560,12 @@
                     <span>до ${product.recommended_area} м²</span>
                     <span>${product.min_noise_level} дБ</span>
                 </div>
-                ${isAuthenticated ? `<button class="${inCartClass}" onclick="addToCart(${product.id})">В корзину</button>` : ''}
+            ${isAuthenticated ? `<button class="${product.in_cart ? 'add-to-cart active' : 'add-to-cart'}" onclick="${product.in_cart ? `removeFromCart(this, ${product.id})` : `addToCart(this, ${product.id})`} ">${product.in_cart ? 'Уже в корзине' : 'В корзину'}</button>` : ''}
             </div>
         `;
+
             container.appendChild(card);
         });
-    }
-
-    function formatPrice(price) {
-        return (price / 100).toLocaleString('ru-RU'); // если цена в копейках
     }
 
 
@@ -643,39 +638,83 @@
     });
 
 
-    function addToCart(id) {
+    function addToCart(button, id) {
         fetch("/api/cart", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({split_system_id: id})
+            body: JSON.stringify({ split_system_id: id })
         })
+            .then(response => {
+                if (!response.ok) throw new Error("Ошибка при добавлении");
+                return response.json(); // если сервер возвращает JSON
+            })
             .then(data => {
-                alert("Ответ с сервера: " + data);
-                renderProducts(data.items)
+                button.classList.add("active");
+                button.textContent = "Уже в корзине";
+                button.setAttribute("onclick", `removeFromCart(this, ${id})`);
             })
             .catch(err => {
-                alert("Ошибка: " + err);
+                alert("Ошибка: " + err.message);
+            });
+    }
+    function removeFromCart(button, id) {
+        fetch(`/api/cart/${id}`, {
+            method: "DELETE"
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Ошибка при удалении из корзины");
+                return response.json();
+            })
+            .then(data => {
+                button.classList.remove("active");
+                button.textContent = "В корзину";
+                button.setAttribute("onclick", `addToCart(this, ${id})`);
+            })
+            .catch(err => {
+                alert("Ошибка: " + err.message);
             });
     }
 
-    function addToFavorites(id) {
+
+    function addToFavorites(button, id) {
         fetch("/api/favorites", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({split_system_id: id})
+            body: JSON.stringify({ split_system_id: id })
         })
+            .then(response => {
+                if (!response.ok) throw new Error("Ошибка при добавлении в избранное");
+                return response.json(); // если сервер возвращает JSON
+            })
             .then(data => {
-                alert("Ответ с сервера: " + data);
-                renderProducts(data.items)
+                button.classList.add("active");
+                button.setAttribute("onclick", `removeFromFavorites(this, ${id})`);
             })
             .catch(err => {
-                alert("Ошибка: " + err);
+                alert("Ошибка: " + err.message);
             });
     }
+    function removeFromFavorites(button, id) {
+        fetch(`/api/favorites/${id}`, {
+            method: "DELETE"
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Ошибка при удалении из избранного");
+                return response.json();
+            })
+            .then(data => {
+                button.classList.remove("active");
+                button.setAttribute("onclick", `addToFavorites(this, ${id})`);
+            })
+            .catch(err => {
+                alert("Ошибка: " + err.message);
+            });
+    }
+
 </script>
 
 

@@ -149,3 +149,7 @@ function unlockBodyScroll() {
     document.body.classList.remove('modal-open');
     document.body.style.removeProperty('padding-right');
 }
+
+function formatPrice(price) {
+    return (price / 100).toLocaleString('ru-RU'); // если цена в копейках
+}

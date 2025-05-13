@@ -8,30 +8,28 @@
 
     <div class="cart__container">
         <div class="products__grid cart">
-
             {{if eq .cart.total 0}}
             <div class="products-empty">
                 <h4>В корзине пока пусто</h4>
                 <p>Загляните в каталог — собрали там сплит-системы, которые могут вам подойти</p>
             </div>
-
             {{else}}
-            {{ range .cart.items }}
-            <div class="product-card">
-                <div class="product-thumb">
-                    <span class="product-price">{{.Price}} ₽</span>
-                    <img src="/web/static/img/primer.webp" class="product-img" alt="">
-                </div>
-                <div class="product-body">
-                    <p class="product-title">{{.Title}}</p>
-                    <div class="product-tags">
-                        <span>{{.Type.Name}}</span>
-                        <span>до {{.RecommendedArea}} м²</span>
-                        <span>{{.MinNoiseLevel}} дБ</span>
+                {{ range .cart.items }}
+                <div class="product-card">
+                    <div class="product-thumb">
+                        <span class="product-price">{{.Price}} ₽</span>
+                        <img src="/web/static/img/primer.webp" class="product-img" alt="">
+                    </div>
+                    <div class="product-body">
+                        <p class="product-title">{{.Title}}</p>
+                        <div class="product-tags">
+                            <span>{{.Type.Name}}</span>
+                            <span>до {{.RecommendedArea}} м²</span>
+                            <span>{{.MinNoiseLevel}} дБ</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            {{end}}
+                {{end}}
             {{end}}
 
         </div>
