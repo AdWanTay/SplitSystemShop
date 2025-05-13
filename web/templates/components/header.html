@@ -48,7 +48,9 @@
         <a href="/#services">Услуги</a>
         <a href="/blog">Блог</a>
         <a href="/contact">Контакты</a>
+        {{ if .isAuthenticated }}
         <a href="/cart#favorites">Мое избранное</a>
+        {{end}}
     </nav>
 </header>
 {{end}}}
