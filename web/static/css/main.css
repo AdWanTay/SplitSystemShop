@@ -193,7 +193,7 @@ body {
 }
 
 .products, .services, .cart-section, .favorites-section,
-.profile-section {
+.profile-section, .products__editor, .blog__editor {
     padding: 4rem 8vw;
 }
 .products h2, .services h2, .contact__form h2 {

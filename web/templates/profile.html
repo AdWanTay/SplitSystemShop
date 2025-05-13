@@ -9,6 +9,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/web/static/favicon/favicon-16x16.png">
     <link rel="manifest" href="/web/static/favicon/site.webmanifest">
 
+    <link rel="stylesheet" href="/web/static/notify/simple-notify.css" />
+
     <link rel="stylesheet" href="/web/static/css/elements.css" />
     <link rel="stylesheet" href="/web/static/css/main.css" />
 </head>
@@ -89,7 +91,7 @@
 
     <section class="profile-section">
         <div class="form-section">
-            <h2>Контактные данные</h2>
+            <h2>Персональные данные</h2>
             <div class="form-group">
                 <input type="text" placeholder="Фамилия">
                 <input type="text" placeholder="Имя">
@@ -99,7 +101,7 @@
                 <input type="email" placeholder="Почта">
                 <input type="tel" placeholder="Телефон">
             </div>
-            <button class="accent-btn btn-standard">Изменить / Сохранить</button>
+            <button class="accent-btn btn-standard" onclick="">Изменить / Сохранить</button>
         </div>
 
         <hr>
@@ -108,9 +110,9 @@
             <h2>Аккаунт</h2>
             <div class="form-group">
                 <input type="password" value="************" disabled>
-                <button class="accent-btn btn-standard">Изменить&nbsp;пароль</button>
+                <button class="accent-btn btn-standard" onclick="openModal(modalConfigs.passwordEdit)">Изменить&nbsp;пароль</button>
             </div>
-            <button class="primary-btn btn-standard">Удалить аккаунт</button>
+            <button class="primary-btn btn-standard" onclick="openModal(modalConfigs.deleteAccount)">Удалить аккаунт</button>
         </div>
     </section>
 
@@ -119,6 +121,10 @@
 </main>
 
 {{template "footer" .}}}
+
+<script src="/web/static/js/app.js"></script>
+<script src="/web/static/js/utils.js"></script>
+<script src="/web/static/notify/simple-notify.min.js"></script>
 
 </body>
 </html>

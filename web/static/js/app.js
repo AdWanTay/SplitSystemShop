@@ -347,8 +347,7 @@ const modalConfigs = {
                 const response = await fetch('/api/auth/change-password', {
                     method: 'PATCH',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         new_password: newPassword
@@ -387,8 +386,7 @@ const modalConfigs = {
                 const response = await fetch('/api/auth/delete-account', {
                     method: 'DELETE',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        'Content-Type': 'application/json'
                     }
                 });
 
