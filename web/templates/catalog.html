@@ -12,9 +12,6 @@
     <link rel="stylesheet" href="/web/static/css/main.css"/>
     <link rel="stylesheet" href="/web/static/css/elements.css"/>
 
-    <link rel="stylesheet" href="/web/static/notify/simple-notify.css" />
-
-
     <script src="https://static.elfsight.com/platform/platform.js" async></script>
     <div class="elfsight-app-e4363121-2d4f-4914-8220-73508a36cd9e" data-elfsight-app-lazy></div>
 
@@ -190,7 +187,7 @@
                 <div id="extra-filters">
                     <div class="filter-group">
                         <label class="title">Основные режимы</label>
-                        <div>
+                        <div id="modes-checkboxes">
                             {{ range .modes }}
                             <label class="checkbox-button"><input type="checkbox" value="{{.ID}}"/>{{.Name}}</label>
                             {{end}}
@@ -356,7 +353,6 @@
 
 {{template "footer" .}}}
 
-
 <script>
     document.querySelectorAll('input[name="cost"]').forEach(radio => {
         radio.addEventListener('click', () => {
@@ -421,29 +417,31 @@
     load()
 
     //TODO: сброс фильтров
-    function appendRangeFromSelect(selectEl, paramPrefix) {
-        const value = selectEl?.value;
-        if (value && value !== "") {
-            const [min, max] = value.replace(',', '.').split('-');
-            if (min !== undefined && max !== undefined) {
-                params.append(`${paramPrefix}_min`, parseFloat(min));
-                params.append(`${paramPrefix}_max`, parseFloat(max));
-            }
-        }
-    }
 
-    function appendRangeFromRange(value, paramPrefix) {
-        if (value && value !== "") {
-            const [min, max] = value.replace(',', '.').split('–');
-            if (min !== undefined && max !== undefined) {
-                params.append(`${paramPrefix}_min`, parseFloat(min));
-                params.append(`${paramPrefix}_max`, parseFloat(max));
-            }
-        }
-    }
 
     function getParams() {
         const params = new URLSearchParams();
+
+        function appendRangeFromSelect(selectEl, paramPrefix) {
+            const value = selectEl?.value;
+            if (value && value !== "") {
+                const [min, max] = value.replace(',', '.').split('-');
+                if (min !== undefined && max !== undefined) {
+                    params.append(`${paramPrefix}_min`, parseFloat(min));
+                    params.append(`${paramPrefix}_max`, parseFloat(max));
+                }
+            }
+        }
+
+        function appendRangeFromRange(value, paramPrefix) {
+            if (value && value !== "") {
+                const [min, max] = value.replace(',', '.').split('–');
+                if (min !== undefined && max !== undefined) {
+                    params.append(`${paramPrefix}_min`, parseFloat(min));
+                    params.append(`${paramPrefix}_max`, parseFloat(max));
+                }
+            }
+        }
 
         // Бренды
         document.querySelectorAll('#brand-checkboxes input[type="checkbox"]:checked')
@@ -452,6 +450,11 @@
         // Типы
         document.querySelectorAll('#type-checkboxes input[type="checkbox"]:checked')
             .forEach(cb => params.append('type', cb.value));
+
+        // Режимы
+        document.querySelectorAll('#modes-checkboxes input[type="checkbox"]:checked')
+            .forEach(cb => params.append('mode', cb.value));
+
 
         // Инвертор
         const inverter = document.querySelector('input[name="inverter"]:checked')?.value;
@@ -496,8 +499,8 @@
     }
 
     function applyButtonPress() {
-        load()
         applyPressed = true
+        load()
     }
 
     function load() {
@@ -512,7 +515,7 @@
             sortParams.append('sort', selectedSort.value);
         }
 
-        const fullUrl = "/api/split-systems" + (applyPressed ? "?" + params.toString() : '') + "?" + sortParams.toString();
+        const fullUrl = "/api/split-systems?" + sortParams.toString() + (applyPressed ? "&" + params.toString() : '');
 
         console.log("Загрузка с фильтрами:", fullUrl);
         fetch(fullUrl)
@@ -692,9 +695,8 @@
         coolingLabel.textContent = values[coolingRange.value - 1];
     });
 </script>
-
-<script src="/web/static/notify/simple-notify.min.js"></script>
-
-
+<script src="/web/static/js/app.js"></script>
+<!--<script src="/web/static/js/calculator.js"></script>-->
+<script src="/web/static/js/utils.js"></script>
 </body>
 </html>
