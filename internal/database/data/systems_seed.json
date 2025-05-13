@@ -47,7 +47,7 @@
   },
   {
     "brand": "Aceline",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 1249900,
     "has_inverter": false,
     "recommended_area": 14,
@@ -74,9 +74,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система DEXP AC-CD7ONF белый",
+    "title": "Кондиционер Настенный сплит-система DEXP AC-CD7ONF белый",
     "brand": "DEXP",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 1499900,
     "has_inverter": false,
     "recommended_area": 20,
@@ -103,9 +103,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система Thermex Parma 7 белый",
+    "title": "Кондиционер Настенный сплит-система Thermex Parma 7 белый",
     "brand": "Thermex",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 1549900,
     "has_inverter": false,
     "recommended_area": 16,
@@ -132,9 +132,9 @@
     "image_url": "887e35e02c1eee9738364087ac6fb7c9486fe767f98fe9f011dffb61e5358c65.jpg"
   },
   {
-    "title": "Кондиционер настенный сплит-система Aceline AC-KGHA9ONF белый",
+    "title": "Кондиционер Настенный сплит-система Aceline AC-KGHA9ONF белый",
     "brand": "Aceline",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 1599900,
     "has_inverter": false,
     "recommended_area": 25,
@@ -161,9 +161,9 @@
     "image_url": "72a1aafa37ce16daf0a1c05092f8bd376b90c72539566ff15d16be01d94de659.jpg"
   },
   {
-    "title": "Кондиционер настенный сплит-система DEXP AC-CD9ONF белый",
+    "title": "Кондиционер Настенный сплит-система DEXP AC-CD9ONF белый",
     "brand": "DEXP",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 3900000,
     "has_inverter": false,
     "recommended_area": 25,
@@ -190,9 +190,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система Thermex Parma 9 белый",
+    "title": "Кондиционер Настенный сплит-система Thermex Parma 9 белый",
     "brand": "Thermex",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 15300000,
     "has_inverter": false,
     "recommended_area": 16,
@@ -219,9 +219,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система iFFALCON F1 07 ONF/R белый",
+    "title": "Кондиционер Настенный сплит-система iFFALCON F1 07 ONF/R белый",
     "brand": "iFFALCON",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 12300000,
     "has_inverter": false,
     "recommended_area": 20,
@@ -248,9 +248,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система iFFALCON F1 09 ONF/R белый",
+    "title": "Кондиционер Настенный сплит-система iFFALCON F1 09 ONF/R белый",
     "brand": "iFFALCON",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 10000000,
     "has_inverter": false,
     "recommended_area": 25,
@@ -277,9 +277,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система GoldStar GSAC-07HN1 белый",
+    "title": "Кондиционер Настенный сплит-система GoldStar GSAC-07HN1 белый",
     "brand": "GoldStar",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 9900000,
     "has_inverter": false,
     "recommended_area": 20,
@@ -306,9 +306,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система DEXP AC-CD7INV белый",
+    "title": "Кондиционер Настенный сплит-система DEXP AC-CD7INV белый",
     "brand": "DEXP",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 2000000,
     "has_inverter": true,
     "recommended_area": 20,
@@ -335,9 +335,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система JAX ACN-07HE/ACN-07HE белый",
+    "title": "Кондиционер Настенный сплит-система JAX ACN-07HE/ACN-07HE белый",
     "brand": "Jax",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 3900000,
     "has_inverter": false,
     "recommended_area": 21,
@@ -364,9 +364,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система DEXP AC-CDW7INV белый",
+    "title": "Кондиционер Настенный сплит-система DEXP AC-CDW7INV белый",
     "brand": "DEXP",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 4900000,
     "has_inverter": true,
     "recommended_area": 20,
@@ -393,9 +393,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система Centek CT-65A07+ белый",
+    "title": "Кондиционер Настенный сплит-система Centek CT-65A07+ белый",
     "brand": "Centek",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 2300000,
     "has_inverter": false,
     "recommended_area": 25,
@@ -421,9 +421,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система DEXP AC-CD9ONF-S серый",
+    "title": "Кондиционер Настенный сплит-система DEXP AC-CD9ONF-S серый",
     "brand": "DEXP",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 1400000,
     "has_inverter": false,
     "recommended_area": 25,
@@ -450,9 +450,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система iFFALCON F1 PRO 07 ONF белый",
+    "title": "Кондиционер Настенный сплит-система iFFALCON F1 PRO 07 ONF белый",
     "brand": "iFFALCON",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 2029900,
     "has_inverter": false,
     "recommended_area": 20,
@@ -479,9 +479,9 @@
     "image_url": ""
   },
   {
-    "title": "Кондиционер настенный сплит-система Candy AC-07HTA303/R2 белый",
+    "title": "Кондиционер Настенный сплит-система Candy AC-07HTA303/R2 белый",
     "brand": "Candy",
-    "product_type": "настенный",
+    "type": "Настенные",
     "price": 13900000,
     "has_inverter": false,
     "recommended_area": 20,

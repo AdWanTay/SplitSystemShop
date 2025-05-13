@@ -418,29 +418,31 @@
     load()
 
     //TODO: сброс фильтров
-    function appendRangeFromSelect(selectEl, paramPrefix) {
-        const value = selectEl?.value;
-        if (value && value !== "") {
-            const [min, max] = value.replace(',', '.').split('-');
-            if (min !== undefined && max !== undefined) {
-                params.append(`${paramPrefix}_min`, parseFloat(min));
-                params.append(`${paramPrefix}_max`, parseFloat(max));
-            }
-        }
-    }
 
-    function appendRangeFromRange(value, paramPrefix) {
-        if (value && value !== "") {
-            const [min, max] = value.replace(',', '.').split('–');
-            if (min !== undefined && max !== undefined) {
-                params.append(`${paramPrefix}_min`, parseFloat(min));
-                params.append(`${paramPrefix}_max`, parseFloat(max));
-            }
-        }
-    }
 
     function getParams() {
         const params = new URLSearchParams();
+
+        function appendRangeFromSelect(selectEl, paramPrefix) {
+            const value = selectEl?.value;
+            if (value && value !== "") {
+                const [min, max] = value.replace(',', '.').split('-');
+                if (min !== undefined && max !== undefined) {
+                    params.append(`${paramPrefix}_min`, parseFloat(min));
+                    params.append(`${paramPrefix}_max`, parseFloat(max));
+                }
+            }
+        }
+
+        function appendRangeFromRange(value, paramPrefix) {
+            if (value && value !== "") {
+                const [min, max] = value.replace(',', '.').split('–');
+                if (min !== undefined && max !== undefined) {
+                    params.append(`${paramPrefix}_min`, parseFloat(min));
+                    params.append(`${paramPrefix}_max`, parseFloat(max));
+                }
+            }
+        }
 
         // Бренды
         document.querySelectorAll('#brand-checkboxes input[type="checkbox"]:checked')
@@ -493,8 +495,8 @@
     }
 
     function applyButtonPress() {
-        load()
         applyPressed = true
+        load()
     }
 
     function load() {
@@ -509,7 +511,7 @@
             sortParams.append('sort', selectedSort.value);
         }
 
-        const fullUrl = "/api/split-systems" + (applyPressed ? "?" + params.toString() : '') + "?" + sortParams.toString();
+        const fullUrl = "/api/split-systems?" + sortParams.toString() + (applyPressed ? "&" + params.toString() : '');
 
         console.log("Загрузка с фильтрами:", fullUrl);
         fetch(fullUrl)
