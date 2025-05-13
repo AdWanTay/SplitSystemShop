@@ -3,11 +3,50 @@ function closeAllModals() {
     unlockBodyScroll();
 }
 
+function openAuthModal() {
+    closeAllModals();
+    lockBodyScroll();
+
+    fetch("/web/templates/components/modals/auth-modal.html")
+        .then((res) => res.text())
+        .then((html) => {
+            const modalContainer = document.createElement("div");
+            modalContainer.innerHTML = html;
+            document.body.appendChild(modalContainer);
+
+            // const input = document.querySelector("input[type='tel']");
+            // input.addEventListener("input", mask, false);
+            // input.addEventListener("focus", mask, false);
+            // input.addEventListener("blur", mask, false);
+            // Специальный обработчик для автозаполнения
+            // input.addEventListener('change', function (e) {
+            //     if (this.value && !this.value.startsWith('+7')) {
+            //         setTimeout(() => {
+            //             const event = new Event('input');
+            //             this.dispatchEvent(event);
+            //         }, 100);
+            //     }
+            // }, false);
+
+            document.getElementById('loginForm').addEventListener('submit', login(modalContainer));
+            document.getElementById('registerForm').addEventListener('submit', register(modalContainer));
+
+            showForm("login", modalContainer);
+
+            //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
+            modalContainer.addEventListener("click", (e) => {
+                if (e.target.classList.contains("modal")) {
+                    closeAllModals();
+                }
+            });
+        });
+}
+
 function showForm(type) {
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
     const btnLogin = document.getElementById('btn-login');
     const btnRegister = document.getElementById('btn-register');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
 
     if (type === 'login') {
         loginForm.style.display = 'block';
@@ -206,62 +245,6 @@ function openCalculator() {
         });
 }
 
-function openAuthModal(type) {
-    closeAllModals();
-
-    lockBodyScroll();
-
-    fetch("/web/templates/components/modals/auth-modal.html")
-        .then((res) => res.text())
-        .then((html) => {
-            const modalContainer = document.createElement("div");
-            modalContainer.innerHTML = html;
-            document.body.appendChild(modalContainer);
-
-            const input = document.querySelector("input[type='tel']");
-            input.addEventListener("input", mask, false);
-            input.addEventListener("focus", mask, false);
-            input.addEventListener("blur", mask, false);
-
-            // Специальный обработчик для автозаполнения
-            input.addEventListener('change', function (e) {
-                if (this.value && !this.value.startsWith('+7')) {
-                    setTimeout(() => {
-                        const event = new Event('input');
-                        this.dispatchEvent(event);
-                    }, 100);
-                }
-            }, false);
-
-            // Запускаем нужную форму
-            if (type === "login") {
-                showForm("login");
-            } else {
-                showForm("register");
-            }
-
-            //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
-            modalContainer.addEventListener("click", (e) => {
-                if (e.target.classList.contains("modal")) {
-                    closeAllModals();
-                }
-            });
-            addAuthListener(type, modalContainer)
-        });
-}
-
-function addAuthListener(type, modalContainer) {
-    if (type === "login") {
-        const loginForm = document.getElementById("loginForm");
-        const loginHandler = login(modalContainer);
-        loginForm.addEventListener('submit', loginHandler);
-    } else {
-        const registerForm = document.getElementById("registerForm");
-        const registerHandler = register(modalContainer);
-        registerForm.addEventListener('submit', registerHandler);
-    }
-}
-
 function login(modalContainer) {
     return async (event) => {
         event.preventDefault();
@@ -292,6 +275,7 @@ function login(modalContainer) {
 }
 
 function register(modalContainer) {
+    console.log("register")
     return async (event) => {
         event.preventDefault();
         const form = event.target;
@@ -315,7 +299,7 @@ function register(modalContainer) {
 
             if (response.ok) {
                 modalContainer.remove()
-                location.reload();
+                // location.reload();
             } else {
                 showErr('Ошибка входа: ' + (result.error || 'Неизвестная ошибка'))
             }
