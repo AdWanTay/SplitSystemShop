@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{"название товара"}}} | ClimateHome - Продаем и устанавливаем сплит-системы в Уфе</title>
+    <title>{{"название товара"}} | ClimateHome - Продаем и устанавливаем сплит-системы в Уфе</title>
 {{/*    todo ВСТАВИТЬ НАЗВАНИЕ ТОВАРА*/}}
 
     <link rel="apple-touch-icon" sizes="180x180" href="/web/static/favicon/apple-touch-icon.png">
@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="/web/static/css/main.css" />
     <link rel="stylesheet" href="/web/static/css/elements.css" />
+    <link rel="stylesheet" href="/web/static/css/product.css" />
 
     <link rel="stylesheet" href="/web/static/notify/simple-notify.css" />
 
@@ -23,6 +24,122 @@
 {{template "header" .}}
 
 <main class="main">
+
+    <!-- Контейнер карточки -->
+    <section class="product-page">
+        <h1 class="product-title">Кондиционер Настенный сплит-система DEXP AC-CD7INV белый</h1>
+
+        <div class="product-main">
+            <div class="product-image">
+                <img src="/web/static/img/primer.webp" alt="Название товара">
+            </div>
+
+            <div class="product-info">
+                <p class="product-short">Краткое описание Краткое описание Краткое описание Краткое описание Краткое описание Краткое описание Краткое описание Краткое описание Краткое описание Краткое описание Краткое описание Краткое описание Краткое описание Краткое описание Краткое описание</p>
+
+                <div class="product-meta">
+                    <span class="product-rating">Рейтинг: <strong>4.5</strong></span>
+                    <span class="product-category">Категория 1</span>
+                    <span class="product-category">Категория 2</span>
+                </div>
+
+                <div class="product-price-block">
+                    <div class="p-price">22 800 руб.</div>
+                    <div class="product-actions">
+                        <button class="btn-standard accent-btn">Заказать</button>
+                        <button class="btn-standard primary-btn">В избранное</button>
+                    </div>
+                </div>
+
+                <div class="product-quick-specs">
+
+                    <div class="spec-row">
+                        <span class="spec-label">Модель</span>
+                        <span class="spec-value">Coolray</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Материал изделия</span>
+                        <span class="spec-value">стекло</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Марка автомобиля</span>
+                        <span class="spec-value">Geely; Geely Coolray 2024</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Комплектация</span>
+                        <span class="spec-value">стекло на панель водителя; стекло на мультимедиа</span>
+                    </div>
+
+                    <button class="specs-btn btn-small primary-btn" onclick="document.getElementById('desc').scrollIntoView({ behavior: 'smooth' });">
+                        Характеристики и описание →
+                    </button>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <div id="desc" class="product-desc">
+            <h2>Описание и характеристики</h2>
+
+            <details class="product-description" open>
+                <summary>Описание</summary>
+
+                <p>Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание Полное описание</p>
+                <p><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, cum doloribus earum est id illo ipsum labore minus numquam perspiciatis placeat quidem quisquam quod repellendus rerum sed tenetur totam voluptas?</span><span>Ab consectetur cum dignissimos dolor eius error est eveniet fugit id ipsum minima, modi nam nemo neque nesciunt nisi perferendis quis, quo reiciendis repellat sequi sint velit veniam vitae, voluptas!</span><span>Architecto cumque expedita natus nemo officia optio quam quo saepe unde voluptatem? Ab asperiores delectus deserunt dolores exercitationem impedit, laborum molestiae nam nesciunt numquam odio perspiciatis quibusdam quos soluta tenetur!</span><span>Deserunt eum hic odit pariatur suscipit. A autem deserunt dignissimos esse expedita facilis hic, minima molestias nemo numquam perspiciatis quasi quia quisquam rem sapiente, totam unde. Deserunt maiores saepe ullam.</span><span>Autem consequatur deleniti deserunt dicta dolor, dolorem error est nostrum nulla odit officiis quisquam quos sed sint velit. At nemo quas quis sed voluptas? Dolor dolorem eum ex illum natus.</span><span>Ab ad atque cum distinctio eveniet fugiat maxime nostrum, obcaecati pariatur possimus, quaerat, quos repellat reprehenderit sapiente tenetur. Animi aperiam aut earum magnam maxime neque obcaecati omnis quo reiciendis soluta.</span><span>Aliquam commodi ea id iure modi nemo, optio! Ad cum cumque deleniti deserunt dicta error vitae! Blanditiis consectetur delectus dignissimos eaque expedita, fuga fugit natus nihil pariatur ratione soluta, suscipit!</span><span>Aliquam asperiores commodi debitis dicta distinctio dolor dolores dolorum enim exercitationem facere fugiat fugit, hic illo iusto non obcaecati possimus quas quidem quis quod quos sed soluta veniam voluptas voluptatum.</span><span>Adipisci alias animi asperiores atque beatae cum cumque doloribus eveniet harum illum ipsam iure maxime nam numquam officia, quis quisquam quo quos ratione recusandae sunt ut veritatis vitae voluptate voluptatum.</span><span>Aperiam aut beatae blanditiis culpa delectus deserunt dignissimos earum eius, eligendi facere illo magni maxime nesciunt nisi nobis nulla optio, quam quas quidem quod reprehenderit rerum voluptate. Enim, facilis, obcaecati?</span></p>
+            </details>
+
+            <!-- Характеристики -->
+            <details class="product-details" open>
+                <summary>Характеристики</summary>
+
+                <div class="spec-section">
+                    <h3>Заводские данные</h3>
+                    <div class="spec-grid">
+                        <div class="spec-row"><span>Гарантия производителя:</span><span>36 мес.</span></div>
+                        <div class="spec-row"><span>Страна производства:</span><span>Китай</span></div>
+                    </div>
+                </div>
+
+                <div class="spec-section">
+                    <h3>Общие параметры</h3>
+                    <div class="spec-grid">
+                        <div class="spec-row"><span>Тип кондиционера:</span><span>Настенный</span></div>
+                        <div class="spec-row"><span>Тип системы:</span><span>Сплит-система</span></div>
+                        <div class="spec-row"><span>Модель:</span><span>DEXP AC-CD7ONF</span></div>
+                        <div class="spec-row"><span>Цвет:</span><span>Белый</span></div>
+                    </div>
+                </div>
+
+                <div class="spec-section">
+                    <h3>Конструкция</h3>
+                    <div class="spec-grid">
+                        <div class="spec-row"><span>Инвертор:</span><span>Да</span></div>
+                        <div class="spec-row"><span>Хладагент:</span><span>R410A</span></div>
+                        <div class="spec-row"><span>Компрессор:</span><span>GREE</span></div>
+                        <div class="spec-row"><span>Количество хладагента:</span><span>430 г</span></div>
+                    </div>
+                </div>
+
+                <div class="spec-section">
+                    <h3>Производительность</h3>
+                    <div class="spec-grid">
+                        <div class="spec-row"><span>Охлаждение:</span><span>7500 BTU</span></div>
+                        <div class="spec-row"><span>Мощность охлаждения:</span><span>2300 Вт</span></div>
+                        <div class="spec-row"><span>Мощность обогрева:</span><span>2730 Вт</span></div>
+                        <div class="spec-row"><span>Мин. уровень шума (внутр.):</span><span>34 дБ</span></div>
+                        <div class="spec-row"><span>Макс. уровень шума (внутр.):</span><span>38 дБ</span></div>
+                        <div class="spec-row"><span>Макс. уровень шума (внешн.):</span><span>49 дБ</span></div>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+
+
+    </section>
+
 
     {{template "popular-products" .}}
 
