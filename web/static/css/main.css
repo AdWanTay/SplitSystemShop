@@ -259,7 +259,13 @@ textarea:focus, textarea:active {
 .catalog__container {
     display: flex;
     gap: 2vw;
+    flex-grow: 1;
 }
+
+.catalog .products__grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
 .products, .services, .cart-section, .favorites-section,
 .profile-section, .products__editor, .blog__editor {
     padding: 4rem 8vw;
@@ -363,6 +369,8 @@ textarea:focus, textarea:active {
     font-size: 0.75rem;
 }
 .add-to-cart {
+    margin-bottom: 1rem;
+    margin-right: 1rem;
     margin-top: auto;
     align-self: flex-end;
     background: var(--accent-color);
@@ -448,7 +456,8 @@ textarea:focus, textarea:active {
 }
 
 aside {
-    max-width: 420px;
+    flex-basis: 100%;
+    /*max-width: 420px;*/
     background: #ffffff;
     border-radius: 16px;
     padding: 24px;
@@ -463,7 +472,7 @@ aside {
 
 .filter-group label.title {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
     font-size: 1.2rem;
     font-weight: bold;
     color: #333333;
@@ -474,8 +483,8 @@ aside {
     background: #f1f1f1;
     border: 1px solid #dcdcdc;
     border-radius: 8px;
-    padding: 6px 10px;
-    margin: 4px 6px 4px 0;
+    padding: 4px 8px;
+    margin: 3px 3px 3px 0;
     cursor: pointer;
     font-size: 14px;
     user-select: none;
@@ -501,6 +510,19 @@ select, input[type="range"], input[type="number"] {
     accent-color: #2989e5;
 }
 
+
+#brand-checkboxes.collapsed .checkbox-button.hidden {
+    display: none;
+}
+.toggle-button {
+    margin-top: 8px;
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    padding: 0;
+}
+
 .filter-actions {
     margin-top: 24px;
 }
@@ -509,6 +531,7 @@ select, input[type="range"], input[type="number"] {
     display: block;
     width: 100%;
     padding: 10px;
+    margin-top: .5rem;
 }
 
 #area-range-label, #cooling-range-label {

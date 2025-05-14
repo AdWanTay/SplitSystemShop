@@ -32,11 +32,14 @@
             <aside>
                 <div class="filter-group">
                     <label class="title">Бренд</label>
-                    <div id="brand-checkboxes">
-                        {{ range .brands }}
-                        <label class='checkbox-button'><input type='checkbox' value='{{.ID}}'/>{{.Name}}</label>
+                    <div id="brand-checkboxes" class="collapsed">
+                        {{ range $index, $brand := .brands }}
+                            <label class="checkbox-button{{ if gt $index 4 }} hidden{{ end }}">
+                                <input type="checkbox" value="{{ $brand.ID }}" />{{ $brand.Name }}
+                            </label>
                         {{ end }}
                     </div>
+                    <button id="toggle-brands" class="toggle-button">Показать все</button>
                 </div>
 
                 <div class="filter-group">
@@ -247,9 +250,9 @@
                     </div>
                 </div>
 
-                <button id="toggle-filters" class="btn-apply primary-btn" style="margin-top: 12px;">Все фильтры</button>
 
                 <div class="filter-actions">
+                    <button id="toggle-filters" class="btn-apply primary-btn" style="margin-top: 12px;">Все фильтры</button>
                     <button class="btn-apply accent-btn" onclick="applyButtonPress()">Применить фильтры</button>
                 </div>
             </aside>
@@ -263,7 +266,7 @@
                         </div>
                     </button>
                     <label class="filter-radio">
-                        <input type="radio" name="sort_filter" value="rating_desc" checked>
+                        <input class="default" type="radio" name="sort_filter" value="rating_desc" checked>
                         <span class="radio-label">Высокий рейтинг</span>
                     </label>
                     <label class="filter-radio">
@@ -291,6 +294,19 @@
 {{template "footer" .}}}
 
 <script>
+    document.getElementById('toggle-brands').addEventListener('click', function () {
+        const container = document.getElementById('brand-checkboxes');
+        const isCollapsed = container.classList.contains('collapsed');
+
+        if (isCollapsed) {
+            container.classList.remove('collapsed');
+            this.textContent = 'Скрыть';
+        } else {
+            container.classList.add('collapsed');
+            this.textContent = 'Показать все';
+        }
+    });
+
     document.querySelectorAll('input[name="cost"]').forEach(radio => {
         radio.addEventListener('click', () => {
             const priceFrom = document.getElementById('price-from');
@@ -505,7 +521,7 @@
             })
             .then(data => {
                 console.log("Ответ с сервера:", data);
-                renderProducts(data.items)
+                renderProducts(data.items.slice(0, 9)); // Показываем только первые 9 товаров
             })
             .catch(err => {
                 console.error("Ошибка:", err);
@@ -539,8 +555,9 @@
                     <span>до ${product.recommended_area} м²</span>
                     <span>${product.min_noise_level} дБ</span>
                 </div>
-            ${isAuthenticated ? `<button class="${product.in_cart ? 'add-to-cart active' : 'add-to-cart'}" onclick="${product.in_cart ? `removeFromCart(this, ${product.id})` : `addToCart(this, ${product.id})`} ">${product.in_cart ? 'Уже в корзине' : 'В корзину'}</button>` : ''}
             </div>
+            ${isAuthenticated ? `<button class="${product.in_cart ? 'add-to-cart active' : 'add-to-cart'}" onclick="${product.in_cart ? `removeFromCart(this, ${product.id})` : `addToCart(this, ${product.id})`} ">${product.in_cart ? 'Уже в корзине' : 'В корзину'}</button>` : ''}
+
         `;
 
             container.appendChild(card);
@@ -554,6 +571,7 @@
 
         // Сброс радиокнопок
         document.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+        document.querySelector('.filter-radio .default').checked = true;
 
         // Сброс селектов
         document.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
@@ -580,6 +598,8 @@
             powerRange.value = 0;
             powerLabel.textContent = powerLabels[0];
         }
+
+        showToast("", "Фильтры сброшены");
 
         // Убираем активное состояние у кнопки
         document.getElementById('filters-reset').classList.remove('active');
@@ -721,18 +741,10 @@
             label.classList.toggle('checked', input.checked);
         });
     });
-
-    // Cooling Capacity Range
-    const coolingRange = document.getElementById('cooling-capacity-range');
-    const coolingLabel = document.getElementById('cooling-capacity-label');
-    coolingRange.addEventListener('input', () => {
-        coolingLabel.textContent = values[coolingRange.value - 1];
-    });
 </script>
 
 <script src="/web/static/notify/simple-notify.min.js"></script>
 <script src="/web/static/js/app.js"></script>
-<!--<script src="/web/static/js/calculator.js"></script>-->
 <script src="/web/static/js/utils.js"></script>
 </body>
 </html>
