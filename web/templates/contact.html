@@ -15,7 +15,6 @@
 
     <link rel="stylesheet" href="/web/static/notify/simple-notify.css" />
 
-
     <script src="https://static.elfsight.com/platform/platform.js" async></script>
     <div class="elfsight-app-e4363121-2d4f-4914-8220-73508a36cd9e" data-elfsight-app-lazy></div>
 </head>
@@ -52,37 +51,14 @@
                 </div>
             </div>
 
-            <div style="position:relative;overflow:hidden; height: 55vh; border-radius: 1rem; flex: 1; border: 1px solid #dcdcdc;">
+            <div style="position:relative;overflow:hidden; max-height: 55vh; border-radius: 1rem; flex: 1; border: 1px solid #dcdcdc;">
                 <iframe style="height: 100%; width: 100%" src="https://yandex.ru/map-widget/v1/?ll=56.037968%2C54.731079&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgg1MzEwNTMwORJD0KDQvtGB0YHQuNGPLCDQoNC10YHQv9GD0LHQu9C40LrQsCDQkdCw0YjQutC-0YDRgtC-0YHRgtCw0L0sINCj0YTQsCIKDb7VX0IVy_BaQg%2C%2C&source=serp_navig&z=10" frameborder="0" allowfullscreen="true" style="position:relative;">
                 </iframe>
             </div>
         </div>
     </section>
 
-    <section class="about">
-        <div class="about__container">
-            <div class="about__content">
-                <h2 class="about__title">О компании ClimateHome</h2>
-                <p class="about__text">
-                    С 2022 года ClimateHome занимается продажей, установкой и обслуживанием сплит-систем по всему региону.
-                    Среди наших клиентов – частные домовладельцы, отели, офисы и строительные организации. Мы успешно реализовали
-                    более 100 проектов различной сложности и масштаба.
-                </p>
-                <p class="about__text">
-                    Наша цель — обеспечить комфортный микроклимат в каждом доме. Мы работаем только с сертифицированной техникой,
-                    используем проверенные материалы и гарантируем надёжность систем на долгие годы. Наша команда – это опытные
-                    специалисты, готовые к любым задачам.
-                    <a href="/contact">Подробнее</a>
-                </p>
-            </div>
-            <div class="about__stats">
-                <div class="about__stat"><span>&gt;100</span><p>Установленных систем</p></div>
-                <div class="about__stat"><span>&gt;5</span><p>Профессиональных монтажников</p></div>
-                <div class="about__stat"><span>&gt;2 года</span><p>Опыт работы в сфере климата</p></div>
-                <div class="about__stat"><span>&gt;100</span><p>Долгосрочных клиентов</p></div>
-            </div>
-        </div>
-    </section>
+    {{template "about-company" .}}
 
     {{template "contact-form" .}}
 
@@ -92,6 +68,8 @@
 
 
 <script src="/web/static/notify/simple-notify.min.js"></script>
+<script src="/web/static/js/app.js"></script>
+<script src="/web/static/js/utils.js"></script>
 
 </body>
 </html>
