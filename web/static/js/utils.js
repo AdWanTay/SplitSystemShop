@@ -38,6 +38,24 @@ function showNotify(title, text) {
     })
 };
 
+function showToast(title, text) {
+    new Notify ({
+        status: 'info',
+        title: `${title}`,
+        text: `${text}`,
+        effect: 'slide',
+        speed: 500,
+        customClass: 'customToast',
+        showIcon: false,
+        showCloseButton: true,
+        autoclose: true,
+        autotimeout: 1500,
+        notificationsGap: null,
+        notificationsPadding: null,
+        type: 'outline',
+        position: 'x-center',
+    })
+};
 
 document.addEventListener("DOMContentLoaded", () => {
 

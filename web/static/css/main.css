@@ -367,11 +367,11 @@ textarea:focus, textarea:active {
     align-self: flex-end;
     background: var(--accent-color);
     color: white;
-    border: none;
     padding: 0.4rem 0.8rem;
     font-size: var(--fz-08);
     border-radius: 0.4rem;
     cursor: pointer;
+    border: 1px solid transparent;
     transition: var(--transition-fast);
 }
 .add-to-cart.active {

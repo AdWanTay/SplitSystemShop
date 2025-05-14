@@ -1,6 +1,7 @@
 {{define "popular-products"}}
 <section id="popular" class="popular products">
     <h2>Популярные сплит-системы</h2>
+
     <div class="products__filters">
         <label class="filter-radio">
             <input type="radio" name="popular-filter" param1="has_inverter" value1="1" checked>
@@ -23,6 +24,16 @@
             <span class="radio-label">Тихие</span>
         </label>
     </div>
+
+    {{if not .isAuthenticated}}
+        <div class="hint-block">
+            <div class="hint-icon">ⓘ</div>
+            <div class="hint-text">
+                <strong>Зарегистрируйтесь или войдите в аккаунт.</strong> Чтобы добавить товар в корзину, необходимо авторизоваться.
+            </div>
+            <div class="hint-close" onclick="this.parentElement.style.display='none'">×</div>
+        </div>
+    {{end}}
 
     <div class="products__grid" id="popular_products__grid"></div>
 </section>

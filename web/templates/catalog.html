@@ -10,8 +10,8 @@
     <link rel="manifest" href="/web/static/favicon/site.webmanifest">
 
     <link rel="stylesheet" href="/web/static/css/main.css"/>
-    <link rel="stylesheet" href="/web/static/css/elements.css"/>
     <link rel="stylesheet" href="/web/static/notify/simple-notify.css"/>
+    <link rel="stylesheet" href="/web/static/css/elements.css"/>
 
     <script src="https://static.elfsight.com/platform/platform.js" async></script>
     <div class="elfsight-app-e4363121-2d4f-4914-8220-73508a36cd9e" data-elfsight-app-lazy></div>
@@ -664,6 +664,7 @@
             .then(data => {
                 button.classList.add("active");
                 button.textContent = "Уже в корзине";
+                showToast("", "Товар добавлен в корзину");
                 button.setAttribute("onclick", `removeFromCart(this, ${id})`);
             })
             .catch(err => {
@@ -681,6 +682,7 @@
             .then(data => {
                 button.classList.remove("active");
                 button.textContent = "В корзину";
+                showToast("", "Товар удален из корзины");
                 button.setAttribute("onclick", `addToCart(this, ${id})`);
             })
             .catch(err => {
@@ -703,6 +705,7 @@
             })
             .then(data => {
                 button.classList.add("active");
+                showToast("", "Товар добавлен в избранное");
                 button.setAttribute("onclick", `removeFromFavorites(this, ${id})`);
             })
             .catch(err => {
@@ -719,6 +722,7 @@
             })
             .then(data => {
                 button.classList.remove("active");
+                showToast("", "Товар удален из избранного");
                 button.setAttribute("onclick", `addToFavorites(this, ${id})`);
             })
             .catch(err => {

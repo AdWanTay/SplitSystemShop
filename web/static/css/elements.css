@@ -376,3 +376,39 @@ input[type=checkbox]:checked::after {
 .links:hover {
     opacity: .8;
 }
+
+
+
+
+
+.hint-block {
+    width: 100%;
+    background-color: #f8f9fa;
+    border-left: 4px solid #5db0ff;
+    border-radius: .5rem;
+    padding: 15px 20px;
+    margin: 20px 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+.hint-icon {
+    font-size: 24px;
+    color: #5db0ff;
+    margin-right: 15px;
+}
+.hint-text {
+    flex: 1;
+    color: #495057;
+}
+.hint-close {
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 15px;
+}
+
+.customToast {
+    border-color: var(--accent-color);
+    --sn-info-progress-color: var(--accent-color);
+}
