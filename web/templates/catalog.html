@@ -17,77 +17,7 @@
     <div class="elfsight-app-e4363121-2d4f-4914-8220-73508a36cd9e" data-elfsight-app-lazy></div>
 
     <style>
-        aside {
-            max-width: 420px;
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            height: max-content;
-            overflow-y: auto;
-        }
 
-        .filter-group {
-            margin-bottom: 20px;
-        }
-
-        .filter-group label.title {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333333;
-        }
-
-        .checkbox-button, .radio-button {
-            display: inline-block;
-            background: #f1f1f1;
-            border: 1px solid #dcdcdc;
-            border-radius: 8px;
-            padding: 6px 10px;
-            margin: 4px 6px 4px 0;
-            cursor: pointer;
-            font-size: 14px;
-            user-select: none;
-            transition: all 0.2s ease;
-        }
-
-        .checkbox-button input, .radio-button input {
-            display: none;
-        }
-
-        .checkbox-button.checked, .radio-button.checked {
-            background: #5db0ff;
-            color: white;
-            border-color: #5db0ff;
-        }
-
-        select, input[type="range"], input[type="number"] {
-            width: 100%;
-            padding: 6px;
-            border-radius: 8px;
-            border: 1px solid #dcdcdc;
-            font-size: 14px;
-            accent-color: #2989e5;
-        }
-
-        .filter-actions {
-            margin-top: 24px;
-        }
-
-        .btn-apply {
-            display: block;
-            width: 100%;
-            padding: 10px;
-        }
-
-        #area-range-label, #cooling-range-label {
-            font-size: .875rem;
-            padding: .3rem 1rem;
-            border: 1px solid #dcdcdc;
-            border-radius: 1000px;
-            background-color: #f1f1f1;
-        }
     </style>
 </head>
 <body>
@@ -319,13 +249,19 @@
 
                 <button id="toggle-filters" class="btn-apply primary-btn" style="margin-top: 12px;">Все фильтры</button>
 
-                <div class="filter-actions" onclick="applyButtonPress()">
-                    <button class="btn-apply accent-btn">Применить фильтры</button>
+                <div class="filter-actions">
+                    <button class="btn-apply accent-btn" onclick="applyButtonPress()">Применить фильтры</button>
                 </div>
             </aside>
 
             <div class="products__container">
                 <div class="products__filters">
+                    <button id="filters-reset" class="accent-btn btn-small">
+                        <div class="p-f">
+                            <span style="font-weight: bold;">✕</span>
+                            Сбросить фильтры
+                        </div>
+                    </button>
                     <label class="filter-radio">
                         <input type="radio" name="sort_filter" value="rating_desc" checked>
                         <span class="radio-label">Высокий рейтинг</span>
@@ -542,7 +478,8 @@
     }
 
     function applyButtonPress() {
-        applyPressed = true
+        applyPressed = true;
+        document.getElementById('filters-reset').classList.add('active');
         load()
     }
 
@@ -609,6 +546,50 @@
             container.appendChild(card);
         });
     }
+
+
+    document.getElementById('filters-reset').addEventListener('click', () => {
+        // Сброс чекбоксов
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+
+        // Сброс радиокнопок
+        document.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+
+        // Сброс селектов
+        document.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+
+        // Сброс классов визуального выделения
+        document.querySelectorAll('.radio-button.checked, .checkbox-button.checked').forEach(el => {
+            el.classList.remove('checked');
+        });
+
+        // Сброс значений цены
+        const priceFrom = document.getElementById('price-from');
+        const priceTo = document.getElementById('price-to');
+        if (priceFrom) priceFrom.value = '';
+        if (priceTo) priceTo.value = '';
+
+        // Сброс слайдеров
+        const areaRange = document.getElementById('area-range');
+        const powerRange = document.getElementById('power-range');
+        if (areaRange) {
+            areaRange.value = 0;
+            areaLabel.textContent = areaLabels[0];
+        }
+        if (powerRange) {
+            powerRange.value = 0;
+            powerLabel.textContent = powerLabels[0];
+        }
+
+        // Убираем активное состояние у кнопки
+        document.getElementById('filters-reset').classList.remove('active');
+
+        // Сброс apply-флага и загрузка
+        applyPressed = false;
+        load();
+    });
+
+
 
 
     const areaRange = document.getElementById("area-range");
@@ -729,7 +710,6 @@
                 alert("Ошибка: " + err.message);
             });
     }
-
 </script>
 
 

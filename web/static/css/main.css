@@ -447,6 +447,87 @@ textarea:focus, textarea:active {
     color: var(--accent-color);
 }
 
+aside {
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    height: max-content;
+    overflow-y: auto;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-group label.title {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333333;
+}
+
+.checkbox-button, .radio-button {
+    display: inline-block;
+    background: #f1f1f1;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin: 4px 6px 4px 0;
+    cursor: pointer;
+    font-size: 14px;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.checkbox-button input, .radio-button input {
+    display: none;
+}
+
+.checkbox-button.checked, .radio-button.checked {
+    background: #5db0ff;
+    color: white;
+    border-color: #5db0ff;
+}
+
+select, input[type="range"], input[type="number"] {
+    width: 100%;
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    font-size: 14px;
+    accent-color: #2989e5;
+}
+
+.filter-actions {
+    margin-top: 24px;
+}
+
+.btn-apply {
+    display: block;
+    width: 100%;
+    padding: 10px;
+}
+
+#area-range-label, #cooling-range-label {
+    font-size: .875rem;
+    padding: .3rem 1rem;
+    border: 1px solid #dcdcdc;
+    border-radius: 1000px;
+    background-color: #f1f1f1;
+}
+
+#filters-reset {
+    display: none;
+    border-radius: 9999px;
+}
+
+#filters-reset.active {
+    display: block;
+}
+
 
 /* ################################# */
 /*               CART                */
