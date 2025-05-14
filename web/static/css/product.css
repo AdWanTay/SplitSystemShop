@@ -1,5 +1,5 @@
 .product-page {
-    margin: 2rem 8vw;
+    margin: 2rem 8rem;
     font-family: sans-serif;
     padding: 1rem;
 }
@@ -79,7 +79,7 @@
 
 .product-desc {
     width: 70%;
-    margin-top: 2rem;
+    margin: 2rem 0;
 }
 
 .product-desc h2 {
@@ -163,4 +163,81 @@
 
 .specs-btn {
     align-self: flex-start;
+}
+
+.p-f {
+    display: flex;
+    align-self: center;
+    gap: .5rem;
+    line-height: 1;
+}
+
+
+.reviews-block {
+    width: 50%;
+}
+
+.reviews-block h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.review-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.03);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.review-author {
+    font-weight: bold;
+    color: #333;
+}
+
+.review-rating {
+    background-color: #f0f0f0;
+    padding: 0.3rem 0.7rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.review-rating .stars {
+    color: #f5a623;
+    font-family: "Arial", sans-serif;
+    letter-spacing: 1px;
+}
+
+.review-text {
+    color: #444;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.btn-review {
+    margin-top: 1rem;
+    padding: 0.7rem 1.2rem;
+    background-color: #468ef7;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-review:hover {
+    background-color: #3779db;
 }
