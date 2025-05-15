@@ -4,10 +4,10 @@ import "SplitSystemShop/internal/models"
 
 type CatalogResponse struct {
 	Total int           `json:"total"`
-	Items []catalogItem `json:"items"`
+	Items []CatalogItem `json:"items"`
 }
 
-type catalogItem struct {
+type CatalogItem struct {
 	models.SplitSystem
 	InCart      bool `json:"in_cart"`
 	InFavorites bool `json:"in_favorites"`
@@ -25,12 +25,12 @@ func (r *CatalogResponse) New(userCart, userFavorites, allSystems []models.Split
 	}
 
 	r.Total = len(allSystems)
-	r.Items = make([]catalogItem, len(allSystems))
+	r.Items = make([]CatalogItem, len(allSystems))
 
 	for i, system := range allSystems {
 		_, inCart := systemsInCartIDs[system.ID]
 		_, inFavorites := systemsInFavoritesIDs[system.ID]
-		r.Items[i] = catalogItem{
+		r.Items[i] = CatalogItem{
 			SplitSystem: system,
 			InCart:      inCart,
 			InFavorites: inFavorites,
@@ -41,11 +41,11 @@ func (r *CatalogResponse) New(userCart, userFavorites, allSystems []models.Split
 type CartModuleResponse struct {
 	Cart struct {
 		Total int
-		Items []catalogItem
+		Items []CatalogItem
 	}
 	Favorites struct {
 		Total int
-		Items []catalogItem
+		Items []CatalogItem
 	}
 }
 
@@ -57,21 +57,21 @@ func NewCartModuleResponse(cart, favorites []models.SplitSystem) CartModuleRespo
 		favoritesIdx[faveItem.ID] = struct{}{}
 	}
 
-	cartDto := make([]catalogItem, len(cart))
+	cartDto := make([]CatalogItem, len(cart))
 	for i, _ := range cart {
 		cartIdx[cart[i].ID] = struct{}{}
 		_, inFave := favoritesIdx[cart[i].ID]
-		cartDto[i] = catalogItem{
+		cartDto[i] = CatalogItem{
 			SplitSystem: cart[i],
 			InCart:      true,
 			InFavorites: inFave,
 		}
 	}
 
-	favoritesDto := make([]catalogItem, len(favorites))
+	favoritesDto := make([]CatalogItem, len(favorites))
 	for i, _ := range favorites {
 		_, inCart := cartIdx[favorites[i].ID]
-		favoritesDto[i] = catalogItem{
+		favoritesDto[i] = CatalogItem{
 			SplitSystem: favorites[i],
 			InCart:      inCart,
 			InFavorites: true,
@@ -81,14 +81,14 @@ func NewCartModuleResponse(cart, favorites []models.SplitSystem) CartModuleRespo
 	return CartModuleResponse{
 		Cart: struct {
 			Total int
-			Items []catalogItem
+			Items []CatalogItem
 		}{
 			Total: len(cart),
 			Items: cartDto,
 		},
 		Favorites: struct {
 			Total int
-			Items []catalogItem
+			Items []CatalogItem
 		}{
 			Total: len(favorites),
 			Items: favoritesDto,

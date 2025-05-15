@@ -22,10 +22,43 @@ func App(cfg *config.Config) error {
 	engine := html.New("./web/templates", ".html")
 	engine.Reload(true)
 
-	engine.AddFunc("split", func(s, sep string) []string {
-		return strings.Split(s, sep)
+	engine.AddFunc("stars", func(rating int) string {
+		var stars string
+		for i := 1; i <= 5; i++ {
+			if i <= rating {
+				stars += "★"
+			} else {
+				stars += "☆"
+			}
+		}
+		return stars
 	})
 
+	engine.AddFunc("formatPrice", func(price int) string {
+		s := fmt.Sprintf("%d", price)
+		n := len(s)
+
+		if n <= 3 {
+			return s
+		}
+
+		var b strings.Builder
+		pre := n % 3
+		if pre > 0 {
+			b.WriteString(s[:pre])
+			if n > pre {
+				b.WriteString(" ")
+			}
+		}
+
+		for i := pre; i < n; i += 3 {
+			b.WriteString(s[i : i+3])
+			if i+3 < n {
+				b.WriteString(" ")
+			}
+		}
+		return b.String()
+	})
 	app := fiber.New(fiber.Config{
 		Views: engine,
 		ErrorHandler: func(c *fiber.Ctx, err error) error {

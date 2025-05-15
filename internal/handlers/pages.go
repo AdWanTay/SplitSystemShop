@@ -3,10 +3,12 @@ package handlers
 import (
 	"SplitSystemShop/internal/config"
 	"SplitSystemShop/internal/context"
+	"SplitSystemShop/internal/models"
 	"SplitSystemShop/internal/services"
 	"SplitSystemShop/internal/utils"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"math"
 	"strconv"
 )
 
@@ -112,13 +114,25 @@ func ProductPage(cfg *config.Config, splitSystemService *services.SplitSystemSer
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
+		splitSystem.AverageRating = math.Round(splitSystem.AverageRating*10) / 10
+		for i, _ := range splitSystem.Reviews {
+			if splitSystem.Reviews[i].User == nil {
+				splitSystem.Reviews[i].User = &models.User{FirstName: "Профиль удален"}
+			} else {
+				original := splitSystem.Reviews[i].User
+				copied := *original
 
-		for _, review := range splitSystem.Reviews {
-			if review.User == nil {
-				review.User.LastName = "Профиль удален"
+				runes := []rune(copied.LastName)
+				if len(runes) > 0 {
+					postfix := string(runes[0]) + "."
+					copied.FirstName += " " + postfix
+				}
+
+				// Присваиваем копию обратно в review
+				splitSystem.Reviews[i].User = &copied
 			}
 		}
-
+		//response :=
 		return Render(c, "product", fiber.Map{"info": splitSystem}, cfg)
 	}
 }

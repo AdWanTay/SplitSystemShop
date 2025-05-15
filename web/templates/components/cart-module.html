@@ -23,11 +23,11 @@
             {{ range .response.Cart.Items }}
             <div class="product-card" id="cart_{{.ID}}">
                 <div class="product-thumb">
-                    <span class="product-price">{{.Price}} ₽</span>
+                    <span class="product-price">{{formatPrice .Price}} ₽</span>
                     <img src="/web/static/img/primer.webp" class="product-img" alt="">
                 </div>
                 <div class="product-body">
-                    <p class="product-title">{{.Title}}</p>
+                    <p class="card-product-title">{{.Title}}</p>
                     <div class="product-tags">
                         <span>{{.Type.Name}}</span>
                         <span>до {{.RecommendedArea}} м²</span>
@@ -71,11 +71,11 @@
                 <div class="product-thumb">
                     <button class="add-to-favorites active" onclick="removeFromFavorites({{.ID}})">♡</button>
 
-                    <span class="product-price">{{.Price}} ₽</span>
+                    <span class="product-price">{{ formatPrice .Price}} ₽</span>
                     <img src="/web/static/img/primer.webp" class="product-img" alt="">
                 </div>
                 <div class="product-body">
-                    <p class="product-title">{{.Title}}</p>
+                    <p class="card-product-title">{{.Title}}</p>
                     <div class="product-tags">
                         <span>{{.Type.Name}}</span>
                         <span>до {{.RecommendedArea}} м²</span>

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{"название товара"}} | ClimateHome - Продаем и устанавливаем сплит-системы в Уфе</title>
-{{/*    todo ВСТАВИТЬ НАЗВАНИЕ ТОВАРА*/}}
+    <title>{{.info.Title}} | ClimateHome - Продаем и устанавливаем сплит-системы в Уфе</title>
+
 
     <link rel="apple-touch-icon" sizes="180x180" href="/web/static/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/web/static/favicon/favicon-32x32.png">
@@ -24,7 +24,6 @@
 {{template "header" .}}
 
 <main class="main">
-
     <!-- Контейнер карточки -->
     <section class="product-page">
         <h1 class="product-title">{{.info.Title}}</h1>
@@ -44,10 +43,10 @@
                 </div>
 
                 <div class="product-price-block">
-                    <div class="p-price">{{.info.Price}} руб.</div>
+                    <div class="p-price">{{formatPrice .info.Price }} руб.</div>
                     <div class="product-actions">
                         <button class="btn-huge accent-btn">Заказать</button>
-                        <button class="btn-huge primary-btn">
+                        <button class="btn-huge primary-btn" onclick="addToFavorites(this, {{.info.ID}})">
                             <div class="p-f">
                                 <span style="scale: 1.5">♡</span>В избранное
                             </div>
@@ -56,7 +55,6 @@
                 </div>
 
                 <div class="product-quick-specs">
-
                     <div class="spec-row">
                         <span class="spec-label">Модель</span>
                         <span class="spec-value">Coolray</span>
@@ -143,46 +141,24 @@
         <div class="reviews-block">
             <h2>Отзывы</h2>
 
+            {{ range .info.Reviews }}
             <div class="review-card">
                 <div class="review-header">
-                    <span class="review-author">Автор отзыва</span>
+                    <span class="review-author">{{.User.FirstName}}</span>
                     <div class="review-rating">
-                        <span class="stars">★☆☆☆☆</span>
-                        <span class="score">Оценка: 1 / 5</span>
+                        <span class="stars">{{ stars .Rating }}</span>
+                        <span class="score">Оценка: {{.Rating}} / 5</span>
                     </div>
                 </div>
-                <p class="review-text">Текст отзыва</p>
+                <p class="review-text">{{.Comment}}</p>
             </div>
-
-            <div class="review-card">
-                <div class="review-header">
-                    <span class="review-author">Автор отзыва</span>
-                    <div class="review-rating">
-                        <span class="stars">★★☆☆☆</span>
-                        <span class="score">Оценка: 2 / 5</span>
-                    </div>
-                </div>
-                <p class="review-text">Текст отзыва</p>
-            </div>
-
-            <div class="review-card">
-                <div class="review-header">
-                    <span class="review-author">Автор отзыва</span>
-                    <div class="review-rating">
-                        <span class="stars">★★☆☆☆</span>
-                        <span class="score">Оценка: 2 / 5</span>
-                    </div>
-                </div>
-                <p class="review-text">Текст отзыва</p>
-            </div>
-
+            {{end}}
             <button class="btn-standard accent-btn">Написать отзыв</button>
         </div>
 
 
 
     </section>
-
 
     {{template "popular-products" .}}
 
@@ -193,6 +169,28 @@
 {{template "footer" .}}}
 
 <script src="/web/static/notify/simple-notify.min.js"></script>
-
+<script src="/web/static/js/utils.js"></script>
+<script>
+    function addToFavorites(button, id) {
+        fetch("/api/favorites", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ split_system_id: id })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Ошибка при добавлении в избранное");
+                return response.json(); // если сервер возвращает JSON
+            })
+            .then(data => {
+                // button.classList.add("active");
+                showToast("", "Товар добавлен в избранное");
+                // button.setAttribute("onclick", `removeFromFavorites(this, ${id})`);
+            })
+            .catch(err => {
+                alert("Ошибка: " + err.message);
+            });
+    }</script>
 </body>
 </html>

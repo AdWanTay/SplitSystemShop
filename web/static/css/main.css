@@ -354,7 +354,7 @@ textarea:focus, textarea:active {
     flex-direction: column;
     gap: var(--gap-05);
 }
-.product-title {
+.card-product-title {
     font-size: var(--fz-12);
     font-weight: bold;
 }
