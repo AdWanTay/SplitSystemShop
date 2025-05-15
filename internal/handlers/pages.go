@@ -5,6 +5,7 @@ import (
 	"SplitSystemShop/internal/context"
 	"SplitSystemShop/internal/services"
 	"SplitSystemShop/internal/utils"
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -80,14 +81,23 @@ func ContactPage(cfg *config.Config) fiber.Handler {
 	}
 }
 
-func ProfilePage(cfg *config.Config, cartService *services.CartService) fiber.Handler {
+func ProfilePage(cfg *config.Config, appContext *context.AppContext) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		userID := c.Locals("userId").(uint)
-		response, err := cartService.LoadCartModuleData(c.Context(), userID)
+		cartModuleData, err := appContext.CartService.LoadCartModuleData(c.Context(), userID)
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
-		return Render(c, "profile", fiber.Map{"response": response}, cfg)
+
+		user, err := appContext.UserService.GetUser(c.Context(), userID)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
+		}
+		fmt.Println(user)
+		return Render(c, "profile", fiber.Map{
+			"response": cartModuleData,
+			"userData": user,
+		}, cfg)
 	}
 }
 

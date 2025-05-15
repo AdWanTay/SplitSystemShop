@@ -27,13 +27,13 @@
         <div class="form-section">
             <h2>Персональные данные</h2>
             <div class="form-group">
-                <input type="text" placeholder="Фамилия">
-                <input type="text" placeholder="Имя">
-                <input type="text" placeholder="Отчество (не обязательно)">
+                <input type="text" placeholder="Фамилия">{{.userData.LastName}}<input>
+                <input type="text" placeholder="Имя">{{.userData.FirstName}}<input>
+                <input type="text" placeholder="Отчество (не обязательно)">{{.userData.Patronymic}}<input>
             </div>
             <div class="form-group">
-                <input type="email" placeholder="Почта">
-                <input type="tel" placeholder="Телефон">
+                <input type="email" placeholder="Почта">{{.userData.Email}}<input>
+                <input type="tel" placeholder="Телефон">{{.userData.PhoneNumber}}<input>
             </div>
             <button class="accent-btn btn-standard" onclick="">Изменить / Сохранить</button>
         </div>

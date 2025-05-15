@@ -17,6 +17,10 @@ func NewUserService(repo repositories.UserRepository) *UserService {
 	return &UserService{repo: repo}
 }
 
+func (s *UserService) GetUser(c context.Context, userID uint) (*models.User, error) {
+	return s.repo.GetUserById(c, userID)
+}
+
 func (s *UserService) RegisterUser(c context.Context, input dto.RegistrationRequest) (*models.User, error) {
 
 	existingUser, err := s.repo.GetUserByEmail(c, input.Email)
