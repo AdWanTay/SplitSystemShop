@@ -103,117 +103,128 @@
 
         <h1>Редактирование карточки товара</h1>
 
-        <div class="edit-container">
+        <form class="edit-container" id="create-product-form" enctype="multipart/form-data">
             <div class="left-column">
                 <div class="image-upload no-image">
                     <div>Нет изображения</div>
                 </div>
-                <button id="upload-btn" class="btn-small accent-btn">Загрузить фотографию</button>
-
+                <input id="upload-btn" type="file" name="image" accept="image/*">
             </div>
 
             <div class="right-column">
                 <div class="form-group">
-                    <label for="product-name">Название товара</label>
-                    <input type="text" id="product-name" placeholder="Введите название товара">
+                    <label for="title">Название товара</label>
+                    <input type="text" name="title" placeholder="Введите название товара">
                 </div>
 
                 <div class="form-group">
                     <label for="short-description">Краткое описание</label>
-                    <textarea id="short-description" placeholder="Введите краткое описание"></textarea>
+                    <textarea name="short_description" placeholder="Введите краткое описание"></textarea>
                 </div>
 
+                <div class="divider"></div>
+
                 <div class="form-group col">
-                    <label>Тип</label>
-                    <select
+                    <label for="type_id">Тип</label>
+                    <select name="type_id">
                         <option value="">Выберите тип</option>
                         {{ range .types }}
                         <option value="{{.ID}}">{{.Name}}</option>
                         {{ end }}
                     </select>
 
-                    <select>
-                        <label>Бренд</label>
+                    <label for="brand_id">Бренд</label>
+                    <select name="brand_id">
                         <option value="">Выберите бренд</option>
                         {{ range .brands }}
                         <option value="{{.ID}}">{{.Name}}</option>
                         {{ end }}
                     </select>
 
-                    <select>
-                        <label>Тип</label>
-                        <option value="">Выберите категорию</option>
-                        <option value="category1">Категория 1</option>
-                        <option value="category2">Категория 2</option>
-                        <option value="category3">Категория 3</option>
-                    </select>
+                    <label for="cooling_power">Мощность охлаждения (кВт)</label>
+                    <input name="cooling_power" type="number" placeholder="0">
+
+                    <label for="recommended_area">Рекомендуемая площадь (м2)</label>
+                    <input name="recommended_area" type="number" placeholder="0">
                 </div>
+
+                <div class="divider"></div>
+
+                <div class="form-group col">
+                    <label for="price">Цена (руб.)</label>
+                    <input type="text" name="price" class="price-input" placeholder="10 000">
+                </div>
+            </div>
+
+            <div style="width: 100%">
+                <div class="divider"></div>
 
                 <div class="form-group">
-                    <input type="text" id="price" class="price-input" placeholder="Введите цену" value="22 900"> <span
-                        style="font-size: 2rem;">₽</span>
+                    <h2>Описание</h2>
+                    <textarea name="long_description" placeholder="Введите полное описание товара"></textarea>
+                </div>
+
+                <div class="divider"></div>
+
+                <h2>Характеристики</h2>
+                <div class="characteristics">
+                    <div class="form-group characteristic">
+                        <label><input type="checkbox" name="has_inverter"> Инвертор</label>
+                    </div>
+
+                    <div class="form-group characteristic">
+                        <label for="energy_class_cooling_id">Энергокласс (охлаждение)</label>
+                        <select name="energy_class_cooling_id">
+                            <option value="">-- выберите значение --</option>
+                            {{ range .energy_classes }}
+                                <option value="{{.ID}}">{{.Name}}</option>
+                            {{ end }}
+                        </select>
+                    </div>
+
+                    <div class="form-group characteristic">
+                        <label for="energy_class_heating_id">Энергокласс (обогрев)</label>
+                        <select name="energy_class_heating_id">
+                            <option value="">-- выберите значение --</option>
+                            {{ range .energy_classes }}
+                                <option value="{{.ID}}">{{.Name}}</option>
+                            {{ end }}
+                        </select>
+                    </div>
+
+                    <div class="form-group characteristic">
+                        <label name="min_noise_level">Мин. шум (дБ)</label>
+                        <input type="number" step="0.1" name="min_noise_level" placeholder="0">
+                    </div>
+
+                    <div class="form-group characteristic">
+                        <label>Макс. шум (дБ)</label>
+                        <input type="number" step="0.1" name="max_noise_level" placeholder="0">
+                    </div>
+
+                    <div class="form-group characteristic">
+                        <label>Габариты и вес внутреннего блока</label>
+                        <input type="number" step="0.1" name="internal_weight" placeholder="Вес внутреннего (кг)">
+                        <input type="number" name="internal_width" placeholder="Ширина внутреннего (мм)">
+                        <input type="number" name="internal_height" placeholder="Высота внутреннего (мм)">
+                        <input type="number" name="internal_depth" placeholder="Глубина внутреннего (мм)">
+                    </div>
+
+                    <div class="form-group characteristic">
+                        <label>Габариты и вес внешнего блока</label>
+                        <input type="number" step="0.1" name="external_weight" placeholder="Вес внешнего (кг)">
+                        <input type="number" name="external_width" placeholder="Ширина внешнего (мм)">
+                        <input type="number" name="external_height" placeholder="Высота внешнего (мм)">
+                        <input type="number" name="external_depth" placeholder="Глубина внешнего (мм)">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="divider"></div>
-
-        <div class="form-group">
-            <h2>Описание</h2>
-            <textarea id="full-description" placeholder="Введите полное описание товара"></textarea>
-        </div>
-
-        <div class="divider"></div>
-
-        <div>
-            <h2>Характеристики</h2>
-            <div class="characteristics">
-                <div class="form-group characteristic">
-                    <label>Энергокласс (охлаждение)</label>
-                    <select>
-                        <option value="">-- выберите значение --</option>
-                        {{ range .energy_classes }}
-                        <option value="{{.ID}}">{{.Name}}</option>
-                        {{ end }}
-                    </select>
-                </div>
-
-                <div class="form-group characteristic">
-                    <label>Энергокласс (обогрев)</label>
-                    <select>
-                        <option value="">-- выберите значение --</option>
-                        {{ range .energy_classes }}
-                        <option value="{{.ID}}">{{.Name}}</option>
-                        {{ end }}
-                    </select>
-                </div>
-
-                <div class="form-group characteristic">
-                    <label>Характеристика 3</label>
-                    <select>
-                        <option value="">Выберите значение</option>
-                        <option value="char3-1">Значение 1</option>
-                        <option value="char3-2">Значение 2</option>
-                        <option value="char3-3">Значение 3</option>
-                    </select>
-                </div>
-
-                <div class="form-group characteristic">
-                    <label>Характеристика 4</label>
-                    <select>
-                        <option value="">Выберите значение</option>
-                        <option value="char4-1">Значение 1</option>
-                        <option value="char4-2">Значение 2</option>
-                        <option value="char4-3">Значение 3</option>
-                    </select>
-                </div>
+            <div style="width: 100%; display: flex;">
+                <button id="saveProductPtn" type="submit" class="btn-huge accent-btn">Сохранить</button>
             </div>
-        </div>
 
-        <div style="width: 100%; display: flex;">
-            <button id="saveProductPtn" class="btn-huge accent-btn">Сохранить</button>
-
-        </div>
+        </form>
 
     </section>
 </main>
@@ -222,6 +233,38 @@
 
 <script src="/web/static/notify/simple-notify.min.js"></script>
 <script src="/web/static/js/admin.js"></script>
+
+<script>
+    document.getElementById("create-product-form").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        // Приведение чекбокса к строке "true"/"false"
+        formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
+
+        try {
+            const res = await fetch("/api/split-systems", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                showNotify('Успех', "Товар успешно создан!")
+                form.reset();
+            } else {
+                showErr("Ошибка: " + (data.error || "неизвестная ошибка")
+            }
+        } catch (err) {
+            console.error(err);
+            showErr("Ошибка отправки запроса.")
+        }
+    });
+</script>
+
 
 </body>
 </html>

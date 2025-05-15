@@ -39,7 +39,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 
 	app.Post("/api/review", middlewares.RequireAuth(cfg, false), handlers.CreateReview(ctx.ReviewService))
 
-	app.Patch("/api/auth/change-credentialsц", middlewares.RequireAuth(cfg, false), handlers.ChangeCredentials(ctx.UserService))
+	app.Patch("/api/auth/change-credentials", middlewares.RequireAuth(cfg, false), handlers.ChangeCredentials(ctx.UserService))
 	app.Delete("/api/auth/delete-account", middlewares.RequireAuth(cfg, false), handlers.DeleteAccount(ctx.UserService))
 
 	//Роуты для фронта

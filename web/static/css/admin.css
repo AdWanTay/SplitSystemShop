@@ -130,6 +130,7 @@ h3 {
 
 .edit-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 30px;
     margin-bottom: 30px;
 }
@@ -174,6 +175,7 @@ h3 {
 
 .form-group.col {
     display: flex;
+    flex-direction: column;
     gap: .5rem;
 }
 
