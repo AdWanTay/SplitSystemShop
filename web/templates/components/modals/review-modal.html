@@ -1,23 +1,40 @@
-Rj<link rel="stylesheet" href="/web/static/css/elements.css">
+<link rel="stylesheet" href="/web/static/css/elements.css">
 
 <div class="modal">
     <div class="modal-content main-modal">
         <span class="modal-close" onclick="closeAllModals()">✖</span>
 
-        <h2 class="modal-title">Заголовок окна</h2>
+        <h2 class="modal-title">Оставить отзыв</h2>
 
         <div class="modal-body">
-            <!-- Здесь можешь вставлять любые элементы, например форму -->
-            <p>Какой-то контент или форма может быть тут</p>
-        </div>
+            <label for="review">Ваше сообщение</label>
+            <textarea id="review" class="modal-textarea" placeholder="Ваше сообщение"></textarea>
 
-        <div class="modal-description">
-            Это описание или пояснение к действию. Здесь ты можешь разместить текст, предупреждение и т.п.
+            <label>Оцените товар</label>
+            <div class="stars" id="rating">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+            </div>
         </div>
 
         <div class="modal-actions">
-            <button id="mainBtn" class="modal-button primary">Универсальная кнопка</button>
+            <button id="mainBtn" class="modal-button primary">Отправить</button>
             <button class="modal-button cancel" onclick="this.closest('.modal').remove()">Отмена</button>
         </div>
     </div>
 </div>
+
+<script>
+    const stars = document.querySelectorAll('#rating .star');
+    stars.forEach((star, idx) => {
+        star.addEventListener('click', () => {
+            stars.forEach(s => s.classList.remove('selected'));
+            for (let i = 0; i <= idx; i++) {
+                stars[i].classList.add('selected');
+            }
+        });
+    });
+</script>
