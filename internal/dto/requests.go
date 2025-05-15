@@ -44,3 +44,9 @@ type FiltersQuery struct {
 	InternalWeight       float64 `json:"internal_weight,omitempty"`
 	InternalHeight       int     `json:"internal_height,omitempty"`
 }
+
+type NewReviewRequest struct {
+	SplitSystemID uint   `json:"split_system_id"`
+	Rating        int    `json:"rating"`
+	Comment       string `json:"comment"`
+}
