@@ -31,7 +31,7 @@
             </div>
             <div class="hint-close" onclick="this.parentElement.style.display='none'">×</div>
         </div>
-        <button class="primary-btn btn-standard">Перейти в блог</button>
+        <button class="primary-btn btn-standard" onclick="location.href='/blog'">Перейти в блог</button>
     </section>
 
     <div class="divider" style="margin: 0 8vw"></div>
@@ -124,21 +124,24 @@
                 </div>
 
                 <div class="form-group col">
-                    <select>
+                    <label>Тип</label>
+                    <select
                         <option value="">Выберите тип</option>
-                        <option value="type1">Тип 1</option>
-                        <option value="type2">Тип 2</option>
-                        <option value="type3">Тип 3</option>
+                        {{ range .types }}
+                        <option value="{{.ID}}">{{.Name}}</option>
+                        {{ end }}
                     </select>
 
                     <select>
-                        <option value="">Выберите мощность</option>
-                        <option value="power1">Мощность 1</option>
-                        <option value="power2">Мощность 2</option>
-                        <option value="power3">Мощность 3</option>
+                        <label>Бренд</label>
+                        <option value="">Выберите бренд</option>
+                        {{ range .brands }}
+                        <option value="{{.ID}}">{{.Name}}</option>
+                        {{ end }}
                     </select>
 
                     <select>
+                        <label>Тип</label>
                         <option value="">Выберите категорию</option>
                         <option value="category1">Категория 1</option>
                         <option value="category2">Категория 2</option>
@@ -166,22 +169,22 @@
             <h2>Характеристики</h2>
             <div class="characteristics">
                 <div class="form-group characteristic">
-                    <label>Характеристика 1</label>
+                    <label>Энергокласс (охлаждение)</label>
                     <select>
-                        <option value="">Выберите значение</option>
-                        <option value="char1-1">Значение 1</option>
-                        <option value="char1-2">Значение 2</option>
-                        <option value="char1-3">Значение 3</option>
+                        <option value="">-- выберите значение --</option>
+                        {{ range .energy_classes }}
+                        <option value="{{.ID}}">{{.Name}}</option>
+                        {{ end }}
                     </select>
                 </div>
 
                 <div class="form-group characteristic">
-                    <label>Характеристика 2</label>
+                    <label>Энергокласс (обогрев)</label>
                     <select>
-                        <option value="">Выберите значение</option>
-                        <option value="char2-1">Значение 1</option>
-                        <option value="char2-2">Значение 2</option>
-                        <option value="char2-3">Значение 3</option>
+                        <option value="">-- выберите значение --</option>
+                        {{ range .energy_classes }}
+                        <option value="{{.ID}}">{{.Name}}</option>
+                        {{ end }}
                     </select>
                 </div>
 

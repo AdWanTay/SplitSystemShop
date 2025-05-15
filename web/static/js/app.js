@@ -42,7 +42,7 @@ function openAuthModal() {
         });
 }
 
-function openReviewModal() {
+function openReviewModal(id) {
     closeAllModals();
     lockBodyScroll();
 
@@ -52,6 +52,9 @@ function openReviewModal() {
             const modalContainer = document.createElement("div");
             modalContainer.innerHTML = html;
             document.body.appendChild(modalContainer);
+            initReviewModal();
+
+            document.getElementById('sendReviewBtn1').addEventListener('click', submitReview(id));
 
             //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
             modalContainer.addEventListener("click", (e) => {
@@ -61,6 +64,59 @@ function openReviewModal() {
             });
         });
 }
+function submitReview(splitSystemId) {
+    return function () {
+        const rating = parseInt(document.getElementById('rating-value').value);
+        const comment = document.getElementById('review').value.trim();
+
+        if (rating === 0) {
+            showToast('', 'Пожалуйста, выберите рейтинг.');
+            return;
+        }
+
+        if (comment === '') {
+            showToast('', 'Пожалуйста, напишите отзыв.');
+            return;
+        }
+
+        fetch('/api/review', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                split_system_id: splitSystemId,
+                rating: rating,
+                comment: comment
+            })
+        })
+            .then(async response => {
+                const data = await response.json();
+
+                if (!response.ok) {
+                    // Если сервер вернул ошибку
+                    if (data.error) {
+                        showErr(data.error);
+                    } else {
+                        showErr('Произошла ошибка при отправке отзыва.');
+                    }
+                    throw new Error(data.error || 'Ошибка при отправке');
+                }
+
+                // Успех
+                showNotify('Успех', 'Отзыв отправлен успешно!');
+                closeAllModals(); // если у тебя есть модальное окно
+                // Очистка формы (если нужно)
+                document.getElementById('review').value = '';
+                document.getElementById('rating-value').value = 0;
+            })
+            .catch(error => {
+                console.error('Ошибка при отправке отзыва:', error);
+            });
+    };
+}
+
+
 
 function showForm(type) {
     const btnLogin = document.getElementById('btn-login');
@@ -468,3 +524,33 @@ const modalConfigs = {
         }
     }
 };
+
+
+function initReviewModal() {
+    const stars = document.querySelectorAll('#rating .star');
+    const ratingValueInput = document.getElementById('rating-value');
+    let currentRating = 0;
+
+    stars.forEach((star, index) => {
+        star.addEventListener('mouseover', () => {
+            updateStars(index + 1);
+        });
+
+        star.addEventListener('mouseout', () => {
+            updateStars(currentRating);
+        });
+
+        star.addEventListener('click', () => {
+            currentRating = index + 1;
+            ratingValueInput.value = currentRating;
+        });
+    });
+
+    function updateStars(rating) {
+        stars.forEach((star, index) => {
+            star.classList.toggle('active', index < rating);
+        });
+    }
+
+
+}

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/web/static/css/elements.css">
 
 <div class="modal">
-    <div class="modal-content main-modal">
+    <div class="modal-content review-modal">
         <span class="modal-close" onclick="closeAllModals()">✖</span>
 
         <h2 class="modal-title">Оставить отзыв</h2>
@@ -23,42 +23,8 @@
         </div>
 
         <div class="modal-actions">
-            <button id="mainBtn" class="modal-button primary">Отправить</button>
-            <button class="modal-button cancel" onclick="this.closest('.modal').remove()">Отмена</button>
+            <button id="sendReviewBtn1" class="accent-btn btn-standard">Отправить</button>
+            <button class="primary-btn btn-standard" onclick="this.closest('.modal').remove()">Отмена</button>
         </div>
     </div>
 </div>
-
-<script>
-    const stars = document.querySelectorAll('#rating .star');
-    const ratingInput = document.getElementById('rating-value');
-    let selectedRating = 0;
-
-    stars.forEach((star, index) => {
-        // Наведение — временная подсветка
-        star.addEventListener('mouseover', () => {
-            updateStars(index + 1, 'hovered');
-        });
-
-        // Уход мыши — убрать временную подсветку
-        star.addEventListener('mouseout', () => {
-            updateStars(selectedRating, 'selected');
-        });
-
-        // Клик — зафиксировать оценку
-        star.addEventListener('click', () => {
-            selectedRating = index + 1;
-            ratingInput.value = selectedRating;
-            updateStars(selectedRating, 'selected');
-        });
-    });
-
-    function updateStars(rating, className) {
-        stars.forEach((s, i) => {
-            s.classList.remove('hovered', 'selected');
-            if (i < rating) {
-                s.classList.add(className);
-            }
-        });
-    }
-</script>
