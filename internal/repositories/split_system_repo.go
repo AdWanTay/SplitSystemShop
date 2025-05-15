@@ -97,6 +97,8 @@ func (r splitSystemRepository) GetSplitSystem(c context.Context, systemID uint) 
 		Preload("Modes").
 		Preload("EnergyClassCooling").
 		Preload("EnergyClassHeating").
+		Preload("Reviews").
+		Preload("Reviews.User").
 		First(&splitSystem, systemID).Error
 	if err != nil {
 		return nil, err

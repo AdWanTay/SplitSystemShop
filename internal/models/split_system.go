@@ -35,4 +35,6 @@ type SplitSystem struct {
 	ImageURL       string  `gorm:"foreignKey:SplitSystemID" json:"image_url"`
 
 	AverageRating float64 `gorm:"average_rating; default:0" json:"average_rating"`
+
+	Reviews []Review `json:"reviews,omitempty"`
 }

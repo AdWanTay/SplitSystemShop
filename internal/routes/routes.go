@@ -36,7 +36,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Delete("/api/cart/:id", middlewares.RequireAuth(cfg, false), handlers.DeleteCartItem(ctx.CartService))
 	app.Post("/api/cart", middlewares.RequireAuth(cfg, false), handlers.AddToCart(ctx.CartService))
 
-	app.Patch("/api/auth/change-credentials", middlewares.RequireAuth(cfg, false), handlers.ChangeCredentials(ctx.UserService))
+	app.Patch("/api/auth/change-credentialsц", middlewares.RequireAuth(cfg, false), handlers.ChangeCredentials(ctx.UserService))
 	app.Delete("/api/auth/delete-account", middlewares.RequireAuth(cfg, false), handlers.DeleteAccount(ctx.UserService))
 
 	//Роуты для фронта
@@ -46,7 +46,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Get("/cart", middlewares.RequireAuth(cfg, false), handlers.CartPage(cfg, ctx.CartService))
 	app.Get("/catalog", handlers.CatalogPage(cfg, ctx))
 	app.Get("/contact", handlers.ContactPage(cfg))
-	app.Get("/products/:id", handlers.ProductPage(cfg))
+	app.Get("/products/:id", handlers.ProductPage(cfg, ctx.SplitSystemService))
 	app.Get("/profile", middlewares.RequireAuth(cfg, false), handlers.ProfilePage(cfg, ctx))
 	app.Get("/blog", handlers.BlogPage(cfg))
 

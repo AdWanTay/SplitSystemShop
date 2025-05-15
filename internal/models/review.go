@@ -7,8 +7,8 @@ type Review struct {
 	SplitSystemID uint        `gorm:"not null" json:"split_system_id"`
 	SplitSystem   SplitSystem `json:"split_system"`
 
-	UserID uint `gorm:"not null" json:"user_id"`
-	User   User `json:"user"`
+	UserID uint  `gorm:"not null" json:"user_id"`
+	User   *User `json:"user"`
 
 	Rating    int       `gorm:"not null" json:"rating"` // 1–5
 	Comment   string    `gorm:"type:text" json:"comment"`

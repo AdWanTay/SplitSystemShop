@@ -7,6 +7,7 @@ import (
 	"SplitSystemShop/internal/utils"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"strconv"
 )
 
 func Render(c *fiber.Ctx, template string, data fiber.Map, cfg *config.Config) error {
@@ -101,8 +102,23 @@ func ProfilePage(cfg *config.Config, appContext *context.AppContext) fiber.Handl
 	}
 }
 
-func ProductPage(cfg *config.Config) fiber.Handler {
+func ProductPage(cfg *config.Config, splitSystemService *services.SplitSystemService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "product", fiber.Map{}, cfg)
+		id, err := strconv.Atoi(c.Params("id"))
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err})
+		}
+		splitSystem, err := splitSystemService.GetSplitSystem(c.Context(), uint(id))
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
+		}
+
+		for _, review := range splitSystem.Reviews {
+			if review.User == nil {
+				review.User.LastName = "Профиль удален"
+			}
+		}
+
+		return Render(c, "product", fiber.Map{"info": splitSystem}, cfg)
 	}
 }
