@@ -50,6 +50,14 @@ func (r userRepository) Update(c context.Context, user *models.User) error {
 }
 
 func (r userRepository) Delete(c context.Context, userID uint) error {
+	err := r.db.WithContext(c).Model(&models.User{ID: userID}).Association("Cart").Clear()
+	if err != nil {
+		return err
+	}
+	err = r.db.WithContext(c).Model(&models.User{ID: userID}).Association("Favorites").Clear()
+	if err != nil {
+		return err
+	}
 	return r.db.WithContext(c).Delete(models.User{}, userID).Error
 }
 

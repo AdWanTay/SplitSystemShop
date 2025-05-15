@@ -44,31 +44,14 @@ func BlogPage(cfg *config.Config) fiber.Handler {
 	}
 }
 
-func CartPage(cfg *config.Config, userService *services.UserService) fiber.Handler {
-
+func CartPage(cfg *config.Config, cartService *services.CartService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		userID := c.Locals("userId").(uint)
-
-		cart, err := userService.GetCart(c.Context(), userID)
+		response, err := cartService.LoadCartModuleData(c.Context(), userID)
 		if err != nil {
-			return err
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
-
-		favorites, err := userService.GetFavorites(c.Context(), userID)
-		if err != nil {
-			return err
-		}
-
-		return Render(c, "cart", fiber.Map{
-			"cart": fiber.Map{
-				"total": len(cart),
-				"items": cart,
-			},
-			"favorites": fiber.Map{
-				"total": len(favorites),
-				"items": favorites,
-			},
-		}, cfg)
+		return Render(c, "profile", fiber.Map{"response": response}, cfg)
 	}
 }
 
@@ -97,30 +80,14 @@ func ContactPage(cfg *config.Config) fiber.Handler {
 	}
 }
 
-func ProfilePage(cfg *config.Config, userService *services.UserService) fiber.Handler {
+func ProfilePage(cfg *config.Config, cartService *services.CartService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		userID := c.Locals("userId").(uint)
-
-		cart, err := userService.GetCart(c.Context(), userID)
+		response, err := cartService.LoadCartModuleData(c.Context(), userID)
 		if err != nil {
-			return err
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
-
-		favorites, err := userService.GetFavorites(c.Context(), userID)
-		if err != nil {
-			return err
-		}
-
-		return Render(c, "profile", fiber.Map{
-			"cart": fiber.Map{
-				"total": len(cart),
-				"items": cart,
-			},
-			"favorites": fiber.Map{
-				"total": len(favorites),
-				"items": favorites,
-			},
-		}, cfg)
+		return Render(c, "profile", fiber.Map{"response": response}, cfg)
 	}
 }
 

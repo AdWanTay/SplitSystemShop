@@ -37,3 +37,61 @@ func (r *CatalogResponse) New(userCart, userFavorites, allSystems []models.Split
 		}
 	}
 }
+
+type CartModuleResponse struct {
+	Cart struct {
+		Total int
+		Items []catalogItem
+	}
+	Favorites struct {
+		Total int
+		Items []catalogItem
+	}
+}
+
+func NewCartModuleResponse(cart, favorites []models.SplitSystem) CartModuleResponse {
+	cartIdx := make(map[uint]struct{})
+	favoritesIdx := make(map[uint]struct{})
+
+	for _, faveItem := range favorites {
+		favoritesIdx[faveItem.ID] = struct{}{}
+	}
+
+	cartDto := make([]catalogItem, len(cart))
+	for i, _ := range cart {
+		cartIdx[cart[i].ID] = struct{}{}
+		_, inFave := favoritesIdx[cart[i].ID]
+		cartDto[i] = catalogItem{
+			SplitSystem: cart[i],
+			InCart:      true,
+			InFavorites: inFave,
+		}
+	}
+
+	favoritesDto := make([]catalogItem, len(favorites))
+	for i, _ := range favorites {
+		_, inCart := cartIdx[favorites[i].ID]
+		favoritesDto[i] = catalogItem{
+			SplitSystem: favorites[i],
+			InCart:      inCart,
+			InFavorites: true,
+		}
+	}
+
+	return CartModuleResponse{
+		Cart: struct {
+			Total int
+			Items []catalogItem
+		}{
+			Total: len(cart),
+			Items: cartDto,
+		},
+		Favorites: struct {
+			Total int
+			Items []catalogItem
+		}{
+			Total: len(favorites),
+			Items: favoritesDto,
+		},
+	}
+}

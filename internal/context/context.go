@@ -27,10 +27,12 @@ func InitServices(db *gorm.DB) *AppContext {
 	modeRepo := repositories.NewModeRepository(db)
 	energyClassRepo := repositories.NewEnergyClassRepository(db)
 
+	userService := services.NewUserService(userRepo)
+
 	return &AppContext{
-		UserService:        services.NewUserService(userRepo),
+		UserService:        userService,
 		SplitSystemService: services.NewSlitSystemService(splitSystemRepo),
-		CartService:        services.NewCartService(cartRepo),
+		CartService:        services.NewCartService(cartRepo, userService),
 		FavoritesService:   services.NewFavoritesService(favoritesRepo),
 		BrandService:       services.NewBrandService(brandRepo),
 		TypeService:        services.NewTypeService(typeRepo),
