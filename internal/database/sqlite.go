@@ -167,27 +167,29 @@ func populateDB(db *gorm.DB) error {
 }
 
 type SplitSystemSeed struct {
-	Title           string   `json:"title,omitempty"`
-	Brand           string   `json:"brand,omitempty"`
-	Type            string   `json:"type,omitempty"`
-	Price           int      `json:"price,omitempty"`
-	HasInverter     bool     `json:"has_inverter,omitempty"`
-	RecommendedArea float64  `json:"recommended_area,omitempty"`
-	CoolingPower    float64  `json:"cooling_power,omitempty"`
-	CoolingClass    string   `json:"cooling_class,omitempty"`
-	HeatingClass    string   `json:"heating_class,omitempty"`
-	MinNoise        float64  `json:"min_noise,omitempty"`
-	MaxNoise        float64  `json:"max_noise,omitempty"`
-	ExternalWidth   int      `json:"external_width,omitempty"`
-	ExternalHeight  int      `json:"external_height,omitempty"`
-	ExternalDepth   int      `json:"external_depth,omitempty"`
-	ExternalWeight  float64  `json:"external_weight,omitempty"`
-	InternalWidth   int      `json:"internal_width,omitempty"`
-	InternalHeight  int      `json:"internal_height,omitempty"`
-	InternalDepth   int      `json:"internal_depth,omitempty"`
-	InternalWeight  float64  `json:"internal_weight,omitempty"`
-	Modes           []string `json:"modes,omitempty"`
-	ImageURL        string   `json:"image_url,omitempty"`
+	Title            string   `json:"title,omitempty"`
+	ShortDescription string   `json:"short_description"`
+	LongDescription  string   `json:"long_description"`
+	Brand            string   `json:"brand,omitempty"`
+	Type             string   `json:"type,omitempty"`
+	Price            int      `json:"price,omitempty"`
+	HasInverter      bool     `json:"has_inverter,omitempty"`
+	RecommendedArea  float64  `json:"recommended_area,omitempty"`
+	CoolingPower     float64  `json:"cooling_power,omitempty"`
+	CoolingClass     string   `json:"cooling_class,omitempty"`
+	HeatingClass     string   `json:"heating_class,omitempty"`
+	MinNoise         float64  `json:"min_noise,omitempty"`
+	MaxNoise         float64  `json:"max_noise,omitempty"`
+	ExternalWidth    int      `json:"external_width,omitempty"`
+	ExternalHeight   int      `json:"external_height,omitempty"`
+	ExternalDepth    int      `json:"external_depth,omitempty"`
+	ExternalWeight   float64  `json:"external_weight,omitempty"`
+	InternalWidth    int      `json:"internal_width,omitempty"`
+	InternalHeight   int      `json:"internal_height,omitempty"`
+	InternalDepth    int      `json:"internal_depth,omitempty"`
+	InternalWeight   float64  `json:"internal_weight,omitempty"`
+	Modes            []string `json:"modes,omitempty"`
+	ImageURL         string   `json:"image_url,omitempty"`
 }
 
 func SeedSplitSystemsFromJSON(db *gorm.DB, filePath string) error {
@@ -215,6 +217,8 @@ func SeedSplitSystemsFromJSON(db *gorm.DB, filePath string) error {
 
 		system := models.SplitSystem{
 			Title:                s.Title,
+			ShortDescription:     s.ShortDescription,
+			LongDescription:      s.LongDescription,
 			BrandID:              brand.ID,
 			TypeID:               t.ID,
 			Price:                s.Price,

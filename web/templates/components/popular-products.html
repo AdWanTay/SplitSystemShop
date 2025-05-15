@@ -72,7 +72,7 @@
                     container.innerHTML = '<p>Ничего не найдено по выбранным фильтрам.</p>';
                     return;
                 }
-                const isAuthenticated = "{{ .isAuthenticated }}" === true
+                const isAuthenticated =  {{.isAuthenticated }} === true
                 for (let i = 0; i < 8 && i < products.length; i++) {
                     const product = products[i]
                     const card = document.createElement('div');
@@ -81,7 +81,7 @@
                     const img = product.images?.[0]?.image_url || '/web/static/img/primer.webp';
                     card.innerHTML = `
                     <div class="product-thumb">
-                        ${isAuthenticated ? `<button class="${product.in_favorites ? 'add-to-favorites active' : 'add-to-favorites'}" onclick="${product.in_favorites ? `removeFromFavorites(this, ${product.id})` : `addToFavorites(this, ${product.id})`} ">♡</button>` : ''}
+                        ${isAuthenticated ? `<button class="${product.in_favorites ? 'add-to-favorites active' : 'add-to-favorites'}" onclick="${product.in_favorites ? `removeFromFavorites(this, ${product.id}); event.stopPropagation();` : `addToFavorites(this, ${product.id}); event.stopPropagation();`} ">♡</button>` : ''}
                         <span class="product-price">${formatPrice(product.price)} ₽</span>
                         <img src="${img}" class="product-img" alt="${product.brand?.name || ''}">
                     </div>
@@ -92,8 +92,8 @@
                             <span>до ${product.recommended_area} м²</span>
                             <span>${product.min_noise_level} дБ</span>
                         </div>
-                    ${isAuthenticated ? `<button class="${product.in_cart ? 'add-to-cart active' : 'add-to-cart'}" onclick="${product.in_cart ? `removeFromCart(this, ${product.id})` : `addToCart(this, ${product.id})`} ">${product.in_cart ? 'Уже в корзине' : 'В корзину'}</button>` : ''}
                     </div>
+                    ${isAuthenticated ? `<button class="${product.in_cart ? 'add-to-cart active' : 'add-to-cart'}" onclick="${product.in_cart ? `removeFromCart(this, ${product.id}); event.stopPropagation();` : `addToCart(this, ${product.id}); event.stopPropagation();`} ">${product.in_cart ? 'Уже в корзине' : 'В корзину'}</button>` : ''}
                 `;
                     container.appendChild(card);
                 }
@@ -114,5 +114,87 @@
             loadPopular();
         });
     });
+
+
+    function addToCart(button, id) {
+        fetch("/api/cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ split_system_id: id })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Ошибка при добавлении");
+                return response.json(); // если сервер возвращает JSON
+            })
+            .then(data => {
+                button.classList.add("active");
+                button.textContent = "Уже в корзине";
+                showToast("", "Товар добавлен в корзину");
+                button.setAttribute("onclick", `removeFromCart(this, ${id}); event.stopPropagation();`);
+            })
+            .catch(err => {
+                alert("Ошибка: " + err.message);
+            });
+    }
+    function removeFromCart(button, id) {
+        fetch(`/api/cart/${id}`, {
+            method: "DELETE"
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Ошибка при удалении из корзины");
+                return response.json();
+            })
+            .then(data => {
+                button.classList.remove("active");
+                button.textContent = "В корзину";
+                showToast("", "Товар удален из корзины");
+                button.setAttribute("onclick", `addToCart(this, ${id}); event.stopPropagation();`);
+            })
+            .catch(err => {
+                alert("Ошибка: " + err.message);
+            });
+    }
+
+
+    function addToFavorites(button, id) {
+        fetch("/api/favorites", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ split_system_id: id })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Ошибка при добавлении в избранное");
+                return response.json(); // если сервер возвращает JSON
+            })
+            .then(data => {
+                button.classList.add("active");
+                showToast("", "Товар добавлен в избранное");
+                button.setAttribute("onclick", `removeFromFavorites(this, ${id}); event.stopPropagation();`);
+            })
+            .catch(err => {
+                alert("Ошибка: " + err.message);
+            });
+    }
+    function removeFromFavorites(button, id) {
+        fetch(`/api/favorites/${id}`, {
+            method: "DELETE"
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Ошибка при удалении из избранного");
+                return response.json();
+            })
+            .then(data => {
+                button.classList.remove("active");
+                showToast("", "Товар удален из избранного");
+                button.setAttribute("onclick", `addToFavorites(this, ${id}); event.stopPropagation();`);
+            })
+            .catch(err => {
+                alert("Ошибка: " + err.message);
+            });
+    }
 </script>
 {{end}}

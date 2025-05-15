@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 {{if .InCart}}
-                <button class="add-to-cart active" onclick="removeFromCart({{.ID}})">Убрать</button>
+                <button class="add-to-cart active" onclick="removeFromCart({{.ID}}); event.stopPropagation();">Убрать</button>
                 {{end}}
             </div>
             {{end}}
@@ -69,7 +69,7 @@
             {{ range .response.Favorites.Items }}
             <div class="product-card" id="favorites_{{.ID}}">
                 <div class="product-thumb">
-                    <button class="add-to-favorites active" onclick="removeFromFavorites({{.ID}})">♡</button>
+                    <button class="add-to-favorites active" onclick="removeFromFavorites({{.ID}}); event.stopPropagation();">♡</button>
 
                     <span class="product-price">{{ formatPrice .Price}} ₽</span>
                     <img src="/web/static/img/primer.webp" class="product-img" alt="">
@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 {{if not .InCart}}
-                <button class="add-to-cart" onclick="addToCart(this, {{.ID}})">В корзину</button>
+                <button class="add-to-cart" onclick="addToCart(this, {{.ID}}); event.stopPropagation();">В корзину</button>
                 {{end}}
             </div>
             {{end}}
@@ -116,7 +116,7 @@
                     const button = cloned.querySelector('.add-to-cart');
                     button.textContent = "Убрать";
                     button.classList.add('active');
-                    button.setAttribute('onclick', `removeFromCart(${id})`);
+                    button.setAttribute('onclick', `removeFromCart(${id}); event.stopPropagation();`);
                     thisBtn.remove()
                     // Добавляем в корзину
                     const cartGrid = document.querySelector('#cart .products__grid');
@@ -159,7 +159,7 @@
                         btn = document.createElement('button');
                         btn.className = 'add-to-cart';
                         btn.textContent = 'В корзину';
-                        btn.setAttribute('onclick', `addToCart(this, ${id})`);
+                        btn.setAttribute('onclick', `addToCart(this, ${id}); event.stopPropagation();`);
 
                         favCard.appendChild(btn);
                     }

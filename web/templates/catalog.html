@@ -666,7 +666,7 @@
                 button.classList.add("active");
                 button.textContent = "Уже в корзине";
                 showToast("", "Товар добавлен в корзину");
-                button.setAttribute("onclick", `removeFromCart(this, ${id})`);
+                button.setAttribute("onclick", `removeFromCart(this, ${id}); event.stopPropagation();`);
             })
             .catch(err => {
                 alert("Ошибка: " + err.message);
@@ -684,7 +684,7 @@
                 button.classList.remove("active");
                 button.textContent = "В корзину";
                 showToast("", "Товар удален из корзины");
-                button.setAttribute("onclick", `addToCart(this, ${id})`);
+                button.setAttribute("onclick", `addToCart(this, ${id}); event.stopPropagation();`);
             })
             .catch(err => {
                 alert("Ошибка: " + err.message);
@@ -707,7 +707,7 @@
             .then(data => {
                 button.classList.add("active");
                 showToast("", "Товар добавлен в избранное");
-                button.setAttribute("onclick", `removeFromFavorites(this, ${id})`);
+                button.setAttribute("onclick", `removeFromFavorites(this, ${id}); event.stopPropagation();`);
             })
             .catch(err => {
                 alert("Ошибка: " + err.message);
@@ -724,7 +724,7 @@
             .then(data => {
                 button.classList.remove("active");
                 showToast("", "Товар удален из избранного");
-                button.setAttribute("onclick", `addToFavorites(this, ${id})`);
+                button.setAttribute("onclick", `addToFavorites(this, ${id}); event.stopPropagation();`);
             })
             .catch(err => {
                 alert("Ошибка: " + err.message);
