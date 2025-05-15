@@ -78,6 +78,10 @@
                     const card = document.createElement('div');
                     card.className = 'product-card';
 
+                    card.onclick = () => {
+                        window.location.href = `/products/${product.id}/`;
+                    };
+
                     const img = product.images?.[0]?.image_url || '/web/static/img/primer.webp';
                     card.innerHTML = `
                     <div class="product-thumb">

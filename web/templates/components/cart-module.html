@@ -21,7 +21,7 @@
             </div>
             {{else}}
             {{ range .response.Cart.Items }}
-            <div class="product-card" id="cart_{{.ID}}">
+            <div class="product-card" id="cart_{{.ID}}" onclick="location.href='/products/{{.ID}}/'">
                 <div class="product-thumb">
                     <span class="product-price">{{formatPrice .Price}} ₽</span>
                     <img src="/web/static/img/primer.webp" class="product-img" alt="">
@@ -67,7 +67,7 @@
 
             {{else}}
             {{ range .response.Favorites.Items }}
-            <div class="product-card" id="favorites_{{.ID}}">
+            <div class="product-card" id="favorites_{{.ID}}" onclick="location.href='/products/{{.ID}}/'">
                 <div class="product-thumb">
                     <button class="add-to-favorites active" onclick="removeFromFavorites({{.ID}}); event.stopPropagation();">♡</button>
 
@@ -122,6 +122,9 @@
                     const cartGrid = document.querySelector('#cart .products__grid');
                     cartGrid.appendChild(cloned);
 
+                    const emptyBlock = document.querySelector(".cart .products-empty");
+                    if (emptyBlock) emptyBlock.remove();
+
                     // Показываем уведомление
                     updateCount('cart-count', 1);
 
@@ -148,6 +151,19 @@
                     cartCard.remove();
                 }
                 updateCount('cart-count', -1);
+
+                const cartGrid = document.querySelector('#cart .products__grid');
+
+                // Если больше нет товаров — показать "пусто"
+                if (cartGrid.children.length === 0) {
+                    const empty = document.createElement('div');
+                    empty.className = "products-empty";
+                    empty.innerHTML = `
+                        <h4>В корзине пока пусто</h4>
+                        <p>Загляните в каталог — собрали там сплит-системы, которые могут вам подойти</p>
+                    `;
+                    cartGrid.appendChild(empty);
+                }
 
                 // Если есть в избранном — добавить туда кнопку "В корзину"
                 const favCard = document.getElementById(`favorites_${id}`);
@@ -183,7 +199,21 @@
             })
             .then(data => {
                 updateCount('favorites-count', -1);
+
+                const fovGrid = document.querySelector('#favorites .products__grid');
                 document.getElementById(`favorites_${id}`).remove()
+
+                // Если больше нет товаров — показать "пусто"
+                if (fovGrid.children.length === 0) {
+                    const empty = document.createElement('div');
+                    empty.className = "products-empty";
+                    empty.innerHTML = `
+                        <h4>В избранном пока пусто</h4>
+                        <p>Добавляйте товары в избранное, чтобы не потерять их</p>
+                    `;
+                    fovGrid.appendChild(empty);
+                }
+
                 showToast("", "Товар удален из избранного");
             })
             .catch(err => {
