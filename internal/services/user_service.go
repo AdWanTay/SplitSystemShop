@@ -120,3 +120,31 @@ func (s *UserService) GetUserRole(c context.Context, userID uint) (string, error
 	}
 	return user.Role, nil
 }
+
+func (s *UserService) IsInCart(c context.Context, userID, splitSystemID uint) bool {
+	cart, err := s.repo.GetCart(c, userID)
+	if err != nil {
+		return false
+	}
+
+	for _, item := range cart {
+		if item.ID == splitSystemID {
+			return true
+		}
+	}
+	return false
+}
+
+func (s *UserService) IsInFavorites(c context.Context, userID, splitSystemID uint) bool {
+	favorites, err := s.repo.GetFavorites(c, userID)
+	if err != nil {
+		return false
+	}
+
+	for _, item := range favorites {
+		if item.ID == splitSystemID {
+			return true
+		}
+	}
+	return false
+}

@@ -3,6 +3,7 @@ package handlers
 import (
 	"SplitSystemShop/internal/config"
 	"SplitSystemShop/internal/context"
+	"SplitSystemShop/internal/dto"
 	"SplitSystemShop/internal/models"
 	"SplitSystemShop/internal/services"
 	"SplitSystemShop/internal/utils"
@@ -104,18 +105,18 @@ func ProfilePage(cfg *config.Config, appContext *context.AppContext) fiber.Handl
 	}
 }
 
-func ProductPage(cfg *config.Config, splitSystemService *services.SplitSystemService) fiber.Handler {
+func ProductPage(cfg *config.Config, appContext *context.AppContext) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id, err := strconv.Atoi(c.Params("id"))
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err})
 		}
-		splitSystem, err := splitSystemService.GetSplitSystem(c.Context(), uint(id))
+		splitSystem, err := appContext.SplitSystemService.GetSplitSystem(c.Context(), uint(id))
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
 		splitSystem.AverageRating = math.Round(splitSystem.AverageRating*10) / 10
-		for i, _ := range splitSystem.Reviews {
+		for i := range splitSystem.Reviews {
 			if splitSystem.Reviews[i].User == nil {
 				splitSystem.Reviews[i].User = &models.User{FirstName: "Профиль удален"}
 			} else {
@@ -127,12 +128,22 @@ func ProductPage(cfg *config.Config, splitSystemService *services.SplitSystemSer
 					postfix := string(runes[0]) + "."
 					copied.FirstName += " " + postfix
 				}
-
-				// Присваиваем копию обратно в review
 				splitSystem.Reviews[i].User = &copied
 			}
 		}
-		//response :=
-		return Render(c, "product", fiber.Map{"info": splitSystem}, cfg)
+		inCart := false
+		inFavorites := false
+		userId := c.Locals("userId")
+		if userId != nil {
+			inCart = appContext.UserService.IsInCart(c.Context(), userId.(uint), uint(id))
+			inFavorites = appContext.UserService.IsInFavorites(c.Context(), userId.(uint), uint(id))
+		}
+
+		response := dto.CatalogItem{
+			SplitSystem: *splitSystem,
+			InCart:      inCart,
+			InFavorites: inFavorites,
+		}
+		return Render(c, "product", fiber.Map{"info": response}, cfg)
 	}
 }
