@@ -56,7 +56,7 @@ func CartPage(cfg *config.Config, cartService *services.CartService) fiber.Handl
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
-		return Render(c, "profile", fiber.Map{"response": response}, cfg)
+		return Render(c, "cart", fiber.Map{"response": response}, cfg)
 	}
 }
 
