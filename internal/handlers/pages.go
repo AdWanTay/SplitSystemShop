@@ -32,9 +32,22 @@ func IndexPage(cfg *config.Config) fiber.Handler {
 	}
 }
 
-func AdminPage(cfg *config.Config) fiber.Handler {
+func AdminPage(cfg *config.Config, ctx *context.AppContext) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "admin-panel", fiber.Map{}, cfg)
+		brands, err := ctx.BrandService.GetAll(c.Context())
+		types, err := ctx.TypeService.GetAll(c.Context())
+		modes, err := ctx.ModeService.GetAll(c.Context())
+		energyClasses, err := ctx.EnergyClassService.GetAll(c.Context())
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
+		}
+
+		return Render(c, "admin-panel", fiber.Map{
+			"brands":         brands,
+			"types":          types,
+			"modes":          modes,
+			"energy_classes": energyClasses,
+		}, cfg)
 	}
 }
 func ArticlePage(cfg *config.Config) fiber.Handler {

@@ -3,6 +3,7 @@ package repositories
 import (
 	"SplitSystemShop/internal/models"
 	"context"
+	"fmt"
 	"gorm.io/gorm"
 )
 
@@ -19,6 +20,17 @@ func NewReviewRepository(db *gorm.DB) ReviewRepository {
 }
 
 func (r reviewRepository) Create(c context.Context, review *models.Review) error {
+	var count int64
+	err := r.db.WithContext(c).
+		Model(&models.Review{}).
+		Where("user_id = ? AND split_system_id = ?", review.UserID, review.SplitSystemID).
+		Count(&count).Error
+	if err != nil {
+		return err
+	}
+	if count > 0 {
+		return fmt.Errorf("отзыв уже существует")
+	}
 	return r.db.WithContext(c).Create(review).Error
 }
 

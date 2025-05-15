@@ -44,13 +44,13 @@
 
                 <div class="filter-group">
                     <label class="title">Рекомендуемая площадь (м²)</label>
-                    <input type="range" min="0" max="5" step="1" value="0" id="area-range">
+                    <input type="range" min="0" max="6" step="1" value="0" id="area-range">
                     <div style="text-align: center;"><span id="area-range-label"></span></div>
                 </div>
 
                 <div class="filter-group">
                     <label class="title">Мощность охлаждения (кВт)</label>
-                    <input type="range" min="0" max="4" step="1" value="0" id="power-range">
+                    <input type="range" min="0" max="5" step="1" value="0" id="power-range">
                     <div style="text-align: center;"><span id="cooling-range-label"></span></div>
                 </div>
 
@@ -368,6 +368,7 @@
 <script>
 
     const areaLabels = [
+        "Выберите значение",
         "менее 24",
         "24,1-29",
         "29,1-34",
@@ -376,6 +377,7 @@
         "69,1 и более"
     ];
     const areaValues = [
+        "0",
         "0-24",
         "24,1-29",
         "29,1-34",
@@ -384,6 +386,7 @@
         "69,1-10000"
     ];
     const powerLabels = [
+        "Выберите значение",
         "2,0-2,2 кВт",
         "2,5-2,7 кВт",
         "3-3,5 кВт",
@@ -392,6 +395,7 @@
     ];
 
     const powerValues = [
+        "0",
         "2,0-2,2",
         "2,5-2,7",
         "3-3,5",

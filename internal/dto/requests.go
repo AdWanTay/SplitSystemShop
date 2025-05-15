@@ -50,3 +50,28 @@ type NewReviewRequest struct {
 	Rating        int    `json:"rating"`
 	Comment       string `json:"comment"`
 }
+
+type SplitSystemRequest struct {
+	Title                string  `json:"title"`
+	ShortDescription     string  `json:"short_description"`
+	LongDescription      string  `json:"long_description"`
+	BrandID              uint    `json:"brand_id"`
+	TypeID               uint    `json:"type_id"`
+	Price                int     `json:"price"`
+	HasInverter          bool    `json:"has_inverter"`
+	RecommendedArea      float64 `json:"recommended_area"`
+	CoolingPower         float64 `json:"cooling_power"`
+	EnergyClassCoolingID uint    `json:"energy_class_cooling_id"`
+	EnergyClassHeatingID uint    `json:"energy_class_heating_id"`
+	MinNoiseLevel        float64 `json:"min_noise_level"`
+	MaxNoiseLevel        float64 `json:"max_noise_level"`
+	ExternalWeight       float64 `json:"external_weight"`
+	ExternalWidth        int     `json:"external_width"`
+	ExternalHeight       int     `json:"external_height"`
+	ExternalDepth        int     `json:"external_depth"`
+	InternalWeight       float64 `json:"internal_weight"`
+	InternalWidth        int     `json:"internal_width"`
+	InternalHeight       int     `json:"internal_height"`
+	InternalDepth        int     `json:"internal_depth"`
+	ImageURL             string  `json:"image_url"`
+}

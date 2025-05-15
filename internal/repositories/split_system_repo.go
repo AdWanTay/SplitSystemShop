@@ -9,7 +9,8 @@ import (
 type SplitSystemRepository interface {
 	GetSplitSystem(c context.Context, systemID uint) (*models.SplitSystem, error)
 	GetAllSplitSystems(c context.Context, filters map[string]interface{}) ([]models.SplitSystem, error)
-	DeleteSplitSystem(c context.Context, systemID uint) error
+	Delete(c context.Context, systemID uint) error
+	Create(c context.Context, splitSystem *models.SplitSystem) error
 }
 
 type splitSystemRepository struct {
@@ -107,7 +108,11 @@ func (r splitSystemRepository) GetSplitSystem(c context.Context, systemID uint) 
 	return &splitSystem, nil
 }
 
-func (r splitSystemRepository) DeleteSplitSystem(c context.Context, systemID uint) error {
+func (r splitSystemRepository) Delete(c context.Context, systemID uint) error {
 	return r.db.WithContext(c).Exec(
 		"DELETE FROM split_systems WHERE id = ?", systemID).Error
+}
+
+func (r splitSystemRepository) Create(c context.Context, splitSystem *models.SplitSystem) error {
+	return r.db.WithContext(c).Create(splitSystem).Error
 }

@@ -35,7 +35,7 @@ func App(cfg *config.Config) error {
 	})
 
 	engine.AddFunc("formatPrice", func(price int) string {
-		s := fmt.Sprintf("%d", price)
+		s := fmt.Sprintf("%d", price/100)
 		n := len(s)
 
 		if n <= 3 {
@@ -59,6 +59,7 @@ func App(cfg *config.Config) error {
 		}
 		return b.String()
 	})
+
 	app := fiber.New(fiber.Config{
 		Views: engine,
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
@@ -84,6 +85,7 @@ func App(cfg *config.Config) error {
 		},
 	})
 
+	app.Static("/uploads", "./uploads")
 	routes.SetupRoutes(app, cfg, ctx)
 	err = app.Listen(":" + cfg.Port)
 	if err != nil {

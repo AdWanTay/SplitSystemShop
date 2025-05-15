@@ -38,20 +38,19 @@
 
                 <div class="product-meta">
                     <span class="product-rating">Рейтинг: <strong>{{.info.AverageRating}}</strong></span>
-                    <span class="product-category">Категория 1</span>
-                    <span class="product-category">Категория 2</span>
+                    <span class="product-category">{{ .info.Type.Name }}</span>
+                    <span class="product-category">до {{ .info.RecommendedArea }} дБ</span>
                 </div>
 
                 <div class="product-price-block">
-                    <div class="p-price">{{formatPrice .info.Price }} руб.</div>
+                    <div class="p-price">{{formatPrice .info.Price}} руб.</div>
                     <div class="product-actions">
                         <button class="btn-huge accent-btn">Заказать</button>
                         {{ if .isAuthenticated }}
                         {{ if .info.InFavorites }}
                         <button class="btn-huge primary-btn" onclick="">
                             <div class="p-f">
-                                <span style="scale: 1.5">♥</span>В избранном
-                            </div>
+                                <span style="scale: 1.5">♥</span>В избранном</div>
                         </button>
                         {{else}}
                         <button class="btn-huge primary-btn" onclick="addToFavorites(this, {{.info.ID}})">
@@ -134,19 +133,47 @@
                 <div class="spec-section">
                     <h3>Конструкция</h3>
                     <div class="spec-grid">
-                        <div class="spec-row"><span>Инвертор:</span><span>{{if .info.HasInverter}}Да{{else}}Нет{{end}}</span></div>
+                        <div class="spec-row">
+                            <span>Инвертор:</span><span>{{if .info.HasInverter}}Да{{else}}Нет{{end}}</span></div>
                     </div>
                 </div>
 
                 <div class="spec-section">
-                    <h3>Производительность</h3>
+                    <h3>Габариты и вес внутреннего блока</h3>
                     <div class="spec-grid">
-                        <div class="spec-row"><span>Охлаждение:</span><span>7500 BTU</span></div>
-                        <div class="spec-row"><span>Мощность охлаждения:</span><span>{{.info.CoolingPower}} кВт</span></div>
-                        <div class="spec-row"><span>Мин. уровень шума (внутр.):</span><span>{{.info.MinNoiseLevel}} дБ</span></div>
-                        <div class="spec-row"><span>Макс. уровень шума (внутр.):</span><span>{{.info.MaxNoiseLevel}} дБ</span></div>
+                        <div class="spec-row">
+                            <span>Глубина внутреннего блока:</span><span>{{.info.InternalDepth}} мм</span>
+                        </div>
+                        <div class="spec-row">
+                            <span>Ширина внутреннего блока:</span><span>{{.info.InternalWidth}} мм</span>
+                        </div>
+                        <div class="spec-row">
+                            <span>Высота внутреннего блока:</span><span>{{.info.InternalHeight}} мм</span>
+                        </div>
+                        <div class="spec-row">
+                            <span>Вес внутреннего блока:</span><span>{{.info.InternalWeight}} кг</span>
+                        </div>
                     </div>
                 </div>
+
+                <div class="spec-section">
+                    <h3>Габариты и вес внешнего блока</h3>
+                    <div class="spec-grid">
+                        <div class="spec-row">
+                            <span>Глубина внешнего блока (мм):</span><span>{{.info.ExternalDepth}} мм</span>
+                        </div>
+                        <div class="spec-row">
+                            <span>Ширина внешнего блока (мм):</span><span>{{.info.ExternalWidth}} мм</span>
+                        </div>
+                        <div class="spec-row">
+                            <span>Высота внешнего блока (мм):</span><span>{{.info.ExternalHeight}} мм</span>
+                        </div>
+                        <div class="spec-row">
+                            <span>Вес внешнего блока (кг):</span><span>{{.info.ExternalWeight}} кг</span>
+                        </div>
+                    </div>
+                </div>
+
             </details>
         </div>
 
@@ -191,7 +218,7 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ split_system_id: id })
+            body: JSON.stringify({split_system_id: id})
         })
             .then(response => {
                 if (!response.ok) throw new Error("Ошибка при добавлении в избранное");

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const tableBody = document.querySelector('#products-table tbody');
     const searchBtn = document.getElementById('search-btn');
     const searchInput = document.getElementById('search-input');
@@ -10,8 +10,15 @@ document.addEventListener('DOMContentLoaded', function() {
     let allProducts = [];
     const visibleRows = 5;
 
+    searchInput.addEventListener('input', function () {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        if (searchTerm.length !== 0) {
+            filterProducts(searchTerm);
+        }
+    });
+
     // Обработчик "Выбрать все"
-    selectAllCheckbox.addEventListener('change', function() {
+    selectAllCheckbox.addEventListener('change', function () {
         const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]');
         const rows = tableBody.querySelectorAll('tr');
 
@@ -22,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Обработчик клика по строке
-    tableBody.addEventListener('click', function(e) {
+    tableBody.addEventListener('click', function (e) {
         const row = e.target.closest('tr');
         if (!row) return;
 
@@ -39,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Обработчик клика по чекбоксу
-    tableBody.addEventListener('change', function(e) {
+    tableBody.addEventListener('change', function (e) {
         if (e.target.tagName === 'INPUT' && e.target.type === 'checkbox') {
             const row = e.target.closest('tr');
             row.classList.toggle('selected', e.target.checked);
@@ -57,19 +64,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Обработчик поиска
-    searchBtn.addEventListener('click', function() {
+    searchBtn.addEventListener('click', function () {
         const searchTerm = searchInput.value.trim().toLowerCase();
         filterProducts(searchTerm);
     });
 
     // Обработчик добавления товара
-    addBtn.addEventListener('click', function() {
+    addBtn.addEventListener('click', function () {
         console.log('Добавить новый товар');
         // Здесь будет логика добавления
     });
 
     // Обработчик удаления товаров
-    deleteBtn.addEventListener('click', function() {
+    deleteBtn.addEventListener('click', function () {
         const selectedIds = getSelectedIds();
         if (selectedIds.length === 0) {
             alert('Пожалуйста, выберите товары для удаления');
@@ -102,42 +109,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const filtered = allProducts.filter(product =>
-            product.name.toLowerCase().includes(searchTerm) ||
-            product.description.toLowerCase().includes(searchTerm)
+            product.title.toLowerCase().includes(searchTerm) ||
+            String(product.id).toLowerCase().includes(searchTerm) ||
+            product.brand.name.toLowerCase().includes(searchTerm) ||
+            product.short_description.toLowerCase().includes(searchTerm)
         );
 
         renderProducts(filtered);
     }
 
-    // Рендеринг товаров
-    function renderProducts(products) {
-        totalCount.textContent = products.length;
-        selectAllCheckbox.checked = false;
-        selectAllCheckbox.indeterminate = false;
-
-        tableBody.innerHTML = '';
-
-        products.forEach((item, index) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td>${item.id}</td>
-                        <td>${item.name}</td>
-                        <td>${item.description}</td>
-                        <td>${item.price}</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                    `;
-            tableBody.appendChild(row);
-
-            if (index >= visibleRows) {
-                row.style.display = 'none';
-            }
-        });
-
-        adjustTableHeight();
-    }
 
     // Настройка высоты таблицы
     function adjustTableHeight() {
@@ -153,19 +133,100 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Загрузка данных (замените на реальный API запрос)
-    function loadSampleData() {
-        allProducts = [];
-        for (let i = 1; i <= 20; i++) {
-            allProducts.push({
-                id: i,
-                name: `Товар ${i}`,
-                description: `Описание товара ${i}. Подробное описание характеристик и свойств товара.`,
-                price: `${i * 1000} ₽`
-            });
-        }
-
-        renderProducts(allProducts);
+    function formatPrice(price) {
+        const intPrice = parseInt(price); // или Number(price)
+        return new Intl.NumberFormat('ru-RU').format(intPrice / 100) + ' ₽';
     }
 
-    loadSampleData();
+    function renderProducts(products) {
+        totalCount.textContent = products.length;
+        selectAllCheckbox.checked = false;
+        selectAllCheckbox.indeterminate = false;
+
+        tableBody.innerHTML = '';
+
+        products.forEach(item => {
+            const row = document.createElement('tr');
+            row.dataset.id = item.id; // ← обязательно
+
+            row.innerHTML = `
+              <td class="checkbox-cell"><input type="checkbox"></td>
+              <td>${item.id}</td>
+              <td>${item.title}</td>
+              <td>${item.short_description}</td>
+              <td>${item.brand?.name || '—'}</td>
+              <td>${item.type?.name || '—'}</td>
+              <td>${formatPrice(item.price)}</td>
+              <td>${item.has_inverter ? 'Да' : 'Нет'}</td>
+              <td>${item.recommended_area} м²</td>
+              <td>${item.cooling_power} кВт</td>
+              <td>Охлаждение: ${item.energy_class_cooling?.name || '—'}, Обогрев: ${item.energy_class_heating?.name || '—'}</td>
+              <td>${item.min_noise_level} – ${item.max_noise_level} дБ</td>
+              <td>${item.internal_width}×${item.internal_height}×${item.internal_depth} мм / ${item.internal_weight} кг</td>
+              <td>${item.external_width}×${item.external_height}×${item.external_depth} мм / ${item.external_weight} кг</td>
+              <td>${item.average_rating}</td>           
+            `;
+            tableBody.appendChild(row);
+            adjustTableHeight(products)
+        });
+
+    }
+
+    function loadProducts() {
+        fetch('/api/split-systems/')
+            .then(response => {
+                if (!response.ok) throw new Error("Ошибка при загрузке данных");
+                return response.json();
+            })
+            .then(data => {
+                allProducts = data.items
+                renderProducts(data.items || []);
+            })
+            .catch(error => {
+                alert("Ошибка загрузки: " + error.message);
+            });
+    }
+
+    loadProducts()
+
+    function getSelectedProductIds() {
+        const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]:checked');
+        const ids = Array.from(checkboxes).map(checkbox => {
+            return parseInt(checkbox.closest('tr').dataset.id, 10);
+        });
+        return ids;
+    }
+
+    async function deleteProducts(ids) {
+        const confirmed = confirm(`Удалить ${ids.length} товар(ов)?`);
+        if (!confirmed) return;
+
+        try {
+            await Promise.all(ids.map(id =>
+                fetch(`/api/split-systems/${id}`, {
+                    method: 'DELETE'
+                })
+            ));
+
+            // Удалить строки из таблицы сразу (оптимизация UX)
+            ids.forEach(id => {
+                const row = tableBody.querySelector(`tr[data-id="${id}"]`);
+                if (row) row.remove();
+            });
+
+            alert("Удаление завершено.");
+        } catch (error) {
+            console.error("Ошибка удаления:", error);
+            alert("Ошибка при удалении товаров.");
+        }
+    }
+
+    deleteBtn.addEventListener('click', () => {
+        const ids = getSelectedProductIds();
+        if (ids.length === 0) {
+            alert("Выберите хотя бы один товар для удаления.");
+            return;
+        }
+        deleteProducts(ids);
+    });
 });

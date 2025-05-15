@@ -5,7 +5,9 @@ import (
 	"SplitSystemShop/internal/models"
 	"SplitSystemShop/internal/services"
 	"github.com/gofiber/fiber/v2"
+	"path/filepath"
 	"strconv"
+	"time"
 )
 
 func GetSplitSystem(service *services.SplitSystemService) fiber.Handler {
@@ -115,11 +117,78 @@ func DeleteSplitSystem(service *services.SplitSystemService) fiber.Handler {
 		if err != nil {
 			return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{"message": "Неверный id товара"})
 		}
-		if service.DeleteSplitSystem(c.Context(), uint(splitSystemID)) != nil {
+		if service.Delete(c.Context(), uint(splitSystemID)) != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "Ошибка удаления товара"})
 		}
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"message": "Товар успешно удален",
 		})
+	}
+}
+func CreateSplitSystem(splitSystemService *services.SplitSystemService) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		file, err := c.FormFile("image")
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Файл обязателен"})
+		}
+
+		// Генерация пути
+		filename := strconv.FormatInt(time.Now().UnixNano(), 10) + filepath.Ext(file.Filename)
+		savePath := "./web/static/uploads/" + filename
+
+		if err = c.SaveFile(file, savePath); err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Ошибка при сохранении файла"})
+		}
+
+		// Парсинг полей
+		price, _ := strconv.Atoi(c.FormValue("price"))
+		brandID, _ := strconv.ParseInt(c.FormValue("brand_id"), 10, 64)
+		typeID, _ := strconv.ParseInt(c.FormValue("type_id"), 10, 64)
+		recommendedArea, _ := strconv.ParseFloat(c.FormValue("recommended_area"), 64)
+		coolingPower, _ := strconv.ParseFloat(c.FormValue("cooling_power"), 64)
+		energyCoolID, _ := strconv.ParseInt(c.FormValue("energy_class_cooling_id"), 10, 64)
+		energyHeatID, _ := strconv.ParseInt(c.FormValue("energy_class_heating_id"), 10, 64)
+		minNoise, _ := strconv.ParseFloat(c.FormValue("min_noise_level"), 64)
+		maxNoise, _ := strconv.ParseFloat(c.FormValue("max_noise_level"), 64)
+		extWeight, _ := strconv.ParseFloat(c.FormValue("external_weight"), 64)
+		extWidth, _ := strconv.Atoi(c.FormValue("external_width"))
+		extHeight, _ := strconv.Atoi(c.FormValue("external_height"))
+		extDepth, _ := strconv.Atoi(c.FormValue("external_depth"))
+		intWeight, _ := strconv.ParseFloat(c.FormValue("internal_weight"), 64)
+		intWidth, _ := strconv.Atoi(c.FormValue("internal_width"))
+		intHeight, _ := strconv.Atoi(c.FormValue("internal_height"))
+		intDepth, _ := strconv.Atoi(c.FormValue("internal_depth"))
+		hasInverter := c.FormValue("has_inverter") == "true"
+
+		split := &models.SplitSystem{
+			Title:                c.FormValue("title"),
+			ShortDescription:     c.FormValue("short_description"),
+			LongDescription:      c.FormValue("long_description"),
+			BrandID:              uint(brandID),
+			TypeID:               uint(typeID),
+			Price:                price,
+			HasInverter:          hasInverter,
+			RecommendedArea:      recommendedArea,
+			CoolingPower:         coolingPower,
+			EnergyClassCoolingID: uint(energyCoolID),
+			EnergyClassHeatingID: uint(energyHeatID),
+			MinNoiseLevel:        minNoise,
+			MaxNoiseLevel:        maxNoise,
+			ExternalWeight:       extWeight,
+			ExternalWidth:        extWidth,
+			ExternalHeight:       extHeight,
+			ExternalDepth:        extDepth,
+			InternalWeight:       intWeight,
+			InternalWidth:        intWidth,
+			InternalHeight:       intHeight,
+			InternalDepth:        intDepth,
+			ImageURL:             filename,
+		}
+
+		if _, err = splitSystemService.Create(c.Context(), *split); err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Не удалось создать товар"})
+		}
+
+		return c.Status(fiber.StatusCreated).JSON(split)
 	}
 }
