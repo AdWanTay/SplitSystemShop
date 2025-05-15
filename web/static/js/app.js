@@ -42,6 +42,26 @@ function openAuthModal() {
         });
 }
 
+function openReviewModal() {
+    closeAllModals();
+    lockBodyScroll();
+
+    fetch("/web/templates/components/modals/review-modal.html")
+        .then((res) => res.text())
+        .then((html) => {
+            const modalContainer = document.createElement("div");
+            modalContainer.innerHTML = html;
+            document.body.appendChild(modalContainer);
+
+            //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
+            modalContainer.addEventListener("click", (e) => {
+                if (e.target.classList.contains("modal")) {
+                    closeAllModals();
+                }
+            });
+        });
+}
+
 function showForm(type) {
     const btnLogin = document.getElementById('btn-login');
     const btnRegister = document.getElementById('btn-register');
