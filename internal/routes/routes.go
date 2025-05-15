@@ -36,8 +36,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Delete("/api/cart/:id", middlewares.RequireAuth(cfg, false), handlers.DeleteCartItem(ctx.CartService))
 	app.Post("/api/cart", middlewares.RequireAuth(cfg, false), handlers.AddToCart(ctx.CartService))
 
-	//app.Patch("/api/auth/change-name", middlewares.RequireAuth(cfg, false), handlers.ChangeName(userService))
-	//app.Patch("/api/auth/change-phone", middlewares.RequireAuth(cfg, false), handlers.ChangePhoneNumber(userService))
+	app.Patch("/api/auth/change-credentials", middlewares.RequireAuth(cfg, false), handlers.ChangeCredentials(ctx.UserService))
 	app.Delete("/api/auth/delete-account", middlewares.RequireAuth(cfg, false), handlers.DeleteAccount(ctx.UserService))
 
 	//Роуты для фронта

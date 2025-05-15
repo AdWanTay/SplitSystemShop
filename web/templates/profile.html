@@ -27,15 +27,15 @@
         <div class="form-section">
             <h2>Персональные данные</h2>
             <div class="form-group">
-                <input type="text" placeholder="Фамилия">{{.userData.LastName}}<input>
-                <input type="text" placeholder="Имя">{{.userData.FirstName}}<input>
-                <input type="text" placeholder="Отчество (не обязательно)">{{.userData.Patronymic}}<input>
+                <input type="text" placeholder="Фамилия" value="{{.userData.LastName}}">
+                <input type="text" placeholder="Имя" value="{{.userData.FirstName}}">
+                <input type="text" placeholder="Отчество (не обязательно)" value="{{.userData.Patronymic}}">
             </div>
             <div class="form-group">
-                <input type="email" placeholder="Почта">{{.userData.Email}}<input>
-                <input type="tel" placeholder="Телефон">{{.userData.PhoneNumber}}<input>
+                <input type="email" placeholder="Почта" value="{{.userData.Email}}">
+                <input type="tel" placeholder="Телефон" value="{{.userData.PhoneNumber}}">
             </div>
-            <button class="accent-btn btn-standard" onclick="">Изменить / Сохранить</button>
+            <button class="accent-btn btn-standard" onclick="changeCredentials()">Изменить / Сохранить</button>
         </div>
 
         <hr>
@@ -62,3 +62,35 @@
 
 </body>
 </html>
+<script>
+    function changeCredentials(){
+
+        const payload = {
+            new_last_name: document.querySelector('input[placeholder="Фамилия"]').value.trim(),
+            new_first_name: document.querySelector('input[placeholder="Имя"]').value.trim(),
+            new_patronymic: document.querySelector('input[placeholder="Отчество (не обязательно)"]').value.trim(),
+            new_email: document.querySelector('input[placeholder="Почта"]').value.trim(),
+            new_phone_number: document.querySelector('input[placeholder="Телефон"]').value.trim()
+        };
+
+        fetch("/api/auth/change-credentials", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Не удалось обновить данные");
+                return response.json();
+            })
+            .then(data => {
+                showToast("", "Данные успешно обновлены");
+            })
+            .catch(err => {
+                alert("Ошибка: " + err.message);
+            });
+
+    }
+
+</script>
