@@ -83,6 +83,7 @@
 
 .article-editor-modal {
     max-width: 80%;
+    max-height: 100%;
 }
 
 .modal-title {

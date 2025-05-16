@@ -538,7 +538,44 @@ const modalConfigs = {
                 showErr(error.message);
             }
         }
-    }
+    },
+    // articleDeleteConfirm: {
+    //     title: "Подтверждение удаления",
+    //     body: `
+    //         <form id="deleteForm">
+    //             <input type="text" id="deleteConfirmation" autocomplete="off" placeholder="Напишите 'УДАЛИТЬ'" required>
+    //         </form>
+    //     `,
+    //     description: "ⓘ Это действие приведет к безвозвратному удалению статьи",
+    //     mainBtnText: "Удалить статью",
+    //     mainBtnAction: async function () {
+    //         const confirmation = document.getElementById('deleteConfirmation').value;
+    //
+    //         if (confirmation !== 'УДАЛИТЬ') {
+    //             showErr("Пожалуйста, введите пароль и напишите 'УДАЛИТЬ' для подтверждения");
+    //             return;
+    //         }
+    //
+    //         try {
+    //             const response = await fetch('/api/article/${id}', {
+    //                 method: 'DELETE',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 }
+    //             });
+    //
+    //             if (!response.ok) {
+    //                 const error = await response.json();
+    //                 throw new Error(error.message || "Не удалось удалить статья");
+    //             }
+    //
+    //             showNotify("Успех", "Статья была успешно удалена");
+    //             this.closest('.modal').remove();
+    //         } catch (error) {
+    //             showErr(error.message);
+    //         }
+    //     }
+    // },
 };
 
 

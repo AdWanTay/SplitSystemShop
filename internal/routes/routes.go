@@ -39,8 +39,11 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 
 	app.Post("/api/review", middlewares.RequireAuth(cfg, false), handlers.CreateReview(ctx.ReviewService))
 
-	// TODO СДЕЛАТЬ ЭТОТ АПИ ЗАПРОС
-	app.Post("/api/article/:id", middlewares.RequireAuth(cfg, false))
+	app.Get("/api/articles/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.GetArticle(ctx.ArticleService))
+	app.Get("/api/articles/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.GetAllArticles(ctx.ArticleService))
+	app.Post("/api/articles", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.CreateArticle(ctx.ArticleService))
+	app.Delete("/api/articles/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.DeleteArticle(ctx.ArticleService))
+	app.Patch("/api/articles/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.UpdateArticle(ctx.ArticleService))
 
 	app.Patch("/api/auth/change-credentials", middlewares.RequireAuth(cfg, false), handlers.ChangeCredentials(ctx.UserService))
 	app.Delete("/api/auth/delete-account", middlewares.RequireAuth(cfg, false), handlers.DeleteAccount(ctx.UserService))
@@ -50,7 +53,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Get("/admin", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.AdminPage(cfg, ctx))
 
 	// TODO СДЕЛАТЬ ЭТОТ АПИ ЗАПРОС
-	app.Get("/article/:id", handlers.ArticlePage(cfg))
+	//app.Get("/articles/:id", handlers.ArticlePage(cfg))
 
 	app.Get("/cart", middlewares.RequireAuth(cfg, false), handlers.CartPage(cfg, ctx.CartService))
 	app.Get("/catalog", handlers.CatalogPage(cfg, ctx))

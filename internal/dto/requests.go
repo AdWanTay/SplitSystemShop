@@ -53,6 +53,13 @@ type NewReviewRequest struct {
 	Comment       string `json:"comment"`
 }
 
+type NewArticleRequest struct {
+	Title       string `json:"title"`       // Заголовок статьи
+	Description string `json:"description"` // Краткое описание (для карточки)
+	Content     string `json:"content"`     // HTML контент статьи (из Quill)
+	ImageURL    string `json:"image_url"`
+}
+
 type NewSplitSystemRequest struct {
 	Title                string        `json:"title"`
 	ShortDescription     string        `json:"short_description"`

@@ -56,19 +56,28 @@ func ArticlePage(cfg *config.Config) fiber.Handler {
 	}
 }
 
-func BlogPage(cfg *config.Config, appCtx *context.AppContext) fiber.Handler {
+func BlogPage(cfg *config.Config, ctx *context.AppContext) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		var articles []models.Article
+		var err error
+
+		articles, err = ctx.ArticleService.GetAll(c.Context())
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).SendString("Ошибка загрузки статей")
+		}
+
+		userID, ok := c.Locals("userId").(uint)
 		isAdmin := false
-		if userIdVal := c.Locals("userId"); userIdVal != nil {
-			userID := userIdVal.(uint)
-			role, err := appCtx.UserService.GetUserRole(c.Context(), userID)
+		if ok {
+			role, err := ctx.UserService.GetUserRole(c.Context(), userID)
 			if err == nil && role == "admin" {
 				isAdmin = true
 			}
 		}
 
 		return Render(c, "blog", fiber.Map{
-			"isAdmin": isAdmin,
+			"articles": articles,
+			"isAdmin":  isAdmin,
 		}, cfg)
 	}
 }

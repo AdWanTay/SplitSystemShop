@@ -49,6 +49,7 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 			&models.SplitSystem{},
 			&models.SplitSystemImage{},
 			&models.Review{},
+			&models.Article{},
 		)
 		err = populateDB(db)
 		addTriggers(db)

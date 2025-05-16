@@ -7,16 +7,29 @@
 
         <h2 class="modal-title">Редактировать статью</h2>
 
-        <input type="text" id="article-title" placeholder="Заголовок статьи" style="width: 100%; padding: 0.5rem; font-size: 1rem;">
+        <!-- Верхний блок: заголовок + превью -->
+        <div style="display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap; margin-bottom: 1rem;">
+            <input type="text" id="article-title" placeholder="Заголовок"
+                   style="flex: 1 1 300px; padding: 0.5rem; font-size: 1rem; min-width: 200px;">
 
-        <textarea type="text" id="article-short-desc" placeholder="Краткое описание" rows="3" style="width: 100%; padding: 0.5rem; margin-bottom: .5rem;  font-size: 1rem; resize: none"></textarea>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <label for="article-image-upload" class="accent-btn btn-small">Загрузить превью</label>
+                <input type="file" id="article-image-upload" accept="image/*" style="display: none;">
+                <img id="article-image-preview" src="/web/static/img/primer2.jpg"
+                     style="margin-top: 0.5rem; width: 100px; height: 70px; object-fit: cover; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+        </div>
 
-        <div class="modal-body">
+        <textarea id="article-short-desc" placeholder="Краткое описание"
+                  rows="2" style="width: 100%; padding: 0.5rem; margin-bottom: .5rem; font-size: 1rem; resize: none"></textarea>
+
+        <!-- Редактор текста -->
+        <div class="modal-body" style="margin-bottom: 1rem;">
             <div id="editor-container" style="height: 300px;"></div>
         </div>
 
         <div class="modal-actions">
-            <button id="save-article-btn" class="accent-btn btn-standard">Сохранить</button>
+            <button id="save-article-btn" class="accent-btn btn-standard">Сохранить / Опубликовать</button>
             <button class="primary-btn btn-standard" onclick="this.closest('.modal').remove()">Отмена</button>
         </div>
     </div>
