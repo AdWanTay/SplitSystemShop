@@ -119,5 +119,5 @@ func (r splitSystemRepository) Create(c context.Context, splitSystem *models.Spl
 }
 
 func (r splitSystemRepository) Update(ctx context.Context, newSplitSystem *models.SplitSystem) error {
-	return r.db.WithContext(ctx).Save(&newSplitSystem).Error
+	return r.db.WithContext(ctx).Save(newSplitSystem).Error
 }

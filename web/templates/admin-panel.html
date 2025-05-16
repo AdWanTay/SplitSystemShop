@@ -143,7 +143,7 @@
                     </select>
 
                     <label for="cooling_power">Мощность охлаждения (кВт)</label>
-                    <input name="cooling_power" type="number" placeholder="0">
+                    <input name="cooling_power"  step="0.01" type="number" placeholder="0">
 
                     <label for="recommended_area">Рекомендуемая площадь (м2)</label>
                     <input name="recommended_area" type="number" placeholder="0">
@@ -237,35 +237,7 @@
 <script src="/web/static/js/utils.js"></script>
 
 <script>
-    document.getElementById("create-product-form").addEventListener("submit", async function (e) {
-        e.preventDefault();
 
-        const form = e.target;
-        const formData = new FormData(form);
-
-        // Приведение чекбокса к строке "true"/"false"
-        formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
-        formData.set("price", String(form.price.value*100) )
-        try {
-            const res = await fetch("/api/split-systems", {
-                method: "POST",
-                body: formData
-            });
-
-            const data = await res.json();
-
-            if (res.ok) {
-                showNotify('Успех', "Товар успешно создан!")
-                form.reset();
-                hasUnsavedChanges = false;
-            } else {
-                showErr("Ошибка: " + (data.error || "неизвестная ошибка"));
-            }
-        } catch (err) {
-            console.error(err);
-            showErr("Ошибка отправки запроса.")
-        }
-    });
 </script>
 
 

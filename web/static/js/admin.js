@@ -6,15 +6,75 @@ document.addEventListener('DOMContentLoaded', function () {
     const deleteBtn = document.getElementById('delete-btn');
     const totalCount = document.getElementById('total-count');
     const selectAllCheckbox = document.getElementById('select-all');
-    let hasUnsavedChanges = false;
     const form = document.getElementById("create-product-form");
 
+    let hasUnsavedChanges = false;
+    let addingNewProduct = true
     form.addEventListener("input", () => {
         hasUnsavedChanges = true;
     });
-
+    let selectedId = 0
     let allProducts = [];
     const visibleRows = 5;
+
+    document.getElementById("create-product-form").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        if (addingNewProduct) {
+            const form = e.target;
+            const formData = new FormData(form);
+            // Приведение чекбокса к строке "true"/"false"
+            formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
+            formData.set("price", String(form.price.value * 100))
+            try {
+                const res = await fetch("/api/split-systems", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    showNotify('Успех', "Товар успешно создан!")
+                    form.reset();
+                    hasUnsavedChanges = false;
+                    loadProducts()
+                } else {
+                    showErr("Ошибка: " + (data.error || "неизвестная ошибка"));
+                }
+            } catch (err) {
+                console.error(err);
+                showErr("Ошибка отправки запроса.")
+            }
+        } else { // обновление товара
+            const form = e.target;
+            const formData = new FormData(form);
+            // Приведение чекбокса к строке "true"/"false"
+            formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
+            formData.set("price", String(form.price.value * 100))
+            try {
+                const res = await fetch(`/api/split-systems/${selectedId}`, {
+                    method: "PATCH",
+                    body: formData
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    showNotify('Успех', "Товар успешно обновлен!")
+                    form.reset();
+                    hasUnsavedChanges = false;
+                    addingNewProduct = true
+                    loadProducts()
+                } else {
+                    showErr("Ошибка: " + (data.error || "неизвестная ошибка"));
+                }
+            } catch (err) {
+                console.error(err);
+                showErr("Ошибка отправки запроса.")
+            }
+        }
+
+
+    });
 
     searchInput.addEventListener('input', function () {
         const searchTerm = searchInput.value.trim().toLowerCase();
@@ -39,14 +99,15 @@ document.addEventListener('DOMContentLoaded', function () {
     tableBody.addEventListener('click', async function (e) {
         const row = e.target.closest('tr');
         if (!row) return;
-
         const id = row.dataset.id;
         if (!id) return;
 
         if (hasUnsavedChanges) {
             const proceed = confirm("Есть несохранённые изменения. Сохранить?");
+            hasUnsavedChanges = false;
             if (proceed) return; //TODO
         }
+        addingNewProduct = false
 
         try {
             const res = await fetch(`/api/split-systems/${id}`);
@@ -55,11 +116,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             fillForm(data.item);
             hasUnsavedChanges = false;
+            selectedId = id
         } catch (err) {
             console.error(err);
             alert("Ошибка загрузки данных товара");
         }
     });
+
     function fillForm(product) {
         form.title.value = product.title;
         form.short_description.value = product.short_description;
@@ -117,7 +180,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик добавления товара
     addBtn.addEventListener('click', function () {
         console.log('Добавить новый товар');
-        // Здесь будет логика добавления
+
+        if (hasUnsavedChanges) {
+            const proceed = confirm("Есть несохранённые изменения. Сохранить?");
+            hasUnsavedChanges = false;
+            if (proceed) return; //TODO
+        }
+
+        form.reset()
     });
 
     // Обработчик удаления товаров
