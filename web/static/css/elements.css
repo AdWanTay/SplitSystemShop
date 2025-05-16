@@ -81,6 +81,10 @@
     max-width: 40%;
 }
 
+.article-editor-modal {
+    max-width: 80%;
+}
+
 .modal-title {
     font-size: 1.5rem;
     font-weight: bold;
@@ -286,7 +290,10 @@ body.modal-open {
 
 
 
-
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
 
 
 .form-toggle {

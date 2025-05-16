@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('openChatBtn').classList.add('hidden');
+
     const tableBody = document.querySelector('#products-table tbody');
     const searchBtn = document.getElementById('search-btn');
     const searchInput = document.getElementById('search-input');
@@ -16,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let selectedId = 0
     let allProducts = [];
     const visibleRows = 5;
-
 
     async function  updateProduct(){
         const formData = new FormData(form);

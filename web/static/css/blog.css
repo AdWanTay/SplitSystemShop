@@ -71,12 +71,6 @@
     margin-top: 8px;
 }
 
-.blog-card-action {
-    margin: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid #eee;
-}
-
 .blog-card-action .more-btn {
     width: 100%;
     padding: 10px;
@@ -114,4 +108,94 @@
 .right-img {
     float: right;
     margin: 1rem 0 1rem 1rem;
+}
+
+
+.blog-card.blog-card-add {
+    min-height: 22rem;
+    height: 100%;
+}
+
+.blog-card.blog-card-add {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f8f8f7;
+    border: 2px dashed #ccc;
+    color: #333;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s ease;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+}
+
+.blog-card.blog-card-add:hover {
+    background: #e8e8e8;
+}
+
+.blog-card-add-icon {
+    font-size: 48px;
+    margin-bottom: 1rem;
+    color: #888;
+}
+
+.blog-card-add-text {
+    font-size: 18px;
+}
+
+.blog-card-admin-label {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    font-size: 12px;
+    color: #666;
+    background: #fff;
+    padding: 0.2rem 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.blog-card-action {
+    margin: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
+}
+
+.admin-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edit-btn,
+.delete-btn {
+    padding: .6rem;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #f3f3f3;
+    transition: background 0.2s;
+}
+
+.edit-btn:hover {
+    background-color: #dceeff;
+}
+
+.delete-btn:hover {
+    background-color: #ffe0e0;
+}
+
+.ql-container.ql-snow {
+    border-radius: 0 0 .5rem .5rem;
+}
+
+.ql-toolbar.ql-snow {
+    border-radius: .5rem .5rem 0 0;
 }

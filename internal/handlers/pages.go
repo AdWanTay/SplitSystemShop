@@ -56,9 +56,20 @@ func ArticlePage(cfg *config.Config) fiber.Handler {
 	}
 }
 
-func BlogPage(cfg *config.Config) fiber.Handler {
+func BlogPage(cfg *config.Config, appCtx *context.AppContext) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "blog", fiber.Map{}, cfg)
+		isAdmin := false
+		if userIdVal := c.Locals("userId"); userIdVal != nil {
+			userID := userIdVal.(uint)
+			role, err := appCtx.UserService.GetUserRole(c.Context(), userID)
+			if err == nil && role == "admin" {
+				isAdmin = true
+			}
+		}
+
+		return Render(c, "blog", fiber.Map{
+			"isAdmin": isAdmin,
+		}, cfg)
 	}
 }
 

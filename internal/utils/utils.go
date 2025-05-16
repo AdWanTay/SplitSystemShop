@@ -3,9 +3,13 @@ package utils
 import (
 	"SplitSystemShop/internal/config"
 	"SplitSystemShop/internal/models"
+	"encoding/base64"
 	"fmt"
 	"github.com/golang-jwt/jwt/v4"
+	"os"
+	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -55,4 +59,26 @@ func ParseUint(v string) uint {
 func ParseFloat(v string) float64 {
 	f, _ := strconv.ParseFloat(v, 64)
 	return f
+}
+
+func SaveBase64Image(data string) (string, error) {
+	parts := strings.Split(data, ",")
+	if len(parts) != 2 {
+		return "", fmt.Errorf("невалидный base64")
+	}
+
+	decoded, err := base64.StdEncoding.DecodeString(parts[1])
+	if err != nil {
+		return "", err
+	}
+
+	filename := fmt.Sprintf("%d.png", time.Now().UnixNano())
+	path := filepath.Join("web", "static", "uploads", "article_images", filename)
+
+	err = os.WriteFile(path, decoded, 0644)
+	if err != nil {
+		return "", err
+	}
+
+	return "/web/static/uploads/article_images/" + filename, nil
 }

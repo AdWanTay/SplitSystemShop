@@ -15,7 +15,6 @@
 
     <link rel="stylesheet" href="/web/static/notify/simple-notify.css" />
 
-
     <script src="https://static.elfsight.com/platform/platform.js" async></script>
     <div class="elfsight-app-e4363121-2d4f-4914-8220-73508a36cd9e" data-elfsight-app-lazy></div>
 </head>
@@ -25,85 +24,133 @@
 <main class="main">
 
     <section class="blog">
-        <h2>Блог | Полезное и интересное</h2>
+        <h2>Блог
+            {{if not .isAdmin}} [Администрирование] {{else}} | Полезное и интересное {{end}}
+        </h2>
         <div class="blog-card-container">
-            <a href="/article" class="blog-card">
-                <div class="blog-card-image">
+            <div class="blog-card">
+                <a href="/article" class="blog-card-image">
                     <img src="/web/static/img/primer2.jpg" alt="Image icon">
-                </div>
+                </a>
                 <div class="blog-card-content">
                     <h3 class="blog-card-title">Blog Heading</h3>
                     <p class="blog-card-description">This is a short description about the blog post.</p>
                 </div>
                 <div class="blog-card-action">
-                    <button class="more-btn">Подробнее</button>
+                    <button onclick="location.href='/article'" class="more-btn">Подробнее</button>
+                    {{if not .isAdmin}}
+                        <div class="admin-controls">
+                            <button onclick="event.preventDefault(); event.stopPropagation(); openArticleEditor();" class="edit-btn">✏️</button>
+                            <button class="delete-btn">🗑️</button>
+                        </div>
+                    {{end}}
                 </div>
-            </a>
+            </div>
 
-            <a href="/article" class="blog-card">
-                <div class="blog-card-image">
+            <div class="blog-card">
+                <a href="/article" class="blog-card-image">
                     <img src="/web/static/img/primer2.jpg" alt="Image icon">
-                </div>
+                </a>
                 <div class="blog-card-content">
                     <h3 class="blog-card-title">Blog Heading</h3>
                     <p class="blog-card-description">This is a short description about the blog post.</p>
                 </div>
                 <div class="blog-card-action">
-                    <button class="more-btn">Подробнее</button>
+                    <button onclick="location.href='/article'" class="more-btn">Подробнее</button>
+                    {{if not .isAdmin}}
+                        <div class="admin-controls">
+                            <button class="edit-btn">✏️</button>
+                            <button class="delete-btn">🗑️</button>
+                        </div>
+                    {{end}}
                 </div>
-            </a>
+            </div>
 
-            <a href="/article" class="blog-card">
-                <div class="blog-card-image">
+            <div class="blog-card">
+                <a href="/article" class="blog-card-image">
                     <img src="/web/static/img/primer2.jpg" alt="Image icon">
-                </div>
+                </a>
                 <div class="blog-card-content">
                     <h3 class="blog-card-title">Blog Heading</h3>
                     <p class="blog-card-description">This is a short description about the blog post.</p>
                 </div>
                 <div class="blog-card-action">
-                    <button class="more-btn">Подробнее</button>
+                    <button onclick="location.href='/article'" class="more-btn">Подробнее</button>
+                    {{if not .isAdmin}}
+                        <div class="admin-controls">
+                            <button class="edit-btn">✏️</button>
+                            <button class="delete-btn">🗑️</button>
+                        </div>
+                    {{end}}
                 </div>
-            </a>
+            </div>
 
-            <a href="/article" class="blog-card">
-                <div class="blog-card-image">
+            <div class="blog-card">
+                <a href="/article" class="blog-card-image">
                     <img src="/web/static/img/primer2.jpg" alt="Image icon">
-                </div>
+                </a>
                 <div class="blog-card-content">
                     <h3 class="blog-card-title">Blog Heading</h3>
                     <p class="blog-card-description">This is a short description about the blog post.</p>
                 </div>
                 <div class="blog-card-action">
-                    <button class="more-btn">Подробнее</button>
+                    <button onclick="location.href='/article'" class="more-btn">Подробнее</button>
+                    {{if not .isAdmin}}
+                        <div class="admin-controls">
+                            <button class="edit-btn">✏️</button>
+                            <button class="delete-btn">🗑️</button>
+                        </div>
+                    {{end}}
                 </div>
-            </a>
+            </div>
 
-            <a href="/article" class="blog-card">
-                <div class="blog-card-image">
+            <div class="blog-card">
+                <a href="/article" class="blog-card-image">
                     <img src="/web/static/img/primer2.jpg" alt="Image icon">
-                </div>
+                </a>
                 <div class="blog-card-content">
                     <h3 class="blog-card-title">Blog Heading</h3>
                     <p class="blog-card-description">This is a short description about the blog post.</p>
                 </div>
                 <div class="blog-card-action">
-                    <button class="more-btn">Подробнее</button>
-                </div>
-            </a>
+                    <button onclick="location.href='/article'" class="more-btn">Подробнее</button>
 
-            <a href="/article" class="blog-card">
-                <div class="blog-card-image">
-                    <img src="/web/static/img/primer2.jpg" alt="Image icon">
+                    {{if not .isAdmin}}
+                        <div class="admin-controls">
+                            <button class="edit-btn">✏️</button>
+                            <button class="delete-btn">🗑️</button>
+                        </div>
+                    {{end}}
                 </div>
+            </div>
+
+            <div class="blog-card">
+                <a href="/article" class="blog-card-image">
+                    <img src="/web/static/img/primer2.jpg" alt="Image icon">
+                </a>
                 <div class="blog-card-content">
                     <h3 class="blog-card-title">Blog Heading</h3>
                     <p class="blog-card-description">This is a short description about the blog post.</p>
                 </div>
                 <div class="blog-card-action">
-                    <button class="more-btn">Подробнее</button>
+                    <button onclick="location.href='/article'" class="more-btn">Подробнее</button>
+
+                    {{if not .isAdmin}}
+                        <div class="admin-controls">
+                            <button class="edit-btn">✏️</button>
+                            <button class="delete-btn">🗑️</button>
+                        </div>
+                    {{end}}
                 </div>
-            </a>
+            </div>
+
+            {{if not .isAdmin}}
+                <a href="/admin/blog/create" class="blog-card blog-card-add">
+                    <div class="blog-card-add-icon">＋</div>
+                    <div class="blog-card-add-text">Добавить статью</div>
+                    <div class="blog-card-admin-label">Только для админа</div>
+                </a>
+            {{end}}
         </div>
     </section>
 
@@ -114,6 +161,10 @@
 {{template "footer" .}}}
 
 <script src="/web/static/notify/simple-notify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="/web/static/js/app.js"></script>
+<script src="/web/static/js/utils.js"></script>
+<script src="/web/static/js/articles-editor.js"></script>
 
 </body>
 </html>

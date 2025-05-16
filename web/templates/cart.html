@@ -11,9 +11,8 @@
 
     <link rel="stylesheet" href="/web/static/notify/simple-notify.css"/>
 
-
-    <link rel="stylesheet" href="/web/static/css/elements.css"/>
     <link rel="stylesheet" href="/web/static/css/main.css"/>
+    <link rel="stylesheet" href="/web/static/css/elements.css"/>
 </head>
 <body>
 {{template "header" .}}
@@ -32,6 +31,12 @@
 <script src="/web/static/notify/simple-notify.min.js"></script>
 <script src="/web/static/js/app.js"></script>
 <script src="/web/static/js/utils.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('openChatBtn').classList.add('hidden');
+    });
+</script>
 
 </body>
 </html>

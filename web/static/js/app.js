@@ -42,6 +42,22 @@ function openAuthModal() {
         });
 }
 
+function openArticleEditor() {
+    closeAllModals();
+    lockBodyScroll();
+
+    fetch("/web/templates/components/modals/article-edit-modal.html")
+        .then((res) => res.text())
+        .then((html) => {
+            const modalContainer = document.createElement("div");
+            modalContainer.innerHTML = html;
+            document.body.appendChild(modalContainer);
+
+            initializeEditor();
+
+        });
+}
+
 function openReviewModal(id) {
     closeAllModals();
     lockBodyScroll();
