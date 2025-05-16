@@ -120,7 +120,7 @@
 
                 <div class="form-group">
                     <label for="short-description">Краткое описание</label>
-                    <textarea name="short_description" placeholder="Введите краткое описание"></textarea>
+                    <textarea name="short_description" class="autoresize" oninput="autoResize(this)" placeholder="Введите краткое описание"></textarea>
                 </div>
 
                 <div class="divider"></div>
@@ -162,17 +162,13 @@
 
                 <div class="form-group">
                     <h2>Описание</h2>
-                    <textarea name="long_description" placeholder="Введите полное описание товара"></textarea>
+                    <textarea name="long_description" class="autoresize" oninput="autoResize(this)" placeholder="Введите полное описание товара"></textarea>
                 </div>
 
                 <div class="divider"></div>
 
                 <h2>Характеристики</h2>
                 <div class="characteristics">
-                    <div class="form-group characteristic">
-                        <label><input type="checkbox" name="has_inverter"> Инвертор</label>
-                    </div>
-
                     <div class="form-group characteristic">
                         <label for="energy_class_cooling_id">Энергокласс (охлаждение)</label>
                         <select name="energy_class_cooling_id">
@@ -191,6 +187,10 @@
                                 <option value="{{.ID}}">{{.Name}}</option>
                             {{ end }}
                         </select>
+                    </div>
+
+                    <div class="form-group characteristic">
+                        <label><input style="scale: 1.5" type="checkbox" name="has_inverter"> Наличие инвертора</label>
                     </div>
 
                     <div class="form-group characteristic">

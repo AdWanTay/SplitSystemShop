@@ -170,7 +170,7 @@ h3 {
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
 }
 
 .form-group.col {
@@ -185,9 +185,12 @@ h3 {
     font-weight: bold;
 }
 
-.form-group input,
-.form-group textarea {
+.form-group textarea, input[name='title'] {
     width: 100%;
+}
+
+.form-group input[type='checkbox'] {
+    margin-right: .5rem;
 }
 
 .form-group select,
@@ -221,19 +224,24 @@ h3 {
 .characteristics {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 15px;
+    width: 50%;
 }
 
+.characteristic {
+    background: #f8f8f7;
+    padding: 1rem;
+    border-radius: 1rem;
+}
 .characteristic > * {
     align-self: center;
-}
-
-.characteristic select {
-    flex: 0 1 25%;
 }
 
 #saveProductPtn {
     margin: 0 auto;
 }
 
+.autoresize{
+    resize: none;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
