@@ -17,63 +17,67 @@ document.addEventListener('DOMContentLoaded', function () {
     let allProducts = [];
     const visibleRows = 5;
 
+
+    async function  updateProduct(){
+        const formData = new FormData(form);
+        // Приведение чекбокса к строке "true"/"false"
+        formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
+        formData.set("price", String(form.price.value * 100))
+        try {
+            const res = await fetch(`/api/split-systems/${selectedId}`, {
+                method: "PATCH",
+                body: formData
+            });
+            const data = await res.json();
+            if (res.ok) {
+                showNotify('Успех', "Товар успешно обновлен!")
+                form.reset();
+                hasUnsavedChanges = false;
+                addingNewProduct = true
+                loadProducts()
+            } else {
+                showErr("Ошибка: " + (data.error || "неизвестная ошибка"));
+            }
+        } catch (err) {
+            console.error(err);
+            showErr("Ошибка отправки запроса.")
+        }
+    }
+
+   async function createProduct(){
+        const formData = new FormData(form);
+        // Приведение чекбокса к строке "true"/"false"
+        formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
+        formData.set("price", String(form.price.value * 100))
+        try {
+            const res = await fetch("/api/split-systems", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                showNotify('Успех', "Товар успешно создан!")
+                form.reset();
+                hasUnsavedChanges = false;
+                loadProducts()
+            } else {
+                showErr("Ошибка: " + (data.error || "неизвестная ошибка"));
+            }
+        } catch (err) {
+            console.error(err);
+            showErr("Ошибка отправки запроса.")
+        }
+    }
+
     document.getElementById("create-product-form").addEventListener("submit", async function (e) {
         e.preventDefault();
-
         if (addingNewProduct) {
-            const form = e.target;
-            const formData = new FormData(form);
-            // Приведение чекбокса к строке "true"/"false"
-            formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
-            formData.set("price", String(form.price.value * 100))
-            try {
-                const res = await fetch("/api/split-systems", {
-                    method: "POST",
-                    body: formData
-                });
-
-                const data = await res.json();
-
-                if (res.ok) {
-                    showNotify('Успех', "Товар успешно создан!")
-                    form.reset();
-                    hasUnsavedChanges = false;
-                    loadProducts()
-                } else {
-                    showErr("Ошибка: " + (data.error || "неизвестная ошибка"));
-                }
-            } catch (err) {
-                console.error(err);
-                showErr("Ошибка отправки запроса.")
-            }
+           await createProduct()
         } else { // обновление товара
-            const form = e.target;
-            const formData = new FormData(form);
-            // Приведение чекбокса к строке "true"/"false"
-            formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
-            formData.set("price", String(form.price.value * 100))
-            try {
-                const res = await fetch(`/api/split-systems/${selectedId}`, {
-                    method: "PATCH",
-                    body: formData
-                });
-                const data = await res.json();
-                if (res.ok) {
-                    showNotify('Успех', "Товар успешно обновлен!")
-                    form.reset();
-                    hasUnsavedChanges = false;
-                    addingNewProduct = true
-                    loadProducts()
-                } else {
-                    showErr("Ошибка: " + (data.error || "неизвестная ошибка"));
-                }
-            } catch (err) {
-                console.error(err);
-                showErr("Ошибка отправки запроса.")
-            }
+            await updateProduct()
         }
-
-
     });
 
     searchInput.addEventListener('input', function () {
@@ -105,7 +109,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (hasUnsavedChanges) {
             const proceed = confirm("Есть несохранённые изменения. Сохранить?");
             hasUnsavedChanges = false;
-            if (proceed) return; //TODO
+            if (proceed) {
+                await updateProduct(form)
+            }else {
+                return
+            }
         }
         addingNewProduct = false
 
@@ -178,13 +186,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Обработчик добавления товара
-    addBtn.addEventListener('click', function () {
+    addBtn.addEventListener('click', async function () {
         console.log('Добавить новый товар');
 
         if (hasUnsavedChanges) {
             const proceed = confirm("Есть несохранённые изменения. Сохранить?");
             hasUnsavedChanges = false;
-            if (proceed) return; //TODO
+            if (proceed) {
+                await updateProduct(form)
+            } else {
+                return
+            }
         }
 
         form.reset()
