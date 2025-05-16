@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const deleteBtn = document.getElementById('delete-btn');
     const totalCount = document.getElementById('total-count');
     const selectAllCheckbox = document.getElementById('select-all');
+    let hasUnsavedChanges = false;
+    const form = document.getElementById("create-product-form");
+
+    form.addEventListener("input", () => {
+        hasUnsavedChanges = true;
+    });
 
     let allProducts = [];
     const visibleRows = 5;
@@ -30,21 +36,59 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Обработчик клика по строке
-    tableBody.addEventListener('click', function (e) {
+    tableBody.addEventListener('click', async function (e) {
         const row = e.target.closest('tr');
         if (!row) return;
 
-        // Если кликнули на чекбокс, не переключаем выделение (обрабатывается отдельно)
-        if (e.target.tagName === 'INPUT' && e.target.type === 'checkbox') {
-            return;
+        const id = row.dataset.id;
+        if (!id) return;
+
+        if (hasUnsavedChanges) {
+            const proceed = confirm("Есть несохранённые изменения. Сохранить?");
+            if (proceed) return; //TODO
         }
 
-        const checkbox = row.querySelector('input[type="checkbox"]');
-        checkbox.checked = !checkbox.checked;
-        row.classList.toggle('selected', checkbox.checked);
+        try {
+            const res = await fetch(`/api/split-systems/${id}`);
+            if (!res.ok) throw new Error("Ошибка загрузки товара");
+            const data = await res.json();
 
-        updateSelectAllCheckbox();
+            fillForm(data.item);
+            hasUnsavedChanges = false;
+        } catch (err) {
+            console.error(err);
+            alert("Ошибка загрузки данных товара");
+        }
     });
+    function fillForm(product) {
+        form.title.value = product.title;
+        form.short_description.value = product.short_description;
+        form.long_description.value = product.long_description;
+        form.brand_id.value = product.brand_id;
+        form.type_id.value = product.type_id;
+        form.price.value = product.price / 100;
+        form.cooling_power.value = product.cooling_power;
+        form.recommended_area.value = product.recommended_area;
+        form.has_inverter.checked = product.has_inverter;
+        form.energy_class_cooling_id.value = product.energy_class_cooling_id || "";
+        form.energy_class_heating_id.value = product.energy_class_heating_id || "";
+        form.min_noise_level.value = product.min_noise_level;
+        form.max_noise_level.value = product.max_noise_level;
+
+        form.internal_weight.value = product.internal_weight;
+        form.internal_width.value = product.internal_width;
+        form.internal_height.value = product.internal_height;
+        form.internal_depth.value = product.internal_depth;
+
+        form.external_weight.value = product.external_weight;
+        form.external_width.value = product.external_width;
+        form.external_height.value = product.external_height;
+        form.external_depth.value = product.external_depth;
+
+        // сбрасываем выбор файла
+        form.image.value = '';
+    }
+
 
     // Обработчик клика по чекбоксу
     tableBody.addEventListener('change', function (e) {
@@ -159,12 +203,12 @@ document.addEventListener('DOMContentLoaded', function () {
               <td>${item.type?.name || '—'}</td>
               <td>${formatPrice(item.price)}</td>
               <td>${item.has_inverter ? 'Да' : 'Нет'}</td>
-              <td>${item.recommended_area} м²</td>
-              <td>${item.cooling_power} кВт</td>
+              <td>${item.recommended_area}</td>
+              <td>${item.cooling_power}</td>
               <td>Охлаждение: ${item.energy_class_cooling?.name || '—'}, Обогрев: ${item.energy_class_heating?.name || '—'}</td>
               <td>${item.min_noise_level} – ${item.max_noise_level} дБ</td>
-              <td>${item.internal_width}×${item.internal_height}×${item.internal_depth} мм / ${item.internal_weight} кг</td>
-              <td>${item.external_width}×${item.external_height}×${item.external_depth} мм / ${item.external_weight} кг</td>
+              <td>${item.internal_width}×${item.internal_height}×${item.internal_depth} / ${item.internal_weight} </td>
+              <td>${item.external_width}×${item.external_height}×${item.external_depth} / ${item.external_weight} </td>
               <td>${item.modes?.map(mode => mode.name).join(', ') || '—'}</td>
               <td>${item.average_rating}</td>           
             `;
@@ -231,4 +275,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         deleteProducts(ids);
     });
+
+
 });

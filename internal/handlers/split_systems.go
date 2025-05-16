@@ -4,6 +4,7 @@ import (
 	"SplitSystemShop/internal/dto"
 	"SplitSystemShop/internal/models"
 	"SplitSystemShop/internal/services"
+	"SplitSystemShop/internal/utils"
 	"github.com/gofiber/fiber/v2"
 	"path/filepath"
 	"strconv"
@@ -125,6 +126,7 @@ func DeleteSplitSystem(service *services.SplitSystemService) fiber.Handler {
 		})
 	}
 }
+
 func CreateSplitSystem(splitSystemService *services.SplitSystemService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		file, err := c.FormFile("image")
@@ -190,5 +192,57 @@ func CreateSplitSystem(splitSystemService *services.SplitSystemService) fiber.Ha
 		}
 
 		return c.Status(fiber.StatusCreated).JSON(split)
+	}
+}
+
+func UpdateSplitSystem(service *services.SplitSystemService) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		id, err := strconv.Atoi(c.Params("id"))
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Некорректный ID"})
+		}
+
+		// Попытка получить файл
+		file, err := c.FormFile("image")
+		var filename string
+		if err == nil && file != nil {
+			filename = strconv.FormatInt(time.Now().UnixNano(), 10) + filepath.Ext(file.Filename)
+			savePath := "./web/static/uploads/" + filename
+			if err := c.SaveFile(file, savePath); err != nil {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Ошибка при сохранении файла"})
+			}
+		}
+
+		input := dto.UpdateSplitSystemRequest{
+			Title:                c.FormValue("title"),
+			ShortDescription:     c.FormValue("short_description"),
+			LongDescription:      c.FormValue("long_description"),
+			Price:                utils.ParseInt(c.FormValue("price")),
+			BrandID:              utils.ParseUint(c.FormValue("brand_id")),
+			TypeID:               utils.ParseUint(c.FormValue("type_id")),
+			RecommendedArea:      utils.ParseFloat(c.FormValue("recommended_area")),
+			CoolingPower:         utils.ParseFloat(c.FormValue("cooling_power")),
+			HasInverter:          c.FormValue("has_inverter") == "true",
+			EnergyClassCoolingID: utils.ParseUint(c.FormValue("energy_class_cooling_id")),
+			EnergyClassHeatingID: utils.ParseUint(c.FormValue("energy_class_heating_id")),
+			MinNoiseLevel:        utils.ParseFloat(c.FormValue("min_noise_level")),
+			MaxNoiseLevel:        utils.ParseFloat(c.FormValue("max_noise_level")),
+			InternalWeight:       utils.ParseFloat(c.FormValue("internal_weight")),
+			InternalWidth:        utils.ParseInt(c.FormValue("internal_width")),
+			InternalHeight:       utils.ParseInt(c.FormValue("internal_height")),
+			InternalDepth:        utils.ParseInt(c.FormValue("internal_depth")),
+			ExternalWeight:       utils.ParseFloat(c.FormValue("external_weight")),
+			ExternalWidth:        utils.ParseInt(c.FormValue("external_width")),
+			ExternalHeight:       utils.ParseInt(c.FormValue("external_height")),
+			ExternalDepth:        utils.ParseInt(c.FormValue("external_depth")),
+		}
+		if filename != "" {
+			input.ImageURL = &filename
+		}
+
+		if err = service.UpdateSplitSystem(c.Context(), uint(id), input); err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Ошибка при обновлении"})
+		}
+		return c.JSON(fiber.Map{"message": "Обновление успешно"})
 	}
 }

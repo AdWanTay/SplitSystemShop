@@ -27,6 +27,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Get("/api/split-systems", middlewares.RequireAuth(cfg, true), handlers.GetAllSplitSystems(ctx.SplitSystemService, ctx.UserService))
 	app.Delete("/api/split-systems/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.DeleteSplitSystem(ctx.SplitSystemService))
 	app.Post("/api/split-systems", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.CreateSplitSystem(ctx.SplitSystemService))
+	app.Patch("/api/split-systems/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.UpdateSplitSystem(ctx.SplitSystemService))
 
 	app.Get("/api/favorites", middlewares.RequireAuth(cfg, false), handlers.GetFavorites(ctx.FavoritesService))
 	app.Delete("/api/favorites/:id", middlewares.RequireAuth(cfg, false), handlers.DeleteFavoritesItem(ctx.FavoritesService))

@@ -5,6 +5,7 @@ import (
 	"SplitSystemShop/internal/models"
 	"fmt"
 	"github.com/golang-jwt/jwt/v4"
+	"strconv"
 	"time"
 )
 
@@ -39,4 +40,19 @@ func ParseAndValidateJWT(tokenString string, cfg *config.Config) (uint, error) {
 	userID, ok := claims["user_id"].(float64)
 
 	return uint(userID), err
+}
+
+func ParseInt(v string) int {
+	i, _ := strconv.Atoi(v)
+	return i
+}
+
+func ParseUint(v string) uint {
+	i, _ := strconv.ParseUint(v, 10, 64)
+	return uint(i)
+}
+
+func ParseFloat(v string) float64 {
+	f, _ := strconv.ParseFloat(v, 64)
+	return f
 }

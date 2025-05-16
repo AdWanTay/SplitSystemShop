@@ -11,6 +11,7 @@ type SplitSystemRepository interface {
 	GetAllSplitSystems(c context.Context, filters map[string]interface{}) ([]models.SplitSystem, error)
 	Delete(c context.Context, systemID uint) error
 	Create(c context.Context, splitSystem *models.SplitSystem) error
+	Update(ctx context.Context, splitSystem *models.SplitSystem) error
 }
 
 type splitSystemRepository struct {
@@ -115,4 +116,8 @@ func (r splitSystemRepository) Delete(c context.Context, systemID uint) error {
 
 func (r splitSystemRepository) Create(c context.Context, splitSystem *models.SplitSystem) error {
 	return r.db.WithContext(c).Create(splitSystem).Error
+}
+
+func (r splitSystemRepository) Update(ctx context.Context, newSplitSystem *models.SplitSystem) error {
+	return r.db.WithContext(ctx).Save(&newSplitSystem).Error
 }
