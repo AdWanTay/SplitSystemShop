@@ -85,7 +85,9 @@ func App(cfg *config.Config) error {
 		},
 	})
 
-	app.Static("/uploads", "./uploads")
+	app.Static("/uploads", "./web/static/uploads")
+	app.Static("/web", "./web", fiber.Static{CacheDuration: 0})
+
 	routes.SetupRoutes(app, cfg, ctx)
 	err = app.Listen(":" + cfg.Port)
 	if err != nil {

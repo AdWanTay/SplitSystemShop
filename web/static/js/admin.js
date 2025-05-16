@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+
     // Обработчик "Выбрать все"
     selectAllCheckbox.addEventListener('change', function () {
         const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]');
@@ -164,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
               <td>${item.min_noise_level} – ${item.max_noise_level} дБ</td>
               <td>${item.internal_width}×${item.internal_height}×${item.internal_depth} мм / ${item.internal_weight} кг</td>
               <td>${item.external_width}×${item.external_height}×${item.external_depth} мм / ${item.external_weight} кг</td>
+              <td>${item.modes?.map(mode => mode.name).join(', ') || '—'}</td>
               <td>${item.average_rating}</td>           
             `;
             tableBody.appendChild(row);

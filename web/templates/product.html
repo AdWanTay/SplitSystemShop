@@ -30,7 +30,11 @@
 
         <div class="product-main">
             <div class="product-image">
-                <img src="/web/static/img/primer.webp" alt="Название товара">
+                {{ if eq .info.ImageURL ""}}
+                <img src="/web/static/img/primer.webp" alt="{{.info.Title}}">
+                {{else}}
+                <img src="/uploads/{{.info.ImageURL}}" alt="{{.info.Title}}">
+                {{end}}
             </div>
 
             <div class="product-info">

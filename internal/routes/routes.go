@@ -15,7 +15,6 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 		c.Set("Expires", "0")
 		return c.Next()
 	})
-	app.Static("/web", "./web", fiber.Static{CacheDuration: 0})
 
 	//Роуты для апи
 	app.Post("/api/auth/login", handlers.Login(ctx.UserService, cfg))

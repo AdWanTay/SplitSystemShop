@@ -74,6 +74,7 @@
                         <th>Уровень шума</th>
                         <th>Внутренний блок (размеры/вес)</th>
                         <th>Наружный блок (размеры/вес)</th>
+                        <th>Режимы</th>
                         <th>Рейтинг</th>
                     </tr>
                     </thead>
@@ -233,6 +234,7 @@
 
 <script src="/web/static/notify/simple-notify.min.js"></script>
 <script src="/web/static/js/admin.js"></script>
+<script src="/web/static/js/utils.js"></script>
 
 <script>
     document.getElementById("create-product-form").addEventListener("submit", async function (e) {
@@ -243,7 +245,7 @@
 
         // Приведение чекбокса к строке "true"/"false"
         formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
-
+        formData.set("price", String(form.price.value*100) )
         try {
             const res = await fetch("/api/split-systems", {
                 method: "POST",
@@ -256,7 +258,7 @@
                 showNotify('Успех', "Товар успешно создан!")
                 form.reset();
             } else {
-                showErr("Ошибка: " + (data.error || "неизвестная ошибка")
+                showErr("Ошибка: " + (data.error || "неизвестная ошибка"));
             }
         } catch (err) {
             console.error(err);
