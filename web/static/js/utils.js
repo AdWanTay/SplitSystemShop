@@ -171,3 +171,8 @@ function unlockBodyScroll() {
 function formatPrice(price) {
     return (price / 100).toLocaleString('ru-RU'); // если цена в копейках
 }
+
+function autoResize(elem) {
+    elem.style.height = 'auto';
+    elem.style.height = (elem.scrollHeight-4) + 'px';
+}
