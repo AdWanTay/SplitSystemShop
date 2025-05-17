@@ -27,6 +27,14 @@
             {{if .isAdmin}} [Администрирование] {{else}} | Полезное и интересное{{end}}
         </h2>
         <div class="blog-card-container">
+            {{if .isAdmin}}
+                <div onclick="createArticleEditor()" class="blog-card blog-card-add">
+                    <div class="blog-card-add-icon">＋</div>
+                    <div class="blog-card-add-text">Добавить статью</div>
+                    <div class="blog-card-admin-label">Только для админа</div>
+                </div>
+            {{end}}
+
             {{range .articles}}
                 <div class="blog-card" data-id="{{.ID}}">
                     <a href="/articles/{{.ID}}" class="blog-card-image">
@@ -45,14 +53,6 @@
                             </div>
                         {{end}}
                     </div>
-                </div>
-            {{end}}
-
-            {{if .isAdmin}}
-                <div onclick="createArticleEditor()" class="blog-card blog-card-add">
-                    <div class="blog-card-add-icon">＋</div>
-                    <div class="blog-card-add-text">Добавить статью</div>
-                    <div class="blog-card-admin-label">Только для админа</div>
                 </div>
             {{end}}
         </div>
