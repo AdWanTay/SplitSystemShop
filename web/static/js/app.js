@@ -229,7 +229,6 @@ function submitReview(splitSystemId) {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    // Если сервер вернул ошибку
                     if (data.error) {
                         showErr(data.error);
                     } else {
@@ -240,16 +239,16 @@ function submitReview(splitSystemId) {
 
                 // Успех
                 showNotify('Успех', 'Отзыв отправлен успешно!');
-                closeAllModals(); // если у тебя есть модальное окно
-                // Очистка формы (если нужно)
-                document.getElementById('review').value = '';
-                document.getElementById('rating-value').value = 0;
+                closeAllModals();
+                // document.getElementById('review').value = '';
+                // document.getElementById('rating-value').value = 0;
             })
             .catch(error => {
                 console.error('Ошибка при отправке отзыва:', error);
             });
     };
 }
+
 
 function initReviewModal() {
     const stars = document.querySelectorAll('#rating .star');
