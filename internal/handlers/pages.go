@@ -9,6 +9,7 @@ import (
 	"SplitSystemShop/internal/utils"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"html/template"
 	"math"
 	"strconv"
 )
@@ -65,9 +66,14 @@ func ArticlePage(cfg *config.Config, appContext *context.AppContext) fiber.Handl
 
 		// Можно добавить 2-3 других статьи для "Вам может быть интересно"
 		related, _ := appContext.ArticleService.GetRandomExcept(c.Context(), uint(id), 3)
-
 		return Render(c, "article", fiber.Map{
-			"article": article,
+			"article": fiber.Map{
+				"ID":          article.ID,
+				"Title":       article.Title,
+				"Description": article.Description,
+				"ImageURL":    article.ImageURL,
+				"Content":     template.HTML(article.Content),
+			},
 			"related": related,
 		}, cfg)
 	}
