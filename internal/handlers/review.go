@@ -20,6 +20,6 @@ func CreateReview(reviewService *services.ReviewService) fiber.Handler {
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
 		}
-		return nil
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Отзыв успешно добавлен"})
 	}
 }
