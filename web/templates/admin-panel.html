@@ -104,12 +104,17 @@
 
         <h1>Редактирование карточки товара</h1>
 
-        <form class="edit-container" id="create-product-form" enctype="multipart/form-data">
+        <form class="edit-container" id="product-form" enctype="multipart/form-data">
             <div class="left-column">
-                <div class="image-upload no-image">
-                    <div>Нет изображения</div>
+                <div class="image-upload" id="image-preview-container">
+                    <img id="image-preview" src="/web/static/uploads/placeholder.jpg" alt="Изображение товара">
                 </div>
-                <input id="upload-btn" type="file" name="image" accept="image/*">
+
+                <label class="input-file">
+                    <input id="upload-btn" type="file" name="image" accept="image/*">
+                    <span class="input-file-btn">Загрузить изображение</span>
+                    <span class="input-file-text">Максимум 5мб</span>
+                </label>
             </div>
 
             <div class="right-column">

@@ -1,6 +1,24 @@
 // admin.js - скрипты для административной панели
 
 document.addEventListener('DOMContentLoaded', function () {
+    const uploadInput = document.getElementById('upload-btn');
+    const imagePreview = document.getElementById('image-preview');
+
+    uploadInput.addEventListener('change', function () {
+        const file = uploadInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('openChatBtn').classList.add('hidden');
 
     const tableBody = document.querySelector('#products-table tbody');
@@ -10,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const deleteBtn = document.getElementById('delete-btn');
     const totalCount = document.getElementById('total-count');
     const selectAllCheckbox = document.getElementById('select-all');
-    const form = document.getElementById("create-product-form");
+    const form = document.getElementById("product-form");
 
     let hasUnsavedChanges = false;
     let addingNewProduct = true;
@@ -74,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    document.getElementById("create-product-form").addEventListener("submit", async function (e) {
+    document.getElementById("product-form").addEventListener("submit", async function (e) {
         e.preventDefault();
         if (addingNewProduct) {
             await createProduct()
@@ -127,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fillForm(data.item);
             hasUnsavedChanges = false;
             selectedId = id
+
         } catch (err) {
             console.error(err);
             alert("Ошибка загрузки данных товара");
@@ -157,6 +176,16 @@ document.addEventListener('DOMContentLoaded', function () {
         form.external_width.value = product.external_width;
         form.external_height.value = product.external_height;
         form.external_depth.value = product.external_depth;
+
+        document.querySelector('.input-file-text').textContent = product.image_url;
+
+        // Устанавливаем картинку
+        const imagePreview = document.getElementById('image-preview');
+        if (product.image_url) {
+            imagePreview.src = '/web/static/uploads/' + product.image_url;
+        } else {
+            imagePreview.src = '/web/static/uploads/placeholder.jpg';
+        }
 
         // сбрасываем выбор файла
         form.image.value = '';
@@ -357,6 +386,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         deleteProducts(ids);
     });
+});
 
-
+document.querySelectorAll('.input-file input[type="file"]').forEach(function(input) {
+    input.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const wrapper = this.closest('.input-file');
+            const textElement = wrapper.querySelector('.input-file-text');
+            if (textElement) {
+                textElement.textContent = file.name;
+            }
+        }
+    });
 });
