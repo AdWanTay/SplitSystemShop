@@ -7,15 +7,21 @@
         <h2 class="modal-title" id="modal-title-text">Создание статьи</h2>
 
         <div class="modal-body" style="margin-bottom: 1rem;">
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <label for="article-image-upload" class="accent-btn btn-small">Загрузить превью</label>
-                <input type="file" id="article-image-upload" accept="image/*" style="display: none;">
-                <img id="article-image-preview" src="/web/static/img/primer2.jpg"
-                     style="margin-top: 0.5rem; width: 100px; height: 70px; object-fit: cover; border: 1px solid #ccc; border-radius: 4px;">
-            </div>
+            <div style="display: flex; gap: 2rem; align-items: flex-start; justify-content: space-between; flex-wrap: wrap;">
+                <!-- Левая колонка: Заголовок и описание -->
+                <div style="flex: 1; min-width: 200px;">
+                    <input type="text" id="article-title" placeholder="Заголовок" style="width: 100%; margin-bottom: 0.5rem;">
+                    <textarea id="article-short-desc" placeholder="Краткое описание" rows="3" style="width: 100%;"></textarea>
+                </div>
 
-            <input type="text" id="article-title" placeholder="Заголовок">
-            <textarea id="article-short-desc" placeholder="Краткое описание" rows="2"></textarea>
+                <!-- Правая колонка: Превью и кнопка -->
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="article-image-upload" class="accent-btn btn-small" style="margin-bottom: 0.5rem;">Загрузить превью</label>
+                    <input type="file" id="article-image-upload" accept="image/*" style="display: none;">
+                    <img id="article-image-preview" src="/web/static/img/primer2.jpg"
+                         style="width: 100px; height: 70px; object-fit: cover; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+            </div>
         </div>
 
         <div id="editor-container" style="height: 300px;"></div>
