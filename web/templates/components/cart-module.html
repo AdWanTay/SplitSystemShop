@@ -1,7 +1,7 @@
 {{define "cart-module"}}
 
 <section id="cart" class="cart-section opened">
-    <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
+    <div style="display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; margin-bottom: 2rem;">
         <h2  id="cart-count">Корзина ({{ .response.Cart.Total}})</h2>
         {{if eq .response.Favorites.Total 0}}
         <button onclick="location.href='/catalog'" style="transform: translateY(.3rem)" class="accent-btn btn-standard">
@@ -48,7 +48,7 @@
 <hr style="margin: 0 8vw">
 
 <section id="favorites" class="favorites-section opened">
-    <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
+    <div style="display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-bottom: 2rem;">
         <h2 id="favorites-count">Избранное ({{.response.Favorites.Total}})</h2>
         {{if not (eq .response.Favorites.Total 0)}}
         <button onclick="location.href='/catalog'" style="transform: translateY(.3rem)" class="accent-btn btn-standard">

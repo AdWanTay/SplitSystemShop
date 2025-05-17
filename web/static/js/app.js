@@ -5,6 +5,17 @@ function closeAllModals() {
     unlockBodyScroll();
 }
 
+document.getElementById('burgerBtn').addEventListener('click', function () {
+
+    document.querySelector('.overlay').classList.toggle('active');
+    document.querySelector('.header .nav').classList.toggle('open');
+});
+
+document.querySelector('.overlay').addEventListener('click', function () {
+    document.querySelector('.overlay').classList.remove('active');
+});
+
+
 
 // ################################################################
 //                         AUTH & REGISTER

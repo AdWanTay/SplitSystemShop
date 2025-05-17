@@ -225,3 +225,15 @@
 #article-short-desc {
     resize: none
 }
+
+
+@media screen and (max-width: 576px) {
+    .blog h2, .article h1 {
+        font-size: var(--fz-2);
+    }
+    .article-content img {
+        max-width: 100%;
+    }
+}
+
+
