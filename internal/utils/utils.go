@@ -8,6 +8,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -61,6 +62,7 @@ func ParseFloat(v string) float64 {
 	return f
 }
 
+// Сохраняет base64 в файл, возвращает URL
 func SaveBase64Image(data string) (string, error) {
 	parts := strings.Split(data, ",")
 	if len(parts) != 2 {
@@ -81,4 +83,25 @@ func SaveBase64Image(data string) (string, error) {
 	}
 
 	return "/web/static/uploads/article_images/" + filename, nil
+}
+
+// Заменяет все base64-картинки в HTML на URL
+func ReplaceBase64ImagesInHTML(html string) (string, error) {
+	re := regexp.MustCompile(`(?i)<img[^>]+src="(data:image/[^;]+;base64,[^"]+)"`)
+	matches := re.FindAllStringSubmatch(html, -1)
+
+	updatedHTML := html
+
+	for _, match := range matches {
+		base64Str := match[1]
+
+		url, err := SaveBase64Image(base64Str)
+		if err != nil {
+			return "", err
+		}
+
+		updatedHTML = strings.ReplaceAll(updatedHTML, base64Str, url)
+	}
+
+	return updatedHTML, nil
 }

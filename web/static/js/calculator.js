@@ -1,3 +1,5 @@
+// calculator.js - скрипты для работы с калькулятором мощности охлаждения
+
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('.cooling-calculator');
     const qValueEl = form.querySelector('.q-value');

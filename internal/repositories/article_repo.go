@@ -3,8 +3,10 @@ package repositories
 import (
 	"SplitSystemShop/internal/dto"
 	"SplitSystemShop/internal/models"
+	"SplitSystemShop/internal/utils"
 	"context"
 	"gorm.io/gorm"
+	"strings"
 )
 
 type ArticleRepository interface {
@@ -13,6 +15,7 @@ type ArticleRepository interface {
 	GetAll(ctx context.Context) ([]models.Article, error)
 	Delete(ctx context.Context, id uint) error
 	Update(ctx context.Context, id uint, req dto.NewArticleRequest) error
+	GetRandomExcept(ctx context.Context, id uint, limit int) ([]models.Article, error)
 }
 
 type articleRepository struct {
@@ -33,6 +36,18 @@ func (r *articleRepository) GetByID(ctx context.Context, id uint) (*models.Artic
 	return &article, err
 }
 
+func (r *articleRepository) GetRandomExcept(ctx context.Context, excludeID uint, limit int) ([]models.Article, error) {
+	var articles []models.Article
+	if err := r.db.WithContext(ctx).
+		Where("id != ?", excludeID).
+		Order("RANDOM()").
+		Limit(limit).
+		Find(&articles).Error; err != nil {
+		return nil, err
+	}
+	return articles, nil
+}
+
 func (r *articleRepository) GetAll(ctx context.Context) ([]models.Article, error) {
 	var articles []models.Article
 	err := r.db.WithContext(ctx).Find(&articles).Error
@@ -44,10 +59,36 @@ func (r *articleRepository) Delete(ctx context.Context, id uint) error {
 }
 
 func (r *articleRepository) Update(ctx context.Context, id uint, req dto.NewArticleRequest) error {
+	imagePath := ""
+
+	// Обработка base64 превью, если есть
+	if strings.HasPrefix(req.ImageBase64, "data:image") {
+		path, err := utils.SaveBase64Image(req.ImageBase64)
+		if err != nil {
+			return err
+		}
+		imagePath = path
+	} else {
+		// можно оставить старую картинку без изменений, если base64 нет
+		// для этого нужно сначала получить текущую статью
+		var existing models.Article
+		if err := r.db.WithContext(ctx).First(&existing, id).Error; err != nil {
+			return err
+		}
+		imagePath = existing.ImageURL
+	}
+
+	// Обработка base64 в HTML (если нужно)
+	content, err := utils.ReplaceBase64ImagesInHTML(req.Content)
+	if err != nil {
+		return err
+	}
+
+	// Обновление записи
 	return r.db.WithContext(ctx).Model(&models.Article{}).Where("id = ?", id).Updates(models.Article{
 		Title:       req.Title,
 		Description: req.Description,
-		Content:     req.Content,
-		ImageURL:    req.ImageURL,
+		Content:     content,
+		ImageURL:    imagePath,
 	}).Error
 }

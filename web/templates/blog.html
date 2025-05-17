@@ -22,29 +22,34 @@
 {{template "header" .}}
 
 <main class="main">
-
     <section class="blog">
         <h2>Блог
-            {{if not .isAdmin}} [Администрирование] {{else}} | Полезное и интересное {{end}}
+            {{if .isAdmin}} [Администрирование] {{else}} | Полезное и интересное{{end}}
         </h2>
         <div class="blog-card-container">
             {{range .articles}}
                 <div class="blog-card" data-id="{{.ID}}">
                     <a href="/articles/{{.ID}}" class="blog-card-image">
-                        <img src="{{.ImageURL}}" alt="Image icon">
+                        <img src="{{.ImageURL}}" alt="{{.Title}}">
                     </a>
                     <div class="blog-card-content">
                         <h3 class="blog-card-title">{{.Title}}</h3>
                         <p class="blog-card-description">{{.Description}}</p>
                     </div>
                     <div class="blog-card-action">
-                        <button onclick="location.href='/article/{{.ID}}'" class="more-btn">Подробнее</button>
+                        <button onclick="location.href='/articles/{{.ID}}'" class="more-btn">Подробнее</button>
+                        {{if $.isAdmin}}
+                            <div class="admin-controls">
+                                <button class="article-edit-btn" onclick="openArticleEditor({{.ID}})">✏️</button>
+                                <button class="article-delete-btn" onclick="articleDeleteConfirm({{.ID}})">🗑️</button>
+                            </div>
+                        {{end}}
                     </div>
                 </div>
             {{end}}
 
-            {{if not .isAdmin}}
-                <div onclick="openArticleEditor();"  class="blog-card blog-card-add">
+            {{if .isAdmin}}
+                <div onclick="createArticleEditor()" class="blog-card blog-card-add">
                     <div class="blog-card-add-icon">＋</div>
                     <div class="blog-card-add-text">Добавить статью</div>
                     <div class="blog-card-admin-label">Только для админа</div>
@@ -54,13 +59,13 @@
     </section>
 
     {{template "contact-form" .}}
-
 </main>
 
 {{template "footer" .}}}
 
 <script src="/web/static/notify/simple-notify.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="/web/static/js/blog.js"></script>
 <script src="/web/static/js/articles-editor.js"></script>
 <script src="/web/static/js/app.js"></script>
 <script src="/web/static/js/utils.js"></script>

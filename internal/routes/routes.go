@@ -39,8 +39,8 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 
 	app.Post("/api/review", middlewares.RequireAuth(cfg, false), handlers.CreateReview(ctx.ReviewService))
 
-	app.Get("/api/articles/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.GetArticle(ctx.ArticleService))
-	app.Get("/api/articles/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.GetAllArticles(ctx.ArticleService))
+	app.Get("/api/articles/:id", middlewares.RequireAuth(cfg, false), handlers.GetArticle(ctx.ArticleService))
+	app.Get("/api/articles/:id", middlewares.RequireAuth(cfg, false), handlers.GetAllArticles(ctx.ArticleService))
 	app.Post("/api/articles", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.CreateArticle(ctx.ArticleService))
 	app.Delete("/api/articles/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.DeleteArticle(ctx.ArticleService))
 	app.Patch("/api/articles/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.UpdateArticle(ctx.ArticleService))
@@ -53,13 +53,13 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Get("/admin", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.AdminPage(cfg, ctx))
 
 	// TODO СДЕЛАТЬ ЭТОТ АПИ ЗАПРОС
-	//app.Get("/articles/:id", handlers.ArticlePage(cfg))
+	app.Get("/articles/:id", handlers.ArticlePage(cfg, ctx))
 
 	app.Get("/cart", middlewares.RequireAuth(cfg, false), handlers.CartPage(cfg, ctx.CartService))
 	app.Get("/catalog", handlers.CatalogPage(cfg, ctx))
 	app.Get("/contact", handlers.ContactPage(cfg))
 	app.Get("/products/:id", middlewares.RequireAuth(cfg, true), handlers.ProductPage(cfg, ctx))
 	app.Get("/profile", middlewares.RequireAuth(cfg, false), handlers.ProfilePage(cfg, ctx))
-	app.Get("/blog", handlers.BlogPage(cfg, ctx))
+	app.Get("/blog", middlewares.RequireAuth(cfg, true), handlers.BlogPage(cfg, ctx))
 
 }

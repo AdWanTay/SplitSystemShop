@@ -50,30 +50,51 @@ func AdminPage(cfg *config.Config, ctx *context.AppContext) fiber.Handler {
 		}, cfg)
 	}
 }
-func ArticlePage(cfg *config.Config) fiber.Handler {
+func ArticlePage(cfg *config.Config, appContext *context.AppContext) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "article", fiber.Map{}, cfg)
+		idParam := c.Params("id")
+		id, err := strconv.Atoi(idParam)
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).SendString("Некорректный ID")
+		}
+
+		article, err := appContext.ArticleService.GetByID(c.Context(), uint(id))
+		if err != nil {
+			return c.Status(fiber.StatusNotFound).SendString("Статья не найдена")
+		}
+
+		// Можно добавить 2-3 других статьи для "Вам может быть интересно"
+		related, _ := appContext.ArticleService.GetRandomExcept(c.Context(), uint(id), 3)
+
+		return Render(c, "article", fiber.Map{
+			"article": article,
+			"related": related,
+		}, cfg)
 	}
 }
 
-func BlogPage(cfg *config.Config, ctx *context.AppContext) fiber.Handler {
+func BlogPage(cfg *config.Config, appContext *context.AppContext) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		var articles []models.Article
-		var err error
+		articles, _ = appContext.ArticleService.GetAll(c.Context())
 
-		articles, err = ctx.ArticleService.GetAll(c.Context())
-		if err != nil {
-			return c.Status(fiber.StatusInternalServerError).SendString("Ошибка загрузки статей")
-		}
-
-		userID, ok := c.Locals("userId").(uint)
+		// По умолчанию считаем, что не админ
 		isAdmin := false
-		if ok {
-			role, err := ctx.UserService.GetUserRole(c.Context(), userID)
-			if err == nil && role == "admin" {
-				isAdmin = true
+
+		// Без паники, если пользователь не залогинен
+		if rawID := c.Locals("userId"); rawID != nil {
+			fmt.Println("тест")
+
+			if userID, ok := rawID.(uint); ok {
+				user, err := appContext.UserService.GetUser(c.Context(), userID)
+				fmt.Println("2")
+				if err == nil && user.Role == "admin" {
+					isAdmin = true
+				}
 			}
 		}
+
+		fmt.Println(isAdmin)
 
 		return Render(c, "blog", fiber.Map{
 			"articles": articles,

@@ -57,7 +57,7 @@ type NewArticleRequest struct {
 	Title       string `json:"title"`       // Заголовок статьи
 	Description string `json:"description"` // Краткое описание (для карточки)
 	Content     string `json:"content"`     // HTML контент статьи (из Quill)
-	ImageURL    string `json:"image_url"`
+	ImageBase64 string `json:"imageBase64"`
 }
 
 type NewSplitSystemRequest struct {

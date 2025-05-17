@@ -16,21 +16,26 @@
 }
 
 .blog-card-container {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2rem;
 }
 
 .blog-card {
+    height: 100%;
+    min-height: 320px; /* подбирай под контент */
+}
+
+.blog-card {
     width: 100%;
-    max-width: 300px;
+    max-width: 400px;
     background: white;
     border-radius: 16px;
     border: 1px solid #dcdcdc;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     cursor: pointer;
 }
 
@@ -63,12 +68,22 @@
     font-size: 1.2rem;
     font-weight: 700;
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* максимум 2 строки */
+    -webkit-box-orient: vertical;
 }
 
 .blog-card-description {
     font-size: 0.95rem;
     color: #666;
     margin-top: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* максимум 3 строки */
+    -webkit-box-orient: vertical;
 }
 
 .blog-card-action .more-btn {
@@ -173,8 +188,8 @@
     gap: 0.5rem;
 }
 
-.edit-btn,
-.delete-btn {
+.article-edit-btn,
+.article-delete-btn {
     padding: .6rem;
     font-size: 0.9rem;
     border: none;
@@ -184,11 +199,11 @@
     transition: background 0.2s;
 }
 
-.edit-btn:hover {
+.article-edit-btn:hover {
     background-color: #dceeff;
 }
 
-.delete-btn:hover {
+.article-delete-btn:hover {
     background-color: #ffe0e0;
 }
 
@@ -198,4 +213,15 @@
 
 .ql-toolbar.ql-snow {
     border-radius: .5rem .5rem 0 0;
+}
+
+#article-short-desc, #article-title {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: .5rem;
+    font-size: 1rem;
+}
+
+#article-short-desc {
+    resize: none
 }

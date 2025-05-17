@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="/web/static/css/elements.css">
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
-<div class="modal" id="articleEditorModal">
-    <div class="modal-content article-editor-modal">
+<div class="modal" id="articleCreateModal">
+    <div class="modal-content article-create-modal">
         <span class="modal-close" onclick="closeAllModals()">✖</span>
-        <h2 class="modal-title" id="modal-title-text">Редактирование статьи</h2>
+        <h2 class="modal-title" id="modal-title-text">Создание статьи</h2>
 
         <div class="modal-body" style="margin-bottom: 1rem;">
             <div style="display: flex; flex-direction: column; align-items: center;">
@@ -13,6 +13,7 @@
                 <img id="article-image-preview" src="/web/static/img/primer2.jpg"
                      style="margin-top: 0.5rem; width: 100px; height: 70px; object-fit: cover; border: 1px solid #ccc; border-radius: 4px;">
             </div>
+
             <input type="text" id="article-title" placeholder="Заголовок">
             <textarea id="article-short-desc" placeholder="Краткое описание" rows="2"></textarea>
         </div>
@@ -20,7 +21,7 @@
         <div id="editor-container" style="height: 300px;"></div>
 
         <div class="modal-actions">
-            <button id="save-article-btn" class="accent-btn btn-standard">Сохранить</button>
+            <button id="publish-article-btn" class="accent-btn btn-standard">Опубликовать</button>
             <button class="primary-btn btn-standard" onclick="this.closest('.modal').remove()">Отмена</button>
         </div>
     </div>

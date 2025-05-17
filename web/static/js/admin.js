@@ -1,3 +1,5 @@
+// admin.js - скрипты для административной панели
+
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('openChatBtn').classList.add('hidden');
 
@@ -11,19 +13,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById("create-product-form");
 
     let hasUnsavedChanges = false;
-    let addingNewProduct = true
+    let addingNewProduct = true;
     form.addEventListener("input", () => {
         hasUnsavedChanges = true;
     });
-    let selectedId = 0
+    let selectedId = 0;
     let allProducts = [];
     const visibleRows = 5;
 
-    async function  updateProduct(){
+    async function updateProduct() {
         const formData = new FormData(form);
         // Приведение чекбокса к строке "true"/"false"
         formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
-        formData.set("price", String(form.price.value * 100))
+        formData.set("price", String(form.price.value * 100));
         try {
             const res = await fetch(`/api/split-systems/${selectedId}`, {
                 method: "PATCH",
@@ -31,10 +33,10 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             const data = await res.json();
             if (res.ok) {
-                showNotify('Успех', "Товар успешно обновлен!")
+                showNotify('Успех', "Товар успешно обновлен!");
                 form.reset();
                 hasUnsavedChanges = false;
-                addingNewProduct = true
+                addingNewProduct = true;
                 loadProducts()
             } else {
                 showErr("Ошибка: " + (data.error || "неизвестная ошибка"));
@@ -45,11 +47,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-   async function createProduct(){
+    async function createProduct() {
         const formData = new FormData(form);
         // Приведение чекбокса к строке "true"/"false"
         formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
-        formData.set("price", String(form.price.value * 100))
+        formData.set("price", String(form.price.value * 100));
         try {
             const res = await fetch("/api/split-systems", {
                 method: "POST",
@@ -59,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = await res.json();
 
             if (res.ok) {
-                showNotify('Успех', "Товар успешно создан!")
+                showNotify('Успех', "Товар успешно создан!");
                 form.reset();
                 hasUnsavedChanges = false;
                 loadProducts()
@@ -75,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("create-product-form").addEventListener("submit", async function (e) {
         e.preventDefault();
         if (addingNewProduct) {
-           await createProduct()
+            await createProduct()
         } else { // обновление товара
             await updateProduct()
         }
@@ -87,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function () {
             filterProducts(searchTerm);
         }
     });
-
 
     // Обработчик "Выбрать все"
     selectAllCheckbox.addEventListener('change', function () {
@@ -112,11 +113,11 @@ document.addEventListener('DOMContentLoaded', function () {
             hasUnsavedChanges = false;
             if (proceed) {
                 await updateProduct(form)
-            }else {
+            } else {
                 return
             }
         }
-        addingNewProduct = false
+        addingNewProduct = false;
 
         try {
             const res = await fetch(`/api/split-systems/${id}`);
@@ -160,7 +161,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // сбрасываем выбор файла
         form.image.value = '';
     }
-
 
     // Обработчик клика по чекбоксу
     tableBody.addEventListener('change', function (e) {
@@ -246,7 +246,6 @@ document.addEventListener('DOMContentLoaded', function () {
         renderProducts(filtered);
     }
 
-
     // Настройка высоты таблицы
     function adjustTableHeight() {
         const rows = tableBody.querySelectorAll('tr');
@@ -308,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
-                allProducts = data.items
+                allProducts = data.items;
                 renderProducts(data.items || []);
             })
             .catch(error => {
@@ -316,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    loadProducts()
+    loadProducts();
 
     function getSelectedProductIds() {
         const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]:checked');
