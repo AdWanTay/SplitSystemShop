@@ -37,7 +37,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Delete("/api/cart/:id", middlewares.RequireAuth(cfg, false), handlers.DeleteCartItem(ctx.CartService))
 	app.Post("/api/cart", middlewares.RequireAuth(cfg, false), handlers.AddToCart(ctx.CartService))
 
-	app.Post("/api/review", middlewares.RequireAuth(cfg, false), handlers.CreateReview(ctx.ReviewService))
+	app.Post("/api/review", middlewares.RequireAuth(cfg, false), handlers.CreateReview(ctx))
 
 	app.Get("/api/articles/:id", middlewares.RequireAuth(cfg, false), handlers.GetArticle(ctx.ArticleService))
 	app.Get("/api/articles/:id", middlewares.RequireAuth(cfg, false), handlers.GetAllArticles(ctx.ArticleService))

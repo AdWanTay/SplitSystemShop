@@ -15,7 +15,7 @@ type ReviewService struct {
 func NewReviewService(repo repositories.ReviewRepository) *ReviewService {
 	return &ReviewService{repo: repo}
 }
-func (s *ReviewService) Create(c context.Context, review dto.NewReviewRequest, userID uint) error {
+func (s *ReviewService) Create(c context.Context, review dto.NewReviewRequest, userID uint) (*models.Review, error) {
 	return s.repo.Create(c, &models.Review{
 		SplitSystemID: review.SplitSystemID,
 		UserID:        userID,

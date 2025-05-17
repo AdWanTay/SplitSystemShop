@@ -240,8 +240,26 @@ function submitReview(splitSystemId) {
                 // Успех
                 showNotify('Успех', 'Отзыв отправлен успешно!');
                 closeAllModals();
-                // document.getElementById('review').value = '';
-                // document.getElementById('rating-value').value = 0;
+                const emptyBlock = document.querySelector('.products-empty');
+                if (emptyBlock) emptyBlock.remove(); // скрыть блок "Пока нет отзывов"
+
+                const reviewsContainer = document.querySelector('.reviews-block');
+                if (reviewsContainer) {
+                    const reviewCard = document.createElement('div');
+                    reviewCard.className = 'review-card';
+
+                    reviewCard.innerHTML = `
+                    <div class="review-header">
+                        <span class="review-author">${data.item.name || 'Вы'}</span>
+                        <div class="review-rating">
+                            <span class="stars">${generateStars(data.item.rating)}</span>
+                            <span class="score">Оценка: ${data.item.rating} / 5</span>
+                        </div>
+                    </div>
+                    <p class="review-text">${escapeHTML(data.item.comment)}</p>
+                `;
+                    reviewsContainer.prepend(reviewCard);
+                }
             })
             .catch(error => {
                 console.error('Ошибка при отправке отзыва:', error);
@@ -249,6 +267,23 @@ function submitReview(splitSystemId) {
     };
 }
 
+function generateStars(rating) {
+    const filled = '★'.repeat(rating);
+    const empty = '☆'.repeat(5 - rating);
+    return filled + empty;
+}
+
+function escapeHTML(str) {
+    return str.replace(/[&<>"']/g, function (m) {
+        return {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        }[m];
+    });
+}
 
 function initReviewModal() {
     const stars = document.querySelectorAll('#rating .star');
