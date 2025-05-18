@@ -162,16 +162,20 @@ func CreateSplitSystem(splitSystemService *services.SplitSystemService) fiber.Ha
 		intDepth, _ := strconv.Atoi(c.FormValue("internal_depth"))
 		hasInverter := c.FormValue("has_inverter") == "true"
 
-		//modeIDs := c.FormValue("modes")
-		//var modes []models.Mode
-		//for _, mid := range modeIDs {
-		//	id, err := strconv.Atoi(mid)
-		//	if err != nil {
-		//		continue
-		//	}
-		//	modes = append(modes, models.Mode{ID: uint(id)})
-		//}
+		form, err := c.MultipartForm()
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Ошибка при обработке формы"})
+		}
 
+		modeIDs := form.Value["modes"]
+		var modes []models.Mode
+		for _, mid := range modeIDs {
+			id, err := strconv.Atoi(mid)
+			if err != nil {
+				continue
+			}
+			modes = append(modes, models.Mode{ID: uint(id)})
+		}
 		split := &models.SplitSystem{
 			Title:                c.FormValue("title"),
 			ShortDescription:     c.FormValue("short_description"),
@@ -182,6 +186,7 @@ func CreateSplitSystem(splitSystemService *services.SplitSystemService) fiber.Ha
 			HasInverter:          hasInverter,
 			RecommendedArea:      recommendedArea,
 			CoolingPower:         coolingPower,
+			Modes:                modes,
 			EnergyClassCoolingID: uint(energyCoolID),
 			EnergyClassHeatingID: uint(energyHeatID),
 			MinNoiseLevel:        minNoise,

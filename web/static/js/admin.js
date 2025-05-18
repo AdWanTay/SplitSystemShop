@@ -43,10 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Приведение чекбокса к строке "true"/"false"
         formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
         formData.set("price", String(form.price.value * 100));
-
-        // document.querySelectorAll('input[name="modes"]:checked').forEach(cb => {
-        //     formData.append("modes", cb.value);
-        // });
+        
         try {
             const res = await fetch(`/api/split-systems/${selectedId}`, {
                 method: "PATCH",
