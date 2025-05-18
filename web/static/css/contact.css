@@ -52,6 +52,11 @@
     color: #555555;
 }
 
+@media screen and (max-width: 768px) {
+    .contact-card {
+        width: 100%;
+    }
+}
 
 @media screen and (max-width: 576px) {
     .contact-info h2 {

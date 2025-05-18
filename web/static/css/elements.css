@@ -44,7 +44,7 @@
     border: 1px solid #999999;
     background: rgba(0, 0, 0, 0.05);
     transition: .3s ease-in-out;
-    z-index: 1000;
+    z-index: 100002;
 }
 .modal-close:hover {
     color: #bcbcbc;
@@ -298,6 +298,7 @@ body.modal-open {
 .hidden {
     visibility: hidden;
     opacity: 0;
+    width: 0;
 }
 
 
@@ -431,34 +432,64 @@ input[type=checkbox]:checked::after {
 }
 
 
-@media screen and (max-width: 576px) {
-    .modal-title {
-        position: sticky;
-        top: 0;
-    }
-    .modal-close {
-        top: 2rem;
-        right: 2rem;
-        background: white;
-    }
-    .main-modal, .calculator-modal {
-        max-width: 95%;
-        width: 95%;
-        height: 70vh;
+@media screen and (max-width: 992px) {
+    .main-modal, .calculator-modal, .review-modal {
+        max-width: 80%;
+        width: 80%;
     }
     .modal-content {
         padding: 1rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .accent-btn, .primary-btn {
+        font-size: .875rem;
+    }
+    .main-modal {
+        height: auto;
+    }
+    .modal-title {
+        width: 90%;
+    }
+    .modal-close {
+        top: 1rem;
+        right: 1rem;
+        background: white;
+    }
+    .main-modal, .calculator-modal, .review-modal {
+        max-width: 95%;
+        width: 95%;
+    }
+    .calculator-modal {
+        height: 70vh;
+        padding-bottom: 4rem;
     }
     .cooling-calculator {
         max-height: 100%;
         overflow-y: auto;
     }
+    #goto-catalog {
+        width: 100%;
+        margin-top: 2rem;
+    }
+    div.eapps-widget {
+        position: absolute !important;
+    }
+    .form-section input {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 576px) {
+    .modal-title {
+        position: sticky;
+        top: 0;
+    }
     .calculator-modal .form-grid {
         grid-template-columns: 1fr;
         gap: .3rem;
     }
-    #goto-catalog {
-        width: 100%;
-        margin-top: 2rem;
+    .calculator-modal {
+        padding-bottom: 6rem;
     }
 }

@@ -226,6 +226,12 @@
     resize: none
 }
 
+@media screen and (max-width: 768px) {
+    .blog-card-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 
 @media screen and (max-width: 576px) {
     .blog h2, .article h1 {
@@ -233,6 +239,25 @@
     }
     .article-content img {
         max-width: 100%;
+    }
+    .blog-card-container {
+        grid-template-columns: 1fr;
+    }
+    .blog-card {
+        max-width: 100%;
+    }
+
+    .article-editor-modal, .article-create-modal {
+        max-width: 95% !important;
+        width: 95% !important;
+        max-height: 70vh !important;
+        height: 70vh !important;
+        overflow: hidden !important;
+    }
+    .article-editor-modal .modal-body, .article-create-modal .modal-body {
+        overflow-y: auto;
+        height: 100%;
+        padding-bottom: 4rem;
     }
 }
 
