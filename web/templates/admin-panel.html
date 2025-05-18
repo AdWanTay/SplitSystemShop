@@ -210,18 +210,18 @@
 
                     <div class="form-group characteristic">
                         <label>Габариты и вес внутреннего блока</label>
-                        <input type="number" step="0.1" name="internal_weight" placeholder="Вес внутреннего (кг)">
-                        <input type="number" name="internal_width" placeholder="Ширина внутреннего (мм)">
-                        <input type="number" name="internal_height" placeholder="Высота внутреннего (мм)">
-                        <input type="number" name="internal_depth" placeholder="Глубина внутреннего (мм)">
+                        <input type="number" step="0.1" name="internal_weight" placeholder="0" data-unit="Вес, кг">
+                        <input type="number" name="internal_width" placeholder="0" data-unit="Ширина,мм">
+                        <input type="number" name="internal_height" placeholder="0" data-unit="Высота, мм">
+                        <input type="number" name="internal_depth" placeholder="0" data-unit="Глубина, мм">
                     </div>
 
                     <div class="form-group characteristic">
                         <label>Габариты и вес внешнего блока</label>
-                        <input type="number" step="0.1" name="external_weight" placeholder="Вес внешнего (кг)">
-                        <input type="number" name="external_width" placeholder="Ширина внешнего (мм)">
-                        <input type="number" name="external_height" placeholder="Высота внешнего (мм)">
-                        <input type="number" name="external_depth" placeholder="Глубина внешнего (мм)">
+                        <input type="number" step="0.1" name="external_weight" placeholder="0" data-unit="Вес, кг">
+                        <input type="number" name="external_width" placeholder="0" data-unit="Ширина,мм">
+                        <input type="number" name="external_height" placeholder="0" data-unit="Высота, мм">
+                        <input type="number" name="external_depth" placeholder="0" data-unit="Глубина, мм">
                     </div>
                 </div>
             </div>
@@ -242,9 +242,21 @@
 <script src="/web/static/js/utils.js"></script>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('input[data-unit]').forEach(function (input) {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('input-with-unit-wrapper');
 
+            const unitSpan = document.createElement('span');
+            unitSpan.classList.add('unit-label');
+            unitSpan.textContent = input.dataset.unit;
+
+            input.parentNode.insertBefore(wrapper, input);
+            wrapper.appendChild(input);
+            wrapper.appendChild(unitSpan);
+        });
+    });
 </script>
-
 
 </body>
 </html>

@@ -531,10 +531,10 @@ aside {
 
 select, input[type="range"], input[type="number"] {
     width: 100%;
-    padding: 6px;
+    padding: .18rem;
     border-radius: 8px;
     border: 1px solid #dcdcdc;
-    font-size: 14px;
+    font-size: .875rem;
     accent-color: #2989e5;
 }
 
