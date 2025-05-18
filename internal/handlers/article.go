@@ -65,12 +65,13 @@ func UpdateArticle(articleService *services.ArticleService) fiber.Handler {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Неверный ID"})
 		}
 		var req dto.NewArticleRequest
-		if err := c.BodyParser(&req); err != nil {
+		if err = c.BodyParser(&req); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Некорректные данные"})
 		}
-		if err := articleService.Update(c.Context(), uint(id), req); err != nil {
+		updatedArticle, err := articleService.Update(c.Context(), uint(id), req)
+		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 		}
-		return c.SendStatus(fiber.StatusOK)
+		return c.Status(fiber.StatusOK).JSON(updatedArticle)
 	}
 }

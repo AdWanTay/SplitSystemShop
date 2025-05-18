@@ -14,7 +14,7 @@ type ArticleRepository interface {
 	GetByID(ctx context.Context, id uint) (*models.Article, error)
 	GetAll(ctx context.Context) ([]models.Article, error)
 	Delete(ctx context.Context, id uint) error
-	Update(ctx context.Context, id uint, req dto.NewArticleRequest) error
+	Update(ctx context.Context, id uint, req dto.NewArticleRequest) (*models.Article, error)
 	GetRandomExcept(ctx context.Context, id uint, limit int) ([]models.Article, error)
 }
 
@@ -58,14 +58,14 @@ func (r *articleRepository) Delete(ctx context.Context, id uint) error {
 	return r.db.WithContext(ctx).Delete(&models.Article{}, id).Error
 }
 
-func (r *articleRepository) Update(ctx context.Context, id uint, req dto.NewArticleRequest) error {
+func (r *articleRepository) Update(ctx context.Context, id uint, req dto.NewArticleRequest) (*models.Article, error) {
 	imagePath := ""
 
 	// Обработка base64 превью, если есть
 	if strings.HasPrefix(req.ImageBase64, "data:image") {
 		path, err := utils.SaveBase64Image(req.ImageBase64)
 		if err != nil {
-			return err
+			return nil, err
 		}
 		imagePath = path
 	} else {
@@ -73,7 +73,7 @@ func (r *articleRepository) Update(ctx context.Context, id uint, req dto.NewArti
 		// для этого нужно сначала получить текущую статью
 		var existing models.Article
 		if err := r.db.WithContext(ctx).First(&existing, id).Error; err != nil {
-			return err
+			return nil, err
 		}
 		imagePath = existing.ImageURL
 	}
@@ -81,14 +81,19 @@ func (r *articleRepository) Update(ctx context.Context, id uint, req dto.NewArti
 	// Обработка base64 в HTML (если нужно)
 	content, err := utils.ReplaceBase64ImagesInHTML(req.Content)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// Обновление записи
-	return r.db.WithContext(ctx).Model(&models.Article{}).Where("id = ?", id).Updates(models.Article{
+	newArticle := models.Article{
 		Title:       req.Title,
 		Description: req.Description,
 		Content:     content,
 		ImageURL:    imagePath,
-	}).Error
+	}
+	err = r.db.WithContext(ctx).Model(&models.Article{}).Where("id = ?", id).Updates(newArticle).Error
+	if err != nil {
+		return nil, err
+	}
+	return &newArticle, nil
 }

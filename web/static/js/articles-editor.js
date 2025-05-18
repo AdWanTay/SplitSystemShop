@@ -148,10 +148,10 @@ async function updateArticle(id) {
         // Обновляем карточку в DOM
         const card = document.querySelector(`.blog-card[data-id="${id}"]`);
         if (card) {
-            card.querySelector(".blog-title").textContent = updated.title;
-            card.querySelector(".blog-description").textContent = updated.description;
+            card.querySelector(".blog-card-title").textContent = updated.title;
+            card.querySelector(".blog-card-description").textContent = updated.description;
             if (updated.image_url && updated.image_url.trim() !== "") {
-                card.querySelector(".blog-image").src = updated.image_url;
+                card.querySelector(".blog-card-action").src = updated.image_url;
             }
         }
 
