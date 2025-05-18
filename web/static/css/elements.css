@@ -19,10 +19,11 @@
     padding: 30px;
     width: 100%;
     max-width: 400px;
-    max-height: 65vh;
+    max-height: 70vh;
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.15);
     margin: auto; /* Центрирование по вертикали */
+    overflow: hidden;
     transform: translateY(2vw);
     z-index: 1003;
 }
@@ -43,6 +44,7 @@
     border: 1px solid #999999;
     background: rgba(0, 0, 0, 0.05);
     transition: .3s ease-in-out;
+    z-index: 1000;
 }
 .modal-close:hover {
     color: #bcbcbc;
@@ -91,6 +93,7 @@
     font-weight: bold;
     margin: 0;
     margin-bottom: 1rem;
+    background: white;
 }
 
 .modal-body {
@@ -240,6 +243,7 @@ body.modal-open {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
+    padding: 0 2px;
 }
 
 .calculator-modal .form-group {
@@ -276,7 +280,7 @@ body.modal-open {
 .calculator-modal .results {
     display: flex;
     justify-content: space-between;
-
+    flex-wrap: wrap;
     margin-top: 1rem;
     font-size: 1.1rem;
     color: #1b7900;
@@ -317,7 +321,7 @@ body.modal-open {
 
 .form-group {
     display: flex;
-    gap: 10px;
+    gap: .6rem;
     flex-wrap: wrap;
     margin-bottom: 15px;
 }
@@ -428,13 +432,33 @@ input[type=checkbox]:checked::after {
 
 
 @media screen and (max-width: 576px) {
+    .modal-title {
+        position: sticky;
+        top: 0;
+    }
     .modal-close {
-        right: 2rem;
         top: 2rem;
+        right: 2rem;
         background: white;
     }
-    .main-modal {
-        max-width: 90%;
-        width: 90%;
+    .main-modal, .calculator-modal {
+        max-width: 95%;
+        width: 95%;
+        height: 70vh;
+    }
+    .modal-content {
+        padding: 1rem;
+    }
+    .cooling-calculator {
+        max-height: 100%;
+        overflow-y: auto;
+    }
+    .calculator-modal .form-grid {
+        grid-template-columns: 1fr;
+        gap: .3rem;
+    }
+    #goto-catalog {
+        width: 100%;
+        margin-top: 2rem;
     }
 }

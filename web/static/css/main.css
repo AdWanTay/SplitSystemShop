@@ -235,7 +235,6 @@ textarea:focus, textarea:active {
     width: 100%;
     position: relative;
     overflow: hidden;
-    border-radius: var(--border-2);
 }
 .swiper-wrapper {
     margin-left: 0;
@@ -1010,6 +1009,9 @@ select, input[type="range"], input[type="number"] {
     }
     .desktop.swiper-container {
         display: none;
+    }
+    .swiper-slide img {
+        border-radius: var(--border-1);
     }
     .services-card-container {
         grid-template-columns: repeat(2, 1fr);

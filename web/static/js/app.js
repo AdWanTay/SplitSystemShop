@@ -5,14 +5,24 @@ function closeAllModals() {
     unlockBodyScroll();
 }
 
+// Открытие/закрытие меню по кнопке бургера
 document.getElementById('burgerBtn').addEventListener('click', function () {
-
     document.querySelector('.overlay').classList.toggle('active');
     document.querySelector('.header .nav').classList.toggle('open');
 });
 
+// Закрытие меню при клике на любую ссылку в навигации
+document.querySelectorAll('.nav a').forEach(function (link) {
+    link.addEventListener('click', function () {
+        document.querySelector('.overlay').classList.remove('active');
+        document.querySelector('.header .nav').classList.remove('open');
+    });
+});
+
+// Закрытие меню при клике на подложку (overlay)
 document.querySelector('.overlay').addEventListener('click', function () {
     document.querySelector('.overlay').classList.remove('active');
+    document.querySelector('.header .nav').classList.remove('open');
 });
 
 
