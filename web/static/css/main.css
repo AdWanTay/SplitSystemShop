@@ -284,7 +284,8 @@ textarea:focus, textarea:active {
 /*       CATALOG, PRODUCT CARDS      */
 /* ################################# */
 .catalog__container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
     gap: 2vw;
     flex-grow: 1;
 }
@@ -1054,6 +1055,9 @@ select, input[type="range"], input[type="number"] {
     .header .nav {
         gap: .5rem;
     }
+    .catalog .products__grid {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 
@@ -1061,58 +1065,77 @@ select, input[type="range"], input[type="number"] {
     .contact__form textarea {
         min-height: 12vh;
     }
+
     .products__grid, .products__grid.cart {
-        grid-template-columns: 1fr 1fr ;
+        grid-template-columns: 1fr 1fr;
     }
+
     .about {
         margin-bottom: 4rem;
     }
+
     .about__stats {
         flex-basis: 100px;
     }
+
     .about__content {
         flex-basis: auto;
     }
+
     .services-card-container {
         grid-template-columns: repeat(2, 1fr);
     }
+
     input[type="tel"], input[type="text"], input[type="email"], input[type="password"], textarea {
         padding: .5rem .8rem;
         font-size: .75rem !important;
     }
+
     .products__filters {
         gap: .5rem;
     }
+
     .contact__form {
         padding-bottom: 4rem;
     }
+
     .contact__form .contact-col {
         flex: auto;
         width: 100%;
     }
+
     .contact-col .contact__banner {
         display: none;
     }
+
     .mobile.swiper-container {
         display: block;
     }
+
     .desktop.swiper-container {
         display: none;
     }
+
     .swiper-slide img {
         border-radius: var(--border-1);
     }
+
     .calc__banner {
         height: auto;
     }
+
     .calc__banner .img-mobile {
         display: block;
     }
+
     .calc__banner .img-desktop {
         display: none;
     }
-}
 
+    .catalog__container {
+        grid-template-columns: 1fr;
+    }
+}
 
 @media screen and (max-width: 576px) {
     html, body {
