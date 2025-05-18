@@ -432,6 +432,9 @@ input[type=checkbox]:checked::after {
         right: 2rem;
         top: 2rem;
         background: white;
-
+    }
+    .main-modal {
+        max-width: 90%;
+        width: 90%;
     }
 }

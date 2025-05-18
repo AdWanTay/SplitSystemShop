@@ -24,22 +24,49 @@
 
 <main class="main">
     <section class="slider">
-        <div class="swiper-container">
+        <div class="desktop swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img src="/web/static/img/slider-banner_1.jpg" alt="Гарантия 3 года">
+                    <a href="/catalog">
+                        <img src="/web/static/img/slider-banner_1.jpg" alt="Гарантия 3 года">
+                    </a>
                 </div>
                 <div class="swiper-slide">
-                    <img src="/web/static/img/slider-banner_2.jpg" alt="Нажмите если хотите оставить заявку">
+                    <a onclick="openModal(modalConfigs.contactUs)">
+                        <img src="/web/static/img/slider-banner_2.jpg" alt="Нажмите если хотите оставить заявку">
+                    </a>
                 </div>
                 <div class="swiper-slide">
-                    <img src="/web/static/img/slider-banner_3.jpg" alt="Скидка 10% при заказе через сайт">
+                    <a href="/catalog">
+                        <img src="/web/static/img/slider-banner_3.jpg" alt="Скидка 10% при заказе через сайт">
+                    </a>
                 </div>
             </div>
 
             <div class="swiper-pagination"></div>
         </div>
+
+        <div class="mobile swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="/catalog">
+                        <img src="/web/static/img/banner-mobile_1.png" alt="Гарантия 3 года">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a onclick="openModal(modalConfigs.contactUs)">
+                        <img src="/web/static/img/banner-mobile_2.png" alt="Нажмите если хотите оставить заявку">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="/catalog">
+                        <img src="/web/static/img/banner-mobile_3.png" alt="Скидка 10% при заказе через сайт">
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
+
 
     <section id="services">
         <h2>Продаем и обслуживаем<br>Сплит-системы в Уфе</h2>
