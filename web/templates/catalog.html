@@ -292,16 +292,22 @@
 <script>
     document.getElementById('toggle-brands').addEventListener('click', function () {
         const container = document.getElementById('brand-checkboxes');
+        const allCheckboxes = container.querySelectorAll('.checkbox-button');
         const isCollapsed = container.classList.contains('collapsed');
 
         if (isCollapsed) {
             container.classList.remove('collapsed');
+            allCheckboxes.forEach(el => el.classList.remove('hidden'));
             this.textContent = 'Скрыть';
         } else {
             container.classList.add('collapsed');
+            allCheckboxes.forEach((el, index) => {
+                if (index > 4) el.classList.add('hidden');
+            });
             this.textContent = 'Показать все';
         }
     });
+
 
     document.querySelectorAll('input[name="cost"]').forEach(radio => {
         radio.addEventListener('click', () => {
