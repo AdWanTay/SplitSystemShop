@@ -478,6 +478,8 @@ textarea:focus, textarea:active {
 }
 .radio-label {
     font-size: .875rem;
+    width: 150px;
+    text-align: center;
 }
 .filter-radio input[type="radio"]:checked ~ .radio-label {
     font-weight: 600;
@@ -1030,6 +1032,9 @@ select, input[type="range"], input[type="number"] {
     .about__stats {
         flex-basis: 250px;
     }
+    .radio-label {
+        width: 130px;
+    }
 }
 
 @media screen and (max-width: 992px) {
@@ -1135,6 +1140,9 @@ select, input[type="range"], input[type="number"] {
     .catalog__container {
         grid-template-columns: 1fr;
     }
+    .radio-label {
+        width: 125px;
+    }
 }
 
 @media screen and (max-width: 576px) {
@@ -1167,8 +1175,12 @@ select, input[type="range"], input[type="number"] {
     .footer__logo img {
         height: 2rem;
     }
-
-
+    .filter-radio {
+        padding: .5rem;
+    }
+    .radio-label {
+        width: 140px;
+    }
     aside {
         display: none;
     }
