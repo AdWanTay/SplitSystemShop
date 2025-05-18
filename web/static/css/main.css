@@ -294,6 +294,35 @@ textarea:focus, textarea:active {
     grid-template-columns: repeat(3, 1fr);
 }
 
+.cart__container {
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+}
+
+#cart-toggle, #favorites-toggle {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    border-radius: .5rem;
+    border: 1px solid var(--gray-light);
+    background: #f8f8f7;
+    padding: .6rem;
+    transform: translateY(.3rem);
+}
+#cart-toggle svg { transition: .3s ease }
+#cart-toggle.active svg {
+    transform: scale(1, -1);
+}
+
+.cart__container.opened {
+    max-height: 2000px; /* большое значение, чтобы влез весь контент */
+}
+
+.cart__container:not(.opened) {
+    max-height: 0;
+    padding: 0;
+}
+
 .products, .services, .cart-section, .favorites-section,
 .profile-section, .products__editor, .blog__editor {
     padding: 4rem 8vw;

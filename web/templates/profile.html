@@ -65,6 +65,22 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('openChatBtn').classList.add('hidden');
+
+        document.getElementById("cart-toggle").addEventListener("click", () => {
+            const section = document.querySelector(".cart-section .cart__container");
+            const btn = document.getElementById("cart-toggle");
+
+            section.classList.toggle("opened");
+            btn.classList.toggle('active');
+        });
+
+        document.getElementById("favorites-toggle").addEventListener("click", () => {
+            const section = document.querySelector(".favorites-section .cart__container");
+            const btn = document.getElementById("favorites-toggle");
+
+            section.classList.toggle("opened");
+            btn.classList.toggle('active');
+        });
     });
 
     function changeCredentials(){
