@@ -110,8 +110,15 @@ func (r splitSystemRepository) GetSplitSystem(c context.Context, systemID uint) 
 }
 
 func (r splitSystemRepository) Delete(c context.Context, systemID uint) error {
-	return r.db.WithContext(c).Exec(
-		"DELETE FROM split_systems WHERE id = ?", systemID).Error
+	var splitSystem models.SplitSystem
+	err := r.db.WithContext(c).
+		First(&splitSystem, systemID).Error
+	if err != nil {
+		return err
+	}
+	r.db.Model(&splitSystem).Association("Modes").Clear()
+	r.db.Model(&splitSystem).Association("Reviews").Clear()
+	return r.db.Delete(&splitSystem).Error
 }
 
 func (r splitSystemRepository) Create(c context.Context, splitSystem *models.SplitSystem) error {
