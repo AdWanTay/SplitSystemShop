@@ -24,7 +24,12 @@
             <div class="product-card" id="cart_{{.ID}}" onclick="location.href='/products/{{.ID}}/'">
                 <div class="product-thumb">
                     <span class="product-price">{{formatPrice .Price}} ₽</span>
+                    {{ if .ImageURL }}
+                    <img src="/web/static/uploads/{{.ImageURL}}" class="product-img" alt="">
+                    {{else}}
                     <img src="/web/static/img/primer.webp" class="product-img" alt="">
+                    {{end}}
+
                 </div>
                 <div class="product-body">
                     <p class="card-product-title">{{.Title}}</p>
@@ -72,7 +77,11 @@
                     <button class="add-to-favorites active" onclick="removeFromFavorites({{.ID}}); event.stopPropagation();">♡</button>
 
                     <span class="product-price">{{ formatPrice .Price}} ₽</span>
+                    {{ if .ImageURL }}
+                    <img src="/web/static/uploads/{{.ImageURL}}" class="product-img" alt="">
+                    {{else}}
                     <img src="/web/static/img/primer.webp" class="product-img" alt="">
+                    {{end}}
                 </div>
                 <div class="product-body">
                     <p class="card-product-title">{{.Title}}</p>
@@ -111,7 +120,11 @@
                     // Клонируем карточку
                     const cloned = card.cloneNode(true);
                     cloned.id = `cart_${id}`;
-
+                    const thumb = cloned.querySelector(".product-thumb");
+                    if (thumb) {
+                        const favBtn = thumb.querySelector(".add-to-favorites");
+                        if (favBtn) thumb.removeChild(favBtn);
+                    }
                     // Меняем кнопку на "Убрать"
                     const button = cloned.querySelector('.add-to-cart');
                     button.textContent = "Убрать";

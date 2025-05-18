@@ -157,7 +157,6 @@ func ProfilePage(cfg *config.Config, appContext *context.AppContext) fiber.Handl
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
-		fmt.Println(user)
 		return Render(c, "profile", fiber.Map{
 			"response": cartModuleData,
 			"userData": user,
