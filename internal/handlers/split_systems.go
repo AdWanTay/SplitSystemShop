@@ -162,6 +162,16 @@ func CreateSplitSystem(splitSystemService *services.SplitSystemService) fiber.Ha
 		intDepth, _ := strconv.Atoi(c.FormValue("internal_depth"))
 		hasInverter := c.FormValue("has_inverter") == "true"
 
+		//modeIDs := c.FormValue("modes")
+		//var modes []models.Mode
+		//for _, mid := range modeIDs {
+		//	id, err := strconv.Atoi(mid)
+		//	if err != nil {
+		//		continue
+		//	}
+		//	modes = append(modes, models.Mode{ID: uint(id)})
+		//}
+
 		split := &models.SplitSystem{
 			Title:                c.FormValue("title"),
 			ShortDescription:     c.FormValue("short_description"),
@@ -213,6 +223,21 @@ func UpdateSplitSystem(service *services.SplitSystemService) fiber.Handler {
 			}
 		}
 
+		form, err := c.MultipartForm()
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Ошибка при обработке формы"})
+		}
+
+		modeIDs := form.Value["modes"]
+		var modes []models.Mode
+		for _, mid := range modeIDs {
+			id, err := strconv.Atoi(mid)
+			if err != nil {
+				continue
+			}
+			modes = append(modes, models.Mode{ID: uint(id)})
+		}
+
 		input := dto.UpdateSplitSystemRequest{
 			Title:                c.FormValue("title"),
 			ShortDescription:     c.FormValue("short_description"),
@@ -222,6 +247,7 @@ func UpdateSplitSystem(service *services.SplitSystemService) fiber.Handler {
 			TypeID:               utils.ParseUint(c.FormValue("type_id")),
 			RecommendedArea:      utils.ParseFloat(c.FormValue("recommended_area")),
 			CoolingPower:         utils.ParseFloat(c.FormValue("cooling_power")),
+			Modes:                modes,
 			HasInverter:          c.FormValue("has_inverter") == "true",
 			EnergyClassCoolingID: utils.ParseUint(c.FormValue("energy_class_cooling_id")),
 			EnergyClassHeatingID: utils.ParseUint(c.FormValue("energy_class_heating_id")),
@@ -236,6 +262,7 @@ func UpdateSplitSystem(service *services.SplitSystemService) fiber.Handler {
 			ExternalHeight:       utils.ParseInt(c.FormValue("external_height")),
 			ExternalDepth:        utils.ParseInt(c.FormValue("external_depth")),
 		}
+
 		if filename != "" {
 			input.ImageURL = &filename
 		}

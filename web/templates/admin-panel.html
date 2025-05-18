@@ -139,6 +139,12 @@
                         {{ end }}
                     </select>
 
+
+                    {{ range .modes }}
+                    <label class="checkbox-button" ><input name="modes" type="checkbox" value="{{.ID}}"/>{{.Name}}</label>
+                    {{end}}
+
+
                     <label for="brand_id">Бренд</label>
                     <select name="brand_id">
                         <option value="">Выберите бренд</option>
@@ -254,6 +260,13 @@
             input.parentNode.insertBefore(wrapper, input);
             wrapper.appendChild(input);
             wrapper.appendChild(unitSpan);
+        });
+        document.querySelectorAll('.checkbox-button').forEach(label => {
+            const input = label.querySelector('input');
+            label.addEventListener('click', () => {
+                input.checked = !input.checked;
+                label.classList.toggle('checked', input.checked);
+            });
         });
     });
 </script>

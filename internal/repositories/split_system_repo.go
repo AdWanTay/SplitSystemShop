@@ -117,7 +117,16 @@ func (r splitSystemRepository) Delete(c context.Context, systemID uint) error {
 func (r splitSystemRepository) Create(c context.Context, splitSystem *models.SplitSystem) error {
 	return r.db.WithContext(c).Create(splitSystem).Error
 }
-
 func (r splitSystemRepository) Update(ctx context.Context, newSplitSystem *models.SplitSystem) error {
-	return r.db.WithContext(ctx).Save(newSplitSystem).Error
+	tx := r.db.WithContext(ctx)
+
+	if err := tx.Save(newSplitSystem).Error; err != nil {
+		return err
+	}
+
+	if err := tx.Model(newSplitSystem).Association("Modes").Replace(newSplitSystem.Modes); err != nil {
+		return err
+	}
+
+	return nil
 }

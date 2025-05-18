@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('openChatBtn').classList.add('hidden');
 
@@ -44,6 +43,10 @@ document.addEventListener('DOMContentLoaded', function () {
         // Приведение чекбокса к строке "true"/"false"
         formData.set("has_inverter", form.has_inverter.checked ? "true" : "false");
         formData.set("price", String(form.price.value * 100));
+
+        // document.querySelectorAll('input[name="modes"]:checked').forEach(cb => {
+        //     formData.append("modes", cb.value);
+        // });
         try {
             const res = await fetch(`/api/split-systems/${selectedId}`, {
                 method: "PATCH",
@@ -52,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = await res.json();
             if (res.ok) {
                 showNotify('Успех', "Товар успешно обновлен!");
-                form.reset();
+                resetFrom(form)
                 hasUnsavedChanges = false;
                 addingNewProduct = true;
                 loadProducts()
@@ -63,6 +66,17 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error(err);
             showErr("Ошибка отправки запроса.")
         }
+    }
+
+    function resetFrom(form) {
+        form.reset();
+        document.querySelector(".input-file-text").textContent = "Максимум 5мб"
+        document.getElementById("image-preview").src = "/web/static/uploads/placeholder.jpg"
+        document.querySelectorAll('.checkbox-button').forEach((label) => {
+            const input = label.querySelector('input');
+            input.checked = false
+            label.classList.remove('checked');
+        })
     }
 
     async function createProduct() {
@@ -80,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (res.ok) {
                 showNotify('Успех', "Товар успешно создан!");
-                form.reset();
+                resetFrom(form)
                 hasUnsavedChanges = false;
                 loadProducts()
             } else {
@@ -152,7 +166,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+
     function fillForm(product) {
+        document.querySelectorAll('.checkbox-button').forEach((label) => {
+            const input = label.querySelector('input');
+            input.checked = false
+            label.classList.remove('checked');
+        })
+
         form.title.value = product.title;
         form.short_description.value = product.short_description;
         form.long_description.value = product.long_description;
@@ -171,6 +192,17 @@ document.addEventListener('DOMContentLoaded', function () {
         form.internal_width.value = product.internal_width;
         form.internal_height.value = product.internal_height;
         form.internal_depth.value = product.internal_depth;
+
+        document.querySelectorAll('.checkbox-button').forEach((label) => {
+            const input = label.querySelector('input');
+            product.modes.forEach(mode => {
+                const mode_id = mode.id.toString()
+                if (input.value === mode_id) {
+                    input.checked = true
+                    label.classList.add('checked');
+                }
+            })
+        })
 
         form.external_weight.value = product.external_weight;
         form.external_width.value = product.external_width;
@@ -229,7 +261,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        form.reset()
+        resetFrom(form)
+
     });
 
     // Обработчик удаления товаров
@@ -388,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.querySelectorAll('.input-file input[type="file"]').forEach(function(input) {
+document.querySelectorAll('.input-file input[type="file"]').forEach(function (input) {
     input.addEventListener('change', function () {
         const file = this.files[0];
         if (file) {
