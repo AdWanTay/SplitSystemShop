@@ -139,10 +139,12 @@
                         {{ end }}
                     </select>
 
-
-                    {{ range .modes }}
-                    <label class="checkbox-button" ><input name="modes" type="checkbox" value="{{.ID}}"/>{{.Name}}</label>
-                    {{end}}
+                    <label for="modes">Режимы работы</label>
+                    <div style="display: flex; gap: .5rem; flex-wrap: wrap">
+                        {{ range .modes }}
+                            <label class="checkbox-button" style="flex: 1 1 1; text-align: center"><input name="modes" type="checkbox" value="{{.ID}}"/>{{.Name}}</label>
+                        {{end}}
+                    </div>
 
 
                     <label for="brand_id">Бренд</label>
