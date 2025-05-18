@@ -47,7 +47,6 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 			&models.Mode{},
 			&models.EnergyClass{},
 			&models.SplitSystem{},
-			&models.SplitSystemImage{},
 			&models.Review{},
 			&models.Article{},
 		)

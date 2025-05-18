@@ -14,7 +14,7 @@ type SplitSystem struct {
 	HasInverter          bool        `json:"has_inverter"`
 	RecommendedArea      float64     `json:"recommended_area"` // м²
 	CoolingPower         float64     `json:"cooling_power"`    // кВт
-	Modes                []Mode      `gorm:"many2many:split_system_modes" json:"modes"`
+	Modes                []Mode      `gorm:"many2many:split_system_modes;constraint:OnDelete:CASCADE" json:"modes"`
 	EnergyClassCoolingID uint        `json:"energy_class_cooling_id"`
 	EnergyClassCooling   EnergyClass `json:"energy_class_cooling"`
 	EnergyClassHeatingID uint        `json:"energy_class_heating_id"`
@@ -36,5 +36,5 @@ type SplitSystem struct {
 
 	AverageRating float64 `gorm:"average_rating; default:0" json:"average_rating"`
 
-	Reviews []Review `json:"reviews,omitempty"`
+	Reviews []Review `json:"reviews,omitempty;constraint:OnDelete:CASCADE"`
 }
