@@ -18,7 +18,7 @@
 {{template "header" .}}
 
 <main class="main">
-
+    {{if .has_processing_orders}}
     <section class="form-section" style="margin: 2rem 8vw">
         <h2>Заказы</h2>
         <div class="hint-block">
@@ -30,6 +30,7 @@
         </div>
         <button class="primary-btn btn-standard" onclick="location.href='/contact'">Перейти в Контакты</button>
     </section>
+    {{end}}
 
     {{template "cart-module" .}}
 
