@@ -8,7 +8,7 @@
                 <path d="M6 9L12 15L18 9" stroke="#212529" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </button>
-        {{if eq .response.Favorites.Total 0}}
+        {{if eq .response.Cart.Total 0}}
         <button onclick="location.href='/catalog'" style="transform: translateY(.3rem)" class="accent-btn btn-standard">
             Перейти в каталог
         </button>
@@ -67,11 +67,9 @@
                       stroke-linejoin="round"/>
             </svg>
         </button>
-        {{if not (eq .response.Favorites.Total 0)}}
         <button onclick="location.href='/catalog'" style="transform: translateY(.3rem)" class="accent-btn btn-standard">
             Перейти в каталог
         </button>
-        {{end}}
     </div>
 
     <div class="cart__container">

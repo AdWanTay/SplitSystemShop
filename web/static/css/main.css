@@ -308,6 +308,7 @@ textarea:focus, textarea:active {
     background: #f8f8f7;
     padding: .6rem;
     transform: translateY(.3rem);
+    cursor: pointer;
 }
 #cart-toggle svg { transition: .3s ease }
 #cart-toggle.active svg {
