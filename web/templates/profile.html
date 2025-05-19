@@ -19,17 +19,17 @@
 
 <main class="main">
     {{if .has_processing_orders}}
-    <section class="form-section" style="margin: 2rem 8vw">
-        <h2>Заказы</h2>
-        <div class="hint-block">
-            <div class="hint-icon">ⓘ</div>
-            <div class="hint-text">
-                <strong>Ваш заказ в обработке:</strong> У вас есть активный заказ, его статус можно отслеживать в письмах на вашей почте. Если с вами пока не связались, вы можете перейти в <a href="/contacts">раздел "Контакты"</a> и связаться с нами самостоятельно.
+        <section class="form-section" style="margin: 2rem 8vw">
+            <h2>Заказы</h2>
+            <div class="hint-block">
+                <div class="hint-icon">ⓘ</div>
+                <div class="hint-text">
+                    <strong>Ваш заказ в обработке:</strong> У вас есть активный заказ, его статус можно отслеживать в письмах на вашей почте. Если с вами пока не связались, вы можете перейти в <a href="/contacts">раздел "Контакты"</a> и связаться с нами самостоятельно.
+                </div>
+                <div class="hint-close" onclick="this.parentElement.style.display='none'">×</div>
             </div>
-            <div class="hint-close" onclick="this.parentElement.style.display='none'">×</div>
-        </div>
-        <button class="primary-btn btn-standard" onclick="location.href='/contact'">Перейти в Контакты</button>
-    </section>
+            <button class="primary-btn btn-standard" onclick="location.href='/contact'">Перейти в Контакты</button>
+        </section>
     {{end}}
 
     {{template "cart-module" .}}

@@ -362,6 +362,19 @@ h3 {
     background-color: #5db0ff;
 }
 
+.split-link {
+    color: #5db0ff;
+    text-decoration: underline;
+}
+
+#content-3 .table-scroll {
+    min-height: 60vh;
+}
+
+#orders-table {
+    min-height: 60vh;
+}
+
 @media screen and (max-width: 576px) {
     .left-column {
         width: 100%;

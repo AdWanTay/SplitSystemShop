@@ -460,6 +460,50 @@ function openModal(config) {
 }
 
 const modalConfigs = {
+    orderConfirm: {
+        title: "Подтверждение заказа",
+        body: `
+            <p>Пожалуйста, убедитесь, что выбранные сплит-системы корректны и вы действительно хотите оформить заказ.</p>
+        `,
+        description: "ⓘ Вы уверены, что хотите подтвердить заказ?",
+        mainBtnText: "Подтвердить",
+        mainBtnAction: async function () {
+            try {
+                const response = await fetch('/api/order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || "Не удалось оформить заказ. Попробуйте позже");
+                }
+                openModal(modalConfigs.orderSuccess)
+            } catch (error) {
+                showErr(error.message);
+            }
+        }
+    },
+    orderSuccess: {
+        title: "Ваш заказ успешно оформлен!",
+        body: `
+            <p>Отслеживать статус заказа вы можете по электронной почте, указанной в вашем аккаунте. Также вы всегда можете связаться с нами напрямую — мы с радостью ответим на любые вопросы.</p>
+        `,
+        description: "ⓘ В ближайшее время с вами свяжется наш менеджер для уточнения деталей.",
+        mainBtnText: "Связаться",
+        mainBtnAction: async function () {
+            try {
+                showNotify("Успех", "Заявка успешно подана");
+                this.closest('.modal').remove();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3200);
+            } catch (error) {
+                showErr(error.message);
+            }
+        }
+    },
     contactUs: {
         title: "Свяжитесь с нами, или оставьте заявку",
         body: `
@@ -479,8 +523,8 @@ const modalConfigs = {
         description: "ⓘ Рабочие дни: Пн-Пт с 10:00 до 19:00, Сб-Вс Выходной",
         mainBtnText: "Оставить заявку",
         mainBtnAction: async function () {
-            this.closest('.modal').remove();
             location.href = '/#contact-us';
+            this.closest('.modal').remove();
         }
     },
     passwordEdit: {

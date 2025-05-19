@@ -19,12 +19,12 @@
 
 <main class="main">
     <div class="tab">
-        <input checked id="tab-btn-1" name="tab-btn" type="radio" value="">
+        <input id="tab-btn-1" name="tab-btn" type="radio" value="">
         <label for="tab-btn-1">Товары</label>
         <input id="tab-btn-2" name="tab-btn" type="radio" value="">
         <label for="tab-btn-2">Блог</label>
         <input id="tab-btn-3" name="tab-btn" type="radio" value="">
-        <label for="tab-btn-3">Заказы</label>
+        <label for="tab-btn-3" onclick="fetchOrders()">Заказы</label>
         <div class="tab-content" id="content-1">
             <section class="products__editor">
                 <div class="hint-block">
@@ -282,6 +282,7 @@
 
 <script src="/web/static/notify/simple-notify.min.js"></script>
 <script src="/web/static/js/admin.js"></script>
+<script src="/web/static/js/app.js"></script>
 <script src="/web/static/js/utils.js"></script>
 
 <script>

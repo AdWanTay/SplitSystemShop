@@ -14,11 +14,29 @@ document.addEventListener('DOMContentLoaded', function () {
             reader.readAsDataURL(file);
         }
     });
+
+    const defaultTabId = "tab-btn-1";
+    const savedTabId = localStorage.getItem("activeTabId");
+    const tabIdToActivate = savedTabId || defaultTabId;
+
+    const tabInput = document.getElementById(tabIdToActivate);
+    if (tabInput) {
+        tabInput.checked = true;
+    }
+
+    document.querySelectorAll('input[name="tab-btn"]').forEach(input => {
+        input.addEventListener("change", () => {
+            if (input.checked) {
+                localStorage.setItem("activeTabId", input.id);
+            }
+        });
+    });
 });
 
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('openChatBtn').classList.add('hidden');
+    fetchOrders();
 
     const tableBody = document.querySelector('#products-table tbody');
     const searchBtn = document.getElementById('search-btn');
@@ -416,7 +434,97 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         deleteProducts(ids);
     });
+
 });
+
+function fetchOrders() {
+    fetch("/api/order", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.querySelector("#orders-table tbody");
+            tbody.innerHTML = ""; // очистить перед вставкой
+
+            data.data.forEach(order => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${order.id}</td>
+                    <td>${formatDate(order.created_at)}</td>
+                    <td>${order.user.last_name + " " + order.user.first_name + " " + order.user.patronymic || "Неизвестно"}</td>
+                    <td>${order.user?.email + " | +7" + order.user?.phone_number || "—"}</td>
+                    <td>${renderSplitSystems(order.split_systems)}</td>
+                    <td>${formatPrice(order.total_price) || 0}</td>
+                `;
+
+                const statusCell = document.createElement("td");
+                const select = document.createElement("select");
+                ["в обработке", "принят", "завершен"].forEach(status => {
+                    const option = document.createElement("option");
+                    option.value = status;
+                    option.textContent = status;
+                    if (order.status === status) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+
+                select.addEventListener("change", () => {
+                    updateOrderStatus(order.id, select.value);
+                });
+
+                statusCell.appendChild(select);
+                row.appendChild(statusCell);
+                tbody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error("Ошибка загрузки заказов:", error);
+        });
+}
+
+function renderSplitSystems(splitSystems) {
+    if (!Array.isArray(splitSystems) || splitSystems.length === 0) {
+        return "—";
+    }
+    return splitSystems.map(system => {
+        return `<li><a href="/products/${system.id}" class="split-link" target="_blank">${system.title}</a></li>`;
+    }).join("");
+}
+
+function updateOrderStatus(orderId, newStatus) {
+    fetch(`/api/order/${orderId}?status=${encodeURIComponent(newStatus)}`, {
+        method: "PATCH"
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Ошибка обновления статуса");
+            }
+            return response.json();
+        })
+        .then(data => {
+            showNotify("Статус обновлён", data.message);
+        })
+        .catch(error => {
+            showErr("Ошибка при обновлении статуса:", error);
+        });
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleString("ru-RU", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
 
 document.querySelectorAll('.input-file input[type="file"]').forEach(function (input) {
     input.addEventListener('change', function () {
