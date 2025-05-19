@@ -37,6 +37,9 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Delete("/api/cart/:id", middlewares.RequireAuth(cfg, false), handlers.DeleteCartItem(ctx.CartService))
 	app.Post("/api/cart", middlewares.RequireAuth(cfg, false), handlers.AddToCart(ctx.CartService))
 
+	app.Get("/api/order", middlewares.RequireAuth(cfg, false), handlers.CreateOrder(cfg, ctx))
+	app.Patch("/api/order/:id", middlewares.RequireAuth(cfg, false), handlers.UpdateOrderStatus(cfg, ctx))
+
 	app.Post("/api/review", middlewares.RequireAuth(cfg, false), handlers.CreateReview(ctx))
 
 	app.Get("/api/articles/:id", middlewares.RequireAuth(cfg, false), handlers.GetArticle(ctx.ArticleService))
@@ -52,7 +55,6 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Get("/", handlers.IndexPage(cfg))
 	app.Get("/admin", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.AdminPage(cfg, ctx))
 
-	// TODO СДЕЛАТЬ ЭТОТ АПИ ЗАПРОС
 	app.Get("/articles/:id", handlers.ArticlePage(cfg, ctx))
 
 	app.Get("/cart", middlewares.RequireAuth(cfg, false), handlers.CartPage(cfg, ctx.CartService))
