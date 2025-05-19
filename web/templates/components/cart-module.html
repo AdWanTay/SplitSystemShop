@@ -3,7 +3,12 @@
 <section id="cart" class="cart-section opened">
     <div style="display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; margin-bottom: 2rem;">
         <h2  id="cart-count">Корзина ({{ .response.Cart.Total}})</h2>
-        {{if eq .response.Favorites.Total 0}}
+        <button id="cart-toggle" >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 9L12 15L18 9" stroke="#212529" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        {{if eq .response.Cart.Total 0}}
         <button onclick="location.href='/catalog'" style="transform: translateY(.3rem)" class="accent-btn btn-standard">
             Перейти в каталог
         </button>
@@ -55,11 +60,16 @@
 <section id="favorites" class="favorites-section opened">
     <div style="display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-bottom: 2rem;">
         <h2 id="favorites-count">Избранное ({{.response.Favorites.Total}})</h2>
-        {{if not (eq .response.Favorites.Total 0)}}
+        <button id="favorites-toggle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 9L12 15L18 9" stroke="#212529" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+        </button>
         <button onclick="location.href='/catalog'" style="transform: translateY(.3rem)" class="accent-btn btn-standard">
             Перейти в каталог
         </button>
-        {{end}}
     </div>
 
     <div class="cart__container">

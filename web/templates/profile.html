@@ -19,6 +19,18 @@
 
 <main class="main">
 
+    <section class="form-section" style="margin: 2rem 8vw">
+        <h2>Заказы</h2>
+        <div class="hint-block">
+            <div class="hint-icon">ⓘ</div>
+            <div class="hint-text">
+                <strong>Ваш заказ в обработке:</strong> У вас есть активный заказ, его статус можно отслеживать в письмах на вашей почте. Если с вами пока не связались, вы можете перейти в <a href="/contacts">раздел "Контакты"</a> и связаться с нами самостоятельно.
+            </div>
+            <div class="hint-close" onclick="this.parentElement.style.display='none'">×</div>
+        </div>
+        <button class="primary-btn btn-standard" onclick="location.href='/contact'">Перейти в Контакты</button>
+    </section>
+
     {{template "cart-module" .}}
 
     <hr style="margin: 0 8vw">
@@ -65,6 +77,22 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('openChatBtn').classList.add('hidden');
+
+        document.getElementById("cart-toggle").addEventListener("click", () => {
+            const section = document.querySelector(".cart-section .cart__container");
+            const btn = document.getElementById("cart-toggle");
+
+            section.classList.toggle("opened");
+            btn.classList.toggle('active');
+        });
+
+        document.getElementById("favorites-toggle").addEventListener("click", () => {
+            const section = document.querySelector(".favorites-section .cart__container");
+            const btn = document.getElementById("favorites-toggle");
+
+            section.classList.toggle("opened");
+            btn.classList.toggle('active');
+        });
     });
 
     function changeCredentials(){
