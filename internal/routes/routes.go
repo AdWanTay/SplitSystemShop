@@ -58,7 +58,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 
 	app.Get("/articles/:id", handlers.ArticlePage(cfg, ctx))
 
-	app.Get("/cart", middlewares.RequireAuth(cfg, false), handlers.CartPage(cfg, ctx.CartService))
+	app.Get("/cart", middlewares.RequireAuth(cfg, false), handlers.CartPage(cfg, ctx))
 	app.Get("/catalog", handlers.CatalogPage(cfg, ctx))
 	app.Get("/contact", handlers.ContactPage(cfg))
 	app.Get("/products/:id", middlewares.RequireAuth(cfg, true), handlers.ProductPage(cfg, ctx))

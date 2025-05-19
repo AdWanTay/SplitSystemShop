@@ -113,7 +113,7 @@ func (s *UserService) GetCart(c context.Context, userID uint) ([]models.SplitSys
 	return s.repo.GetCart(c, userID)
 }
 
-func (s *UserService) GetOrders(c context.Context, userID uint) ([]models.SplitSystem, error) {
+func (s *UserService) GetOrders(c context.Context, userID uint) ([]models.Order, error) {
 	return s.repo.GetOrders(c, userID)
 }
 
@@ -151,4 +151,19 @@ func (s *UserService) IsInFavorites(c context.Context, userID, splitSystemID uin
 		}
 	}
 	return false
+}
+
+func (s *UserService) HasProcessingOrders(c context.Context, userID uint) bool {
+	orders, err := s.repo.GetOrders(c, userID)
+	if err != nil {
+		return false
+	}
+	hasProcessing := false
+	for _, order := range orders {
+		if order.Status == "В обработке" {
+			hasProcessing = true
+			break
+		}
+	}
+	return hasProcessing
 }

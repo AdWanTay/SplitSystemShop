@@ -14,7 +14,7 @@ type UserRepository interface {
 	Delete(c context.Context, userID uint) error
 	GetFavorites(c context.Context, userID uint) ([]models.SplitSystem, error)
 	GetCart(c context.Context, userID uint) ([]models.SplitSystem, error)
-	GetOrders(c context.Context, userID uint) ([]models.SplitSystem, error)
+	GetOrders(c context.Context, userID uint) ([]models.Order, error)
 }
 
 type userRepository struct {
@@ -80,11 +80,11 @@ func (r userRepository) GetCart(c context.Context, userID uint) ([]models.SplitS
 	return user.Cart, nil
 }
 
-func (r userRepository) GetOrders(c context.Context, userID uint) ([]models.SplitSystem, error) {
+func (r userRepository) GetOrders(c context.Context, userID uint) ([]models.Order, error) {
 	var user models.User
 	err := r.db.WithContext(c).Preload("Order").Preload("Order.SplitSystems").First(&user, userID).Error
 	if err != nil {
 		return nil, err
 	}
-	return user.Cart, nil
+	return user.Orders, nil
 }

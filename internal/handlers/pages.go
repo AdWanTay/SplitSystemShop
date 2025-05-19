@@ -5,7 +5,6 @@ import (
 	"SplitSystemShop/internal/context"
 	"SplitSystemShop/internal/dto"
 	"SplitSystemShop/internal/models"
-	"SplitSystemShop/internal/services"
 	"SplitSystemShop/internal/utils"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
@@ -109,14 +108,17 @@ func BlogPage(cfg *config.Config, appContext *context.AppContext) fiber.Handler 
 	}
 }
 
-func CartPage(cfg *config.Config, cartService *services.CartService) fiber.Handler {
+func CartPage(cfg *config.Config, appContext *context.AppContext) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		userID := c.Locals("userId").(uint)
-		response, err := cartService.LoadCartModuleData(c.Context(), userID)
+		response, err := appContext.CartService.LoadCartModuleData(c.Context(), userID)
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
-		return Render(c, "cart", fiber.Map{"response": response}, cfg)
+		return Render(c, "cart", fiber.Map{
+			"has_processing_orders": appContext.UserService.HasProcessingOrders(c.Context(), userID),
+			"response":              response,
+		}, cfg)
 	}
 }
 
@@ -157,9 +159,11 @@ func ProfilePage(cfg *config.Config, appContext *context.AppContext) fiber.Handl
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
+
 		return Render(c, "profile", fiber.Map{
-			"response": cartModuleData,
-			"userData": user,
+			"has_processing_orders": appContext.UserService.HasProcessingOrders(c.Context(), userID),
+			"response":              cartModuleData,
+			"userData":              user,
 		}, cfg)
 	}
 }
