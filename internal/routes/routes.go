@@ -64,5 +64,4 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Get("/products/:id", middlewares.RequireAuth(cfg, true), handlers.ProductPage(cfg, ctx))
 	app.Get("/profile", middlewares.RequireAuth(cfg, false), handlers.ProfilePage(cfg, ctx))
 	app.Get("/blog", middlewares.RequireAuth(cfg, true), handlers.BlogPage(cfg, ctx))
-
 }
