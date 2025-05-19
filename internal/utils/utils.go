@@ -2,6 +2,7 @@ package utils
 
 import (
 	"SplitSystemShop/internal/config"
+	"SplitSystemShop/internal/dto"
 	"SplitSystemShop/internal/models"
 	"encoding/base64"
 	"fmt"
@@ -154,6 +155,26 @@ func SendOrderStatusUpdateNotification(to string, order *models.Order, cfg *conf
 
 	body += `<p style="margin-top:20px; font-style: italic; color: #777;">Если вы не делали этот заказ — пожалуйста, свяжитесь с нашей службой поддержки.</p>`
 	m.SetBody("text/html", body)
+	d := gomail.NewDialer(cfg.SMTP.Host, cfg.SMTP.Port, cfg.SMTP.User, cfg.SMTP.Password)
+	return d.DialAndSend(m)
+}
+func SendFeedback(request dto.FeedbackRequest, cfg *config.Config) error {
+	m := gomail.NewMessage()
+	m.SetAddressHeader("From", cfg.SMTP.User, cfg.SMTP.From)
+	m.SetHeader("To", cfg.SMTP.User)
+	m.SetHeader("Subject", "📩 Новый вопрос от пользователя")
+
+	body := fmt.Sprintf(`
+		<h2>Поступил новый вопрос</h2>
+		<p><strong>Номер телефона:</strong> %s</p>
+		<p><strong>Сообщение:</strong></p>
+		<p style="white-space: pre-wrap;">%s</p>
+		<hr>
+		<p style="font-size: 12px; color: #888;">Это письмо сформировано автоматически</p>
+	`, request.PhoneNumber, request.Text)
+
+	m.SetBody("text/html", body)
+
 	d := gomail.NewDialer(cfg.SMTP.Host, cfg.SMTP.Port, cfg.SMTP.User, cfg.SMTP.Password)
 	return d.DialAndSend(m)
 }
