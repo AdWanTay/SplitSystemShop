@@ -137,3 +137,23 @@ func SendNewOrderNotification(to string, order *models.Order, cfg *config.Config
 	d := gomail.NewDialer(cfg.SMTP.Host, cfg.SMTP.Port, cfg.SMTP.User, cfg.SMTP.Password)
 	return d.DialAndSend(m)
 }
+
+func SendOrderStatusUpdateNotification(to string, order *models.Order, cfg *config.Config) error {
+	m := gomail.NewMessage()
+	m.SetAddressHeader("From", cfg.SMTP.User, cfg.SMTP.From)
+	m.SetHeader("To", to)
+	m.SetHeader("Subject", fmt.Sprintf("🔄 Обновление статуса заказа №%d", order.ID))
+
+	body := fmt.Sprintf(`
+		<h2 style="color:#333;">Статус вашего заказа №%d обновлён</h2>
+		<p><strong>Новый статус:</strong> %s</p>
+		<p><strong>Дата изменения:</strong> %s</p>
+		<p><strong>Сумма заказа:</strong> %.2f ₽</p>
+
+	`, order.ID, order.Status, time.Now().Format("02.01.2006 15:04"), float64(order.TotalPrice)/100)
+
+	body += `<p style="margin-top:20px; font-style: italic; color: #777;">Если вы не делали этот заказ — пожалуйста, свяжитесь с нашей службой поддержки.</p>`
+	m.SetBody("text/html", body)
+	d := gomail.NewDialer(cfg.SMTP.Host, cfg.SMTP.Port, cfg.SMTP.User, cfg.SMTP.Password)
+	return d.DialAndSend(m)
+}

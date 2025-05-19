@@ -8,7 +8,8 @@ import (
 
 type OrderRepository interface {
 	CreateOrderByUserCart(c context.Context, order *models.Order) (*models.Order, error)
-	UpdateOrderStatus(c context.Context, orderID uint, status string) error
+	UpdateOrderStatus(c context.Context, orderID uint, status string) (*models.Order, error)
+	GetAll(c context.Context) ([]models.Order, error)
 }
 type orderRepository struct {
 	db *gorm.DB
@@ -24,9 +25,28 @@ func (r orderRepository) CreateOrderByUserCart(c context.Context, order *models.
 	}
 	return order, nil
 }
-
-func (r orderRepository) UpdateOrderStatus(c context.Context, orderID uint, status string) error {
-	return r.db.WithContext(c).Model(&models.Order{}).
+func (r orderRepository) UpdateOrderStatus(c context.Context, orderID uint, status string) (*models.Order, error) {
+	// Сначала обновим статус
+	if err := r.db.WithContext(c).
+		Model(&models.Order{}).
 		Where("id = ?", orderID).
-		Update("status", status).Error
+		Update("status", status).Error; err != nil {
+		return nil, err
+	}
+
+	// Затем получим обновлённый заказ
+	var order models.Order
+	if err := r.db.WithContext(c).
+		Preload("User").
+		Preload("SplitSystems").
+		First(&order, orderID).Error; err != nil {
+		return nil, err
+	}
+	return &order, nil
+}
+
+func (r orderRepository) GetAll(c context.Context) ([]models.Order, error) {
+	var orders []models.Order
+	err := r.db.WithContext(c).Preload("User").Preload("SplitSystems").Find(&orders).Error
+	return orders, err
 }

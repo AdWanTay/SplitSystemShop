@@ -40,3 +40,11 @@ func (s *OrderService) CreateOrderByUserCart(c context.Context, userID uint) (*m
 
 	return s.repo.CreateOrderByUserCart(c, order)
 }
+
+func (s *OrderService) UpdateOrderStatus(c context.Context, orderID uint, status string) (*models.Order, error) {
+	return s.repo.UpdateOrderStatus(c, orderID, status)
+}
+
+func (s *OrderService) GetAll(c context.Context) ([]models.Order, error) {
+	return s.repo.GetAll(c)
+}

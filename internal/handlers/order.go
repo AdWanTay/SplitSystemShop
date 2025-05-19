@@ -31,10 +31,32 @@ func CreateOrder(cfg *config.Config, ctx *context.AppContext) fiber.Handler {
 
 func UpdateOrderStatus(cfg *config.Config, ctx *context.AppContext) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		status := c.Query("status")
 		orderID, err := strconv.Atoi(c.Params("id"))
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err})
 		}
 
+		order, err := ctx.OrderService.UpdateOrderStatus(c.Context(), uint(orderID), status)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
+		}
+
+		err = utils.SendOrderStatusUpdateNotification(order.User.Email, order, cfg)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
+		}
+
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "ок"})
+	}
+}
+
+func GetAll(ctx *context.AppContext) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		all, err := ctx.OrderService.GetAll(c.Context())
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
+		}
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{"data": all})
 	}
 }
