@@ -82,7 +82,7 @@ func (r userRepository) GetCart(c context.Context, userID uint) ([]models.SplitS
 
 func (r userRepository) GetOrders(c context.Context, userID uint) ([]models.Order, error) {
 	var user models.User
-	err := r.db.WithContext(c).Preload("Order").Preload("Order.SplitSystems").First(&user, userID).Error
+	err := r.db.WithContext(c).Preload("Orders").Preload("Orders.SplitSystems").First(&user, userID).Error
 	if err != nil {
 		return nil, err
 	}

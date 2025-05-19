@@ -110,3 +110,8 @@ type UpdateSplitSystemRequest struct {
 	ExternalDepth        int           `json:"external_depth,omitempty"`
 	ImageURL             *string       `json:"image_url,omitempty"`
 }
+
+type FeedbackRequest struct {
+	PhoneNumber string `json:"phone_number,omitempty"`
+	Text        string `json:"text,omitempty"`
+}

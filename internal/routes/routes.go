@@ -22,6 +22,8 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Get("/api/auth/logout", middlewares.RequireAuth(cfg, false), handlers.Logout())
 	app.Patch("/api/auth/profile", middlewares.RequireAuth(cfg, false), handlers.ChangeCredentials(ctx.UserService))
 	app.Patch("/api/auth/change-password", middlewares.RequireAuth(cfg, false), handlers.ChangePassword(ctx.UserService))
+	app.Patch("/api/auth/change-credentials", middlewares.RequireAuth(cfg, false), handlers.ChangeCredentials(ctx.UserService))
+	app.Delete("/api/auth/delete-account", middlewares.RequireAuth(cfg, false), handlers.DeleteAccount(ctx.UserService))
 
 	app.Get("/api/split-systems/:id", middlewares.RequireAuth(cfg, false), handlers.GetSplitSystem(ctx.SplitSystemService))
 	app.Get("/api/split-systems", middlewares.RequireAuth(cfg, true), handlers.GetAllSplitSystems(ctx.SplitSystemService, ctx.UserService))
@@ -49,8 +51,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, ctx *context.AppContext) {
 	app.Delete("/api/articles/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.DeleteArticle(ctx.ArticleService))
 	app.Patch("/api/articles/:id", middlewares.RequireAuth(cfg, false), middlewares.RequireAdmin(ctx.UserService), handlers.UpdateArticle(ctx.ArticleService))
 
-	app.Patch("/api/auth/change-credentials", middlewares.RequireAuth(cfg, false), handlers.ChangeCredentials(ctx.UserService))
-	app.Delete("/api/auth/delete-account", middlewares.RequireAuth(cfg, false), handlers.DeleteAccount(ctx.UserService))
+	app.Post("/api/feedback", handlers.SendFeedback(cfg))
 
 	//Роуты для фронта
 	app.Get("/", handlers.IndexPage(cfg))
