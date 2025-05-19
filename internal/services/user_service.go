@@ -113,6 +113,10 @@ func (s *UserService) GetCart(c context.Context, userID uint) ([]models.SplitSys
 	return s.repo.GetCart(c, userID)
 }
 
+func (s *UserService) GetOrders(c context.Context, userID uint) ([]models.SplitSystem, error) {
+	return s.repo.GetOrders(c, userID)
+}
+
 func (s *UserService) GetUserRole(c context.Context, userID uint) (string, error) {
 	user, err := s.repo.GetUserById(c, userID)
 	if err != nil {

@@ -14,10 +14,19 @@ type DatabaseConfig struct {
 	Name     string `envconfig:"DB_NAME"`
 }
 
+type SMTPConfig struct {
+	Host     string `envconfig:"SMTP_HOST"`
+	Port     int    `envconfig:"SMTP_PORT"`
+	User     string `envconfig:"SMTP_USER"`
+	Password string `envconfig:"SMTP_PASSWORD"`
+	From     string `envconfig:"SMTP_FROM"`
+}
+
 type Config struct {
 	JWTSecret string `envconfig:"JWT_SECRET" required:"true"`
 	Port      string `envconfig:"PORT" default:"8080"`
 	Database  DatabaseConfig
+	SMTP      SMTPConfig
 }
 
 func LoadConfig() (*Config, error) {

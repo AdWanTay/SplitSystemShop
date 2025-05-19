@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"github.com/golang-jwt/jwt/v4"
+	"gopkg.in/gomail.v2"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -104,4 +105,35 @@ func ReplaceBase64ImagesInHTML(html string) (string, error) {
 	}
 
 	return updatedHTML, nil
+}
+
+func SendNewOrderNotification(to string, order *models.Order, cfg *config.Config) error {
+	m := gomail.NewMessage()
+	m.SetAddressHeader("From", cfg.SMTP.User, cfg.SMTP.From)
+	m.SetHeader("To", to)
+	m.SetHeader("Subject", fmt.Sprintf("🛒 Новый заказ №%d", order.ID))
+
+	body := fmt.Sprintf(`
+		<h2 style="color:#333;">Вы получили новый заказ №%d</h2>
+		<p><strong>Клиент:</strong> %s</p>
+		<p><strong>Дата заказа:</strong> %s</p>
+		<p><strong>Общая сумма:</strong> %.2f ₽</p>
+		<p><strong>Статус заказа:</strong> %s</p>
+
+		<h3 style="margin-top:20px;">Состав заказа:</h3>
+		<ul style="padding-left:20px;">
+	`, order.ID, order.User.Email, order.CreatedAt.Format("02.01.2006 15:04"), float64(order.TotalPrice)/100, order.Status)
+
+	for _, item := range order.SplitSystems {
+		body += fmt.Sprintf("<li><strong>%s</strong> — %.2f ₽</li>", item.Title, float64(item.Price)/100)
+	}
+
+	body += `</ul>`
+
+	body += `<p style="margin-top:20px; font-style: italic; color: #777;">Это письмо сгенерировано автоматически. Пожалуйста, не отвечайте на него.</p>`
+
+	m.SetBody("text/html", body)
+
+	d := gomail.NewDialer(cfg.SMTP.Host, cfg.SMTP.Port, cfg.SMTP.User, cfg.SMTP.Password)
+	return d.DialAndSend(m)
 }
