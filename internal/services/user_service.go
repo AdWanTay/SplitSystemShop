@@ -160,7 +160,7 @@ func (s *UserService) HasProcessingOrders(c context.Context, userID uint) bool {
 	}
 	hasProcessing := false
 	for _, order := range orders {
-		if order.Status == "В обработке" {
+		if order.Status == "в обработке" || order.Status == "принят" {
 			hasProcessing = true
 			break
 		}

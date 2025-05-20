@@ -11,5 +11,5 @@ type Order struct {
 	SplitSystems []SplitSystem `gorm:"many2many:order_split_systems" json:"split_systems"`
 	CreatedAt    time.Time     `json:"created_at"`
 	TotalPrice   int           `json:"total_price"`
-	Status       string        `gorm:"default:'В обработке'" json:"status"`
+	Status       string        `gorm:"default:'в обработке'" json:"status"`
 }
