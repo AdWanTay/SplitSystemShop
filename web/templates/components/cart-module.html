@@ -1,275 +1,289 @@
 {{define "cart-module"}}
 
-<section id="cart" class="cart-section opened">
-    <div style="display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; margin-bottom: 2rem;">
-        <h2 id="cart-count">Корзина ({{ .response.Cart.Total}})</h2>
-        <button id="cart-toggle">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 9L12 15L18 9" stroke="#212529" stroke-width="2" stroke-linecap="round"
-                      stroke-linejoin="round"/>
-            </svg>
-        </button>
-        <button id="nearCartButton" {{if eq .response.Cart.Total 0}} onclick="location.href='/catalog'" {{else}}
-                onclick="openModal(modalConfigs.orderConfirm)" {{end}} style="transform: translateY(.3rem)"
-                class="accent-btn btn-standard">
-            {{if eq .response.Cart.Total 0}}
-            Перейти в каталог
-            {{else}}
-            Перейти к оформлению
-            {{end}}
-        </button>
-    </div>
-
-    <div class="cart__container">
-        <div class="products__grid cart">
-            {{if eq .response.Cart.Total 0}}
-            <div class="products-empty">
-                <h4>В корзине пока пусто</h4>
-                <p>Загляните в каталог — собрали там сплит-системы, которые могут вам подойти</p>
+    {{if .has_processing_orders}}
+        <section class="form-section" style="margin: 2rem 8vw">
+            <h2>Заказы</h2>
+            <div class="hint-block">
+                <div class="hint-icon">ⓘ</div>
+                <div class="hint-text">
+                    <strong>Ваш заказ в обработке:</strong> У вас есть активный заказ, его статус можно отслеживать в письмах на вашей почте. Если с вами пока не связались, вы можете перейти в <a href="/contacts">раздел "Контакты"</a> и связаться с нами самостоятельно.
+                </div>
+                <div class="hint-close" onclick="this.parentElement.style.display='none'">×</div>
             </div>
-            {{else}}
-            {{ range .response.Cart.Items }}
-            <div class="product-card" id="cart_{{.ID}}" onclick="location.href='/products/{{.ID}}/'">
-                <div class="product-thumb">
-                    <span class="product-price">{{formatPrice .Price}} ₽</span>
-                    {{ if .ImageURL }}
-                    <img src="/web/static/uploads/{{.ImageURL}}" class="product-img" alt="">
-                    {{else}}
-                    <img src="/web/static/img/primer.webp" class="product-img" alt="">
-                    {{end}}
+            <button class="primary-btn btn-standard" onclick="location.href='/contact'">Перейти в Контакты</button>
+        </section>
+    {{end}}
 
-                </div>
-                <div class="product-body">
-                    <p class="card-product-title">{{.Title}}</p>
-                    <div class="product-tags">
-                        <span>{{.Type.Name}}</span>
-                        <span>до {{.RecommendedArea}} м²</span>
-                        <span>{{.MinNoiseLevel}} дБ</span>
-                    </div>
-                </div>
-                {{if .InCart}}
-                <button class="add-to-cart active" onclick="removeFromCart({{.ID}}); event.stopPropagation();">Убрать
-                </button>
+    <section id="cart" class="cart-section opened">
+        <div style="display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; margin-bottom: 2rem;">
+            <h2 id="cart-count">Корзина ({{ .response.Cart.Total}})</h2>
+            <button id="cart-toggle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 9L12 15L18 9" stroke="#212529" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <button id="nearCartButton" {{if eq .response.Cart.Total 0}} onclick="location.href='/catalog'" {{else}}
+                    onclick="openModal(modalConfigs.orderConfirm)" {{end}} style="transform: translateY(.3rem)"
+                    class="accent-btn btn-standard">
+                {{if eq .response.Cart.Total 0}}
+                Перейти в каталог
+                {{else}}
+                Перейти к оформлению
                 {{end}}
-            </div>
-            {{end}}
-            {{end}}
-
+            </button>
         </div>
-    </div>
-</section>
 
-<hr style="margin: 0 8vw">
+        <div class="cart__container">
+            <div class="products__grid cart">
+                {{if eq .response.Cart.Total 0}}
+                <div class="products-empty">
+                    <h4>В корзине пока пусто</h4>
+                    <p>Загляните в каталог — собрали там сплит-системы, которые могут вам подойти</p>
+                </div>
+                {{else}}
+                {{ range .response.Cart.Items }}
+                <div class="product-card" id="cart_{{.ID}}" onclick="location.href='/products/{{.ID}}/'">
+                    <div class="product-thumb">
+                        <span class="product-price">{{formatPrice .Price}} ₽</span>
+                        {{ if .ImageURL }}
+                        <img src="/web/static/uploads/{{.ImageURL}}" class="product-img" alt="">
+                        {{else}}
+                        <img src="/web/static/img/primer.webp" class="product-img" alt="">
+                        {{end}}
 
-<section id="favorites" class="favorites-section opened">
-    <div style="display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-bottom: 2rem;">
-        <h2 id="favorites-count">Избранное ({{.response.Favorites.Total}})</h2>
-        <button id="favorites-toggle">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 9L12 15L18 9" stroke="#212529" stroke-width="2" stroke-linecap="round"
-                      stroke-linejoin="round"/>
-            </svg>
-        </button>
-        <button onclick="location.href='/catalog'" style="transform: translateY(.3rem)" class="accent-btn btn-standard">
-            Перейти в каталог
-        </button>
-    </div>
-
-    <div class="cart__container">
-        <div class="products__grid cart">
-            {{if eq .response.Favorites.Total 0}}
-            <div class="products-empty">
-                <h4>В избранном пока пусто</h4>
-                <p>Добавляйте товары в избранное, чтобы не потерять их</p>
-            </div>
-
-            {{else}}
-            {{ range .response.Favorites.Items }}
-            <div class="product-card" id="favorites_{{.ID}}" onclick="location.href='/products/{{.ID}}/'">
-                <div class="product-thumb">
-                    <button class="add-to-favorites active"
-                            onclick="removeFromFavorites({{.ID}}); event.stopPropagation();">♡
+                    </div>
+                    <div class="product-body">
+                        <p class="card-product-title">{{.Title}}</p>
+                        <div class="product-tags">
+                            <span>{{.Type.Name}}</span>
+                            <span>до {{.RecommendedArea}} м²</span>
+                            <span>{{.MinNoiseLevel}} дБ</span>
+                        </div>
+                    </div>
+                    {{if .InCart}}
+                    <button class="add-to-cart active" onclick="removeFromCart({{.ID}}); event.stopPropagation();">Убрать
                     </button>
-
-                    <span class="product-price">{{ formatPrice .Price}} ₽</span>
-                    {{ if .ImageURL }}
-                    <img src="/web/static/uploads/{{.ImageURL}}" class="product-img" alt="">
-                    {{else}}
-                    <img src="/web/static/img/primer.webp" class="product-img" alt="">
                     {{end}}
                 </div>
-                <div class="product-body">
-                    <p class="card-product-title">{{.Title}}</p>
-                    <div class="product-tags">
-                        <span>{{.Type.Name}}</span>
-                        <span>до {{.RecommendedArea}} м²</span>
-                        <span>{{.MinNoiseLevel}} дБ</span>
-                    </div>
+                {{end}}
+                {{end}}
+
+            </div>
+        </div>
+    </section>
+
+    <hr style="margin: 0 8vw">
+
+    <section id="favorites" class="favorites-section opened">
+        <div style="display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-bottom: 2rem;">
+            <h2 id="favorites-count">Избранное ({{.response.Favorites.Total}})</h2>
+            <button id="favorites-toggle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 9L12 15L18 9" stroke="#212529" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <button onclick="location.href='/catalog'" style="transform: translateY(.3rem)" class="accent-btn btn-standard">
+                Перейти в каталог
+            </button>
+        </div>
+
+        <div class="cart__container">
+            <div class="products__grid cart">
+                {{if eq .response.Favorites.Total 0}}
+                <div class="products-empty">
+                    <h4>В избранном пока пусто</h4>
+                    <p>Добавляйте товары в избранное, чтобы не потерять их</p>
                 </div>
-                {{if not .InCart}}
-                <button class="add-to-cart" onclick="addToCart(this, {{.ID}}); event.stopPropagation();">В корзину
-                </button>
+
+                {{else}}
+                {{ range .response.Favorites.Items }}
+                <div class="product-card" id="favorites_{{.ID}}" onclick="location.href='/products/{{.ID}}/'">
+                    <div class="product-thumb">
+                        <button class="add-to-favorites active"
+                                onclick="removeFromFavorites({{.ID}}); event.stopPropagation();">♡
+                        </button>
+
+                        <span class="product-price">{{ formatPrice .Price}} ₽</span>
+                        {{ if .ImageURL }}
+                        <img src="/web/static/uploads/{{.ImageURL}}" class="product-img" alt="">
+                        {{else}}
+                        <img src="/web/static/img/primer.webp" class="product-img" alt="">
+                        {{end}}
+                    </div>
+                    <div class="product-body">
+                        <p class="card-product-title">{{.Title}}</p>
+                        <div class="product-tags">
+                            <span>{{.Type.Name}}</span>
+                            <span>до {{.RecommendedArea}} м²</span>
+                            <span>{{.MinNoiseLevel}} дБ</span>
+                        </div>
+                    </div>
+                    {{if not .InCart}}
+                    <button class="add-to-cart" onclick="addToCart(this, {{.ID}}); event.stopPropagation();">В корзину
+                    </button>
+                    {{end}}
+                </div>
+                {{end}}
                 {{end}}
             </div>
-            {{end}}
-            {{end}}
         </div>
-    </div>
-</section>
+    </section>
 
-<script>
-    function addToCart(thisBtn, id) {
-        fetch("/api/cart", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({split_system_id: id})
-        })
-            .then(response => {
-                if (!response.ok) throw new Error("Ошибка при добавлении");
-                return response.json(); // если сервер возвращает JSON
+    <script>
+        function addToCart(thisBtn, id) {
+            fetch("/api/cart", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({split_system_id: id})
             })
-            .then(data => {
-                const card = document.getElementById(`favorites_${id}`);
-                if (card) {
-                    // Клонируем карточку
-                    const cloned = card.cloneNode(true);
-                    cloned.id = `cart_${id}`;
-                    const thumb = cloned.querySelector(".product-thumb");
-                    if (thumb) {
-                        const favBtn = thumb.querySelector(".add-to-favorites");
-                        if (favBtn) thumb.removeChild(favBtn);
+                .then(response => {
+                    if (!response.ok) throw new Error("Ошибка при добавлении");
+                    return response.json(); // если сервер возвращает JSON
+                })
+                .then(data => {
+                    const card = document.getElementById(`favorites_${id}`);
+                    if (card) {
+                        // Клонируем карточку
+                        const cloned = card.cloneNode(true);
+                        cloned.id = `cart_${id}`;
+                        const thumb = cloned.querySelector(".product-thumb");
+                        if (thumb) {
+                            const favBtn = thumb.querySelector(".add-to-favorites");
+                            if (favBtn) thumb.removeChild(favBtn);
+                        }
+                        // Меняем кнопку на "Убрать"
+                        const button = cloned.querySelector('.add-to-cart');
+                        button.textContent = "Убрать";
+                        button.classList.add('active');
+                        button.setAttribute('onclick', `removeFromCart(${id}); event.stopPropagation();`);
+                        thisBtn.remove()
+                        // Добавляем в корзину
+                        const cartGrid = document.querySelector('#cart .products__grid');
+                        cartGrid.appendChild(cloned);
+
+                        const emptyBlock = document.querySelector(".cart .products-empty");
+                        if (emptyBlock) emptyBlock.remove();
+                        if (cartGrid.children.length !== 0) {
+                            const btn = document.getElementById("nearCartButton");
+                            btn.setAttribute('onclick', `openModal(modalConfigs.orderConfirm)`);
+                            btn.textContent = "Перейти к оформлению";
+                        }
+
+                        // Показываем уведомление
+                        updateCount('cart-count', 1);
+
+                        showToast("", "Товар добавлен в корзину");
                     }
-                    // Меняем кнопку на "Убрать"
-                    const button = cloned.querySelector('.add-to-cart');
-                    button.textContent = "Убрать";
-                    button.classList.add('active');
-                    button.setAttribute('onclick', `removeFromCart(${id}); event.stopPropagation();`);
-                    thisBtn.remove()
-                    // Добавляем в корзину
-                    const cartGrid = document.querySelector('#cart .products__grid');
-                    cartGrid.appendChild(cloned);
-
-                    const emptyBlock = document.querySelector(".cart .products-empty");
-                    if (emptyBlock) emptyBlock.remove();
-                    if (cartGrid.children.length !== 0) {
-                        const btn = document.getElementById("nearCartButton");
-                        btn.setAttribute('onclick', `openModal(modalConfigs.orderConfirm)`);
-                        btn.textContent = "Перейти к оформлению";
-                    }
-
-                    // Показываем уведомление
-                    updateCount('cart-count', 1);
-
-                    showToast("", "Товар добавлен в корзину");
-                }
-            })
-            .catch(err => {
-                alert("Ошибка: " + err.message);
-            });
-    }
-
-    function removeFromCart(id) {
-        fetch(`/api/cart/${id}`, {
-            method: "DELETE"
-        })
-            .then(response => {
-                if (!response.ok) throw new Error("Ошибка при удалении из корзины");
-                return response.json();
-            })
-            .then(data => {
-                const cartCard = document.getElementById(`cart_${id}`);
-                if (cartCard) {
-                    cartCard.remove();
-                }
-                updateCount('cart-count', -1);
-
-                const cartGrid = document.querySelector('#cart .products__grid');
-
-                // Если больше нет товаров — показать "пусто"
-                if (cartGrid.children.length === 0) {
-                    const empty = document.createElement('div');
-                    empty.className = "products-empty";
-                    empty.innerHTML = `
-                        <h4>В корзине пока пусто</h4>
-                        <p>Загляните в каталог — собрали там сплит-системы, которые могут вам подойти</p>
-                    `;
-                    cartGrid.appendChild(empty);
-
-                    const btn = document.getElementById("nearCartButton");
-                    btn.onclick = () => location.href='/catalog'
-                    btn.textContent = "Перейти в каталог";
-                }
-
-                // Если есть в избранном — добавить туда кнопку "В корзину"
-                const favCard = document.getElementById(`favorites_${id}`);
-                if (favCard) {
-                    // Проверим, есть ли уже кнопка
-                    let btn = favCard.querySelector('.add-to-cart');
-                    if (!btn) {
-                        // Создаём новую кнопку
-                        btn = document.createElement('button');
-                        btn.className = 'add-to-cart';
-                        btn.textContent = 'В корзину';
-                        btn.setAttribute('onclick', `addToCart(this, ${id}); event.stopPropagation();`);
-
-                        favCard.appendChild(btn);
-                    }
-                }
-
-                showToast("", "Товар удален из корзины");
-            })
-            .catch(err => {
-                alert("Ошибка: " + err.message);
-            });
-    }
-
-
-    function removeFromFavorites(id) {
-        fetch(`/api/favorites/${id}`, {
-            method: "DELETE"
-        })
-            .then(response => {
-                if (!response.ok) throw new Error("Ошибка при удалении из избранного");
-                return response.json();
-            })
-            .then(data => {
-                updateCount('favorites-count', -1);
-
-                const fovGrid = document.querySelector('#favorites .products__grid');
-                document.getElementById(`favorites_${id}`).remove()
-
-                // Если больше нет товаров — показать "пусто"
-                if (fovGrid.children.length === 0) {
-                    const empty = document.createElement('div');
-                    empty.className = "products-empty";
-                    empty.innerHTML = `
-                        <h4>В избранном пока пусто</h4>
-                        <p>Добавляйте товары в избранное, чтобы не потерять их</p>
-                    `;
-                    fovGrid.appendChild(empty);
-                }
-
-                showToast("", "Товар удален из избранного");
-            })
-            .catch(err => {
-                alert("Ошибка: " + err.message);
-            });
-    }
-
-    function updateCount(id, delta) {
-        const el = document.getElementById(id);
-        if (!el) return;
-
-        const match = el.textContent.match(/\d+/);
-        if (match) {
-            const current = parseInt(match[0]);
-            const updated = current + delta;
-            el.textContent = el.textContent.replace(/\(\d+\)/, `(${updated})`);
+                })
+                .catch(err => {
+                    alert("Ошибка: " + err.message);
+                });
         }
-    }
 
-</script>
+        function removeFromCart(id) {
+            fetch(`/api/cart/${id}`, {
+                method: "DELETE"
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error("Ошибка при удалении из корзины");
+                    return response.json();
+                })
+                .then(data => {
+                    const cartCard = document.getElementById(`cart_${id}`);
+                    if (cartCard) {
+                        cartCard.remove();
+                    }
+                    updateCount('cart-count', -1);
+
+                    const cartGrid = document.querySelector('#cart .products__grid');
+
+                    // Если больше нет товаров — показать "пусто"
+                    if (cartGrid.children.length === 0) {
+                        const empty = document.createElement('div');
+                        empty.className = "products-empty";
+                        empty.innerHTML = `
+                            <h4>В корзине пока пусто</h4>
+                            <p>Загляните в каталог — собрали там сплит-системы, которые могут вам подойти</p>
+                        `;
+                        cartGrid.appendChild(empty);
+
+                        const btn = document.getElementById("nearCartButton");
+                        btn.onclick = () => location.href='/catalog'
+                        btn.textContent = "Перейти в каталог";
+                    }
+
+                    // Если есть в избранном — добавить туда кнопку "В корзину"
+                    const favCard = document.getElementById(`favorites_${id}`);
+                    if (favCard) {
+                        // Проверим, есть ли уже кнопка
+                        let btn = favCard.querySelector('.add-to-cart');
+                        if (!btn) {
+                            // Создаём новую кнопку
+                            btn = document.createElement('button');
+                            btn.className = 'add-to-cart';
+                            btn.textContent = 'В корзину';
+                            btn.setAttribute('onclick', `addToCart(this, ${id}); event.stopPropagation();`);
+
+                            favCard.appendChild(btn);
+                        }
+                    }
+
+                    showToast("", "Товар удален из корзины");
+                })
+                .catch(err => {
+                    alert("Ошибка: " + err.message);
+                });
+        }
+
+
+        function removeFromFavorites(id) {
+            fetch(`/api/favorites/${id}`, {
+                method: "DELETE"
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error("Ошибка при удалении из избранного");
+                    return response.json();
+                })
+                .then(data => {
+                    updateCount('favorites-count', -1);
+
+                    const fovGrid = document.querySelector('#favorites .products__grid');
+                    document.getElementById(`favorites_${id}`).remove()
+
+                    // Если больше нет товаров — показать "пусто"
+                    if (fovGrid.children.length === 0) {
+                        const empty = document.createElement('div');
+                        empty.className = "products-empty";
+                        empty.innerHTML = `
+                            <h4>В избранном пока пусто</h4>
+                            <p>Добавляйте товары в избранное, чтобы не потерять их</p>
+                        `;
+                        fovGrid.appendChild(empty);
+                    }
+
+                    showToast("", "Товар удален из избранного");
+                })
+                .catch(err => {
+                    alert("Ошибка: " + err.message);
+                });
+        }
+
+        function updateCount(id, delta) {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            const match = el.textContent.match(/\d+/);
+            if (match) {
+                const current = parseInt(match[0]);
+                const updated = current + delta;
+                el.textContent = el.textContent.replace(/\(\d+\)/, `(${updated})`);
+            }
+        }
+
+    </script>
 {{end}}
