@@ -2,19 +2,22 @@
 
 <section id="cart" class="cart-section opened">
     <div style="display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; margin-bottom: 2rem;">
-        <h2  id="cart-count">Корзина ({{ .response.Cart.Total}})</h2>
-        <button id="cart-toggle" >
+        <h2 id="cart-count">Корзина ({{ .response.Cart.Total}})</h2>
+        <button id="cart-toggle">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 9L12 15L18 9" stroke="#212529" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 9L12 15L18 9" stroke="#212529" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round"/>
             </svg>
         </button>
-        {{if eq .response.Cart.Total 0}}
-        <button onclick="location.href='/catalog'" style="transform: translateY(.3rem)" class="accent-btn btn-standard">
+        <button id="nearCartButton" {{if eq .response.Cart.Total 0}} onclick="location.href='/catalog'" {{else}}
+                onclick="openModal(modalConfigs.orderConfirm)" {{end}} style="transform: translateY(.3rem)"
+                class="accent-btn btn-standard">
+            {{if eq .response.Cart.Total 0}}
             Перейти в каталог
+            {{else}}
+            Перейти к оформлению
+            {{end}}
         </button>
-        {{else}}
-        <button onclick="openModal(modalConfigs.orderConfirm)" style="transform: translateY(.3rem)" class="accent-btn btn-standard">Перейти к оформлению</button>
-        {{end}}
     </div>
 
     <div class="cart__container">
@@ -45,7 +48,8 @@
                     </div>
                 </div>
                 {{if .InCart}}
-                <button class="add-to-cart active" onclick="removeFromCart({{.ID}}); event.stopPropagation();">Убрать</button>
+                <button class="add-to-cart active" onclick="removeFromCart({{.ID}}); event.stopPropagation();">Убрать
+                </button>
                 {{end}}
             </div>
             {{end}}
@@ -84,7 +88,9 @@
             {{ range .response.Favorites.Items }}
             <div class="product-card" id="favorites_{{.ID}}" onclick="location.href='/products/{{.ID}}/'">
                 <div class="product-thumb">
-                    <button class="add-to-favorites active" onclick="removeFromFavorites({{.ID}}); event.stopPropagation();">♡</button>
+                    <button class="add-to-favorites active"
+                            onclick="removeFromFavorites({{.ID}}); event.stopPropagation();">♡
+                    </button>
 
                     <span class="product-price">{{ formatPrice .Price}} ₽</span>
                     {{ if .ImageURL }}
@@ -102,7 +108,8 @@
                     </div>
                 </div>
                 {{if not .InCart}}
-                <button class="add-to-cart" onclick="addToCart(this, {{.ID}}); event.stopPropagation();">В корзину</button>
+                <button class="add-to-cart" onclick="addToCart(this, {{.ID}}); event.stopPropagation();">В корзину
+                </button>
                 {{end}}
             </div>
             {{end}}
@@ -147,6 +154,11 @@
 
                     const emptyBlock = document.querySelector(".cart .products-empty");
                     if (emptyBlock) emptyBlock.remove();
+                    if (cartGrid.children.length !== 0) {
+                        const btn = document.getElementById("nearCartButton");
+                        btn.setAttribute('onclick', `openModal(modalConfigs.orderConfirm)`);
+                        btn.textContent = "Перейти к оформлению";
+                    }
 
                     // Показываем уведомление
                     updateCount('cart-count', 1);
@@ -168,7 +180,6 @@
                 return response.json();
             })
             .then(data => {
-                // Удалить карточку из корзины
                 const cartCard = document.getElementById(`cart_${id}`);
                 if (cartCard) {
                     cartCard.remove();
@@ -186,6 +197,10 @@
                         <p>Загляните в каталог — собрали там сплит-системы, которые могут вам подойти</p>
                     `;
                     cartGrid.appendChild(empty);
+
+                    const btn = document.getElementById("nearCartButton");
+                    btn.onclick = () => location.href='/catalog'
+                    btn.textContent = "Перейти в каталог";
                 }
 
                 // Если есть в избранном — добавить туда кнопку "В корзину"
