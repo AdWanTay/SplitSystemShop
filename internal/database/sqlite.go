@@ -4,10 +4,12 @@ import (
 	"SplitSystemShop/internal/config"
 	"SplitSystemShop/internal/models"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"io/ioutil"
 	"log"
 	"os"
 	"sync"
@@ -51,7 +53,6 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 			&models.Article{},
 			&models.Order{},
 		)
-		err = populateDB(db)
 		addTriggers(db)
 		if err = populateDB(db); err != nil {
 			log.Printf("failed to populate DB: %v", err)
@@ -161,9 +162,51 @@ func populateDB(db *gorm.DB) error {
 
 	if err := SeedSplitSystemsFromJSON(db, "internal/database/data/systems_seed.json"); err != nil {
 		log.Fatal(err)
+		return err
+	}
+	if err := LoadArticlesIfEmpty(db, "internal/database/data/articles_seed.json"); err != nil {
+		log.Fatal(err)
+		return err
+	}
+	fmt.Println("Database seeded successfully")
+	return nil
+}
+func LoadArticlesIfEmpty(db *gorm.DB, filePath string) error {
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Printf("Не удалось открыть JSON-файл: %v\n", err)
+		return err
+	}
+	defer file.Close()
+
+	data, err := ioutil.ReadAll(file)
+	if err != nil {
+		log.Printf("Не удалось прочитать JSON-файл: %v\n", err)
+		return err
 	}
 
-	fmt.Println("Database seeded successfully")
+	var articles []models.Article
+	if err := json.Unmarshal(data, &articles); err != nil {
+		log.Printf("Ошибка при парсинге JSON: %v\n", err)
+		return err
+	}
+
+	var added int
+	for _, article := range articles {
+		var existing models.Article
+		err := db.Where("title = ? AND description = ?", article.Title, article.Description).First(&existing).Error
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			if err := db.Create(&article).Error; err != nil {
+				log.Printf("Ошибка при добавлении статьи '%s': %v", article.Title, err)
+				continue
+			}
+			added++
+		} else if err != nil {
+			log.Printf("Ошибка при проверке существования статьи: %v", err)
+		}
+	}
+
+	log.Printf("Добавлено новых статей: %d\n", added)
 	return nil
 }
 
