@@ -448,7 +448,7 @@ function openModal(config) {
                 <div class="modal-description">${config.description}</div>
                 <div class="modal-actions">
                     <button id="mainBtn" class="accent-btn btn-standard">${config.mainBtnText}</button>
-                    <button class="primary-btn btn-standard" onclick="this.closest('.modal').remove()">Отмена</button>
+                    <button class="primary-btn btn-standard" style="display: ${config.cancelBtn}" onclick="this.closest('.modal').remove()">Отмена</button>
                 </div>
             </div>
         </div>
@@ -466,6 +466,7 @@ const modalConfigs = {
         `,
         description: "ⓘ Вы уверены, что хотите подтвердить заказ?",
         mainBtnText: "Подтвердить",
+        cancelBtn: 'block',
         mainBtnAction: async function () {
             try {
                 const response = await fetch('/api/order', {
@@ -490,7 +491,8 @@ const modalConfigs = {
             <p>Отслеживать статус заказа вы можете по электронной почте, указанной в вашем аккаунте. Также вы всегда можете связаться с нами напрямую — мы с радостью ответим на любые вопросы.</p>
         `,
         description: "ⓘ В ближайшее время с вами свяжется наш менеджер для уточнения деталей.",
-        mainBtnText: "Связаться",
+        mainBtnText: "Готово",
+        cancelBtn: 'none',
         mainBtnAction: async function () {
             try {
                 showNotify("Успех", "Заявка успешно подана");
@@ -521,6 +523,8 @@ const modalConfigs = {
         `,
         description: "ⓘ Рабочие дни: Пн-Пт с 10:00 до 19:00, Сб-Вс Выходной",
         mainBtnText: "Оставить заявку",
+        cancelBtn: 'block',
+
         mainBtnAction: async function () {
             location.href = '/#contact-us';
             this.closest('.modal').remove();
@@ -536,6 +540,8 @@ const modalConfigs = {
         `,
         description: "ⓘ Пароль должен содержать не менее 8 символов",
         mainBtnText: "Сохранить",
+        cancelBtn: 'block',
+
         mainBtnAction: async function () {
             const newPassword = document.getElementById('newPassword').value;
             const repeatNewPassword = document.getElementById('repeatNewPassword').value;
@@ -586,6 +592,8 @@ const modalConfigs = {
         `,
         description: "ⓘ Это действие необратимо. Все ваши данные будут удалены.",
         mainBtnText: "Удалить аккаунт",
+        cancelBtn: 'block',
+
         mainBtnAction: async function () {
             const confirmation = document.getElementById('deleteConfirmation').value;
 
