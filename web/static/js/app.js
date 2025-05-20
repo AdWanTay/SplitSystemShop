@@ -26,7 +26,6 @@ document.querySelector('.overlay').addEventListener('click', function () {
 });
 
 
-
 // ################################################################
 //                         AUTH & REGISTER
 // ################################################################
@@ -621,3 +620,39 @@ const modalConfigs = {
         }
     },
 };
+
+function sendFeedback() {
+    const phone = document.getElementById('contact-phone').value.trim();
+    const message = document.getElementById('contact-text').value.trim();
+
+    if (!phone || !message) {
+        showErr('Пожалуйста, заполните оба поля.');
+        return;
+    }
+
+    fetch('/api/feedback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            phone_number: phone,
+            text: message
+        })
+    })
+        .then(async res => {
+            const data = await res.json();
+            if (!res.ok) {
+                showErr(data.error || "Ошибка при отправке сообщения.");
+                return;
+            }
+
+            showNotify("Успех", "Сообщение успешно отправлено!");
+            document.getElementById('contact-phone').value = '';
+            document.getElementById('contact-text').value = '';
+        })
+        .catch(err => {
+            console.error("Ошибка:", err);
+            showErr("Ошибка при отправке запроса.");
+        });
+}

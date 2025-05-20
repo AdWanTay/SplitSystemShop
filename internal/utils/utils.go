@@ -158,6 +158,7 @@ func SendOrderStatusUpdateNotification(to string, order *models.Order, cfg *conf
 	d := gomail.NewDialer(cfg.SMTP.Host, cfg.SMTP.Port, cfg.SMTP.User, cfg.SMTP.Password)
 	return d.DialAndSend(m)
 }
+
 func SendFeedback(request dto.FeedbackRequest, cfg *config.Config) error {
 	m := gomail.NewMessage()
 	m.SetAddressHeader("From", cfg.SMTP.User, cfg.SMTP.From)

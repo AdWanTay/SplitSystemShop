@@ -37,6 +37,9 @@ func (s *OrderService) CreateOrderByUserCart(c context.Context, userID uint) (*m
 		CreatedAt:    time.Time{},
 		TotalPrice:   totalPrice,
 	}
+	if err = s.userRepo.ClearCart(c, userID); err != nil {
+		return nil, fmt.Errorf("ошибка при очистке корзины")
+	}
 
 	return s.repo.CreateOrderByUserCart(c, order)
 }

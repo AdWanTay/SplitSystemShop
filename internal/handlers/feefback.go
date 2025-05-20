@@ -14,10 +14,13 @@ func SendFeedback(cfg *config.Config) fiber.Handler {
 		if err := c.BodyParser(&input); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 		}
-		err := utils.SendFeedback(input, cfg)
-		if err != nil {
-			log.Println("Ошибка отправки письма:", err)
-		}
+		go func() {
+			err := utils.SendFeedback(input, cfg)
+			if err != nil {
+				log.Println("Ошибка отправки письма:", err)
+			}
+		}()
+
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"message": "Сообщение отправлено",
 		})

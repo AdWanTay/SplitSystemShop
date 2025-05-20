@@ -15,6 +15,7 @@ type UserRepository interface {
 	GetFavorites(c context.Context, userID uint) ([]models.SplitSystem, error)
 	GetCart(c context.Context, userID uint) ([]models.SplitSystem, error)
 	GetOrders(c context.Context, userID uint) ([]models.Order, error)
+	ClearCart(c context.Context, userID uint) error
 }
 
 type userRepository struct {
@@ -60,6 +61,11 @@ func (r userRepository) Delete(c context.Context, userID uint) error {
 		return err
 	}
 	return r.db.WithContext(c).Delete(models.User{}, userID).Error
+}
+func (r userRepository) ClearCart(c context.Context, userID uint) error {
+	return r.db.WithContext(c).Exec(
+		"DELETE FROM user_cart WHERE user_id = ?",
+		userID).Error
 }
 
 func (r userRepository) GetFavorites(c context.Context, userID uint) ([]models.SplitSystem, error) {

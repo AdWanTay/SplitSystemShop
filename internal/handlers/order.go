@@ -5,6 +5,7 @@ import (
 	"SplitSystemShop/internal/context"
 	"SplitSystemShop/internal/utils"
 	"github.com/gofiber/fiber/v2"
+	"log"
 	"strconv"
 )
 
@@ -19,11 +20,12 @@ func CreateOrder(cfg *config.Config, ctx *context.AppContext) fiber.Handler {
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
-
-		err = utils.SendNewOrderNotification(user.Email, order, cfg)
-		if err != nil {
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
-		}
+		go func() {
+			err = utils.SendNewOrderNotification(user.Email, order, cfg)
+			if err != nil {
+				log.Println("Ошибка отправки письма при создании заказа:", err)
+			}
+		}()
 
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "ок"})
 	}
@@ -42,10 +44,12 @@ func UpdateOrderStatus(cfg *config.Config, ctx *context.AppContext) fiber.Handle
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
 
-		err = utils.SendOrderStatusUpdateNotification(order.User.Email, order, cfg)
-		if err != nil {
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
-		}
+		go func() {
+			err = utils.SendOrderStatusUpdateNotification(order.User.Email, order, cfg)
+			if err != nil {
+				log.Println("Ошибка отправки письма при обновлении статуса:", err)
+			}
+		}()
 
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "ок"})
 	}
