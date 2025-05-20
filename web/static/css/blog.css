@@ -106,7 +106,7 @@
     line-height: 180%;
 }
 
-.article-content p {
+.article-content ol, .article-content img {
     margin-bottom: 1rem;
 }
 
@@ -224,6 +224,10 @@
 
 #article-short-desc {
     resize: none
+}
+
+ol {
+    margin-left: 1rem;
 }
 
 @media screen and (max-width: 768px) {

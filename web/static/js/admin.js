@@ -457,7 +457,7 @@ function fetchOrders() {
                     <td>${order.id}</td>
                     <td>${formatDate(order.created_at)}</td>
                     <td>${order.user.last_name + " " + order.user.first_name + " " + order.user.patronymic || "Неизвестно"}</td>
-                    <td>${order.user?.email + " | +7" + order.user?.phone_number || "—"}</td>
+                    <td>${order.user?.email + " | " + order.user?.phone_number || "—"}</td>
                     <td>${renderSplitSystems(order.split_systems)}</td>
                     <td>${formatPrice(order.total_price) || 0}</td>
                 `;
