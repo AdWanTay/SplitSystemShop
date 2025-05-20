@@ -116,8 +116,8 @@ func CartPage(cfg *config.Config, appContext *context.AppContext) fiber.Handler 
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
 		return Render(c, "cart", fiber.Map{
-			"has_processing_orders": appContext.UserService.HasProcessingOrders(c.Context(), userID),
-			"response":              response,
+			"hasProcessingOrders": appContext.UserService.HasProcessingOrders(c.Context(), userID),
+			"response":            response,
 		}, cfg)
 	}
 }
@@ -159,11 +159,10 @@ func ProfilePage(cfg *config.Config, appContext *context.AppContext) fiber.Handl
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}
-
 		return Render(c, "profile", fiber.Map{
-			"has_processing_orders": appContext.UserService.HasProcessingOrders(c.Context(), userID),
-			"response":              cartModuleData,
-			"userData":              user,
+			"hasProcessingOrders": appContext.UserService.HasProcessingOrders(c.Context(), userID),
+			"response":            cartModuleData,
+			"userData":            user,
 		}, cfg)
 	}
 }
